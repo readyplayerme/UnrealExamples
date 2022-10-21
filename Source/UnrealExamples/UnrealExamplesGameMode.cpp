@@ -1,7 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "UnrealExamplesGameMode.h"
-#include "UnrealExamplesCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 
 AUnrealExamplesGameMode::AUnrealExamplesGameMode()

@@ -1,6 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "UnrealExamplesCharacter.h"
+#include "ExampleCharacter.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
@@ -8,10 +8,12 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 
-//////////////////////////////////////////////////////////////////////////
-// AUnrealExamplesCharacter
+#include "ReadyPlayerMeComponent.h"
 
-AUnrealExamplesCharacter::AUnrealExamplesCharacter()
+//////////////////////////////////////////////////////////////////////////
+// AExampleCharacter
+
+AExampleCharacter::AExampleCharacter()
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -47,6 +49,9 @@ AUnrealExamplesCharacter::AUnrealExamplesCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
+	ReadyPlayerMeComponent = CreateDefaultSubobject<UReadyPlayerMeComponent>(TEXT("ReadyPlayerMeComponent"));
+	AddOwnedComponent(ReadyPlayerMeComponent);
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
@@ -54,52 +59,52 @@ AUnrealExamplesCharacter::AUnrealExamplesCharacter()
 //////////////////////////////////////////////////////////////////////////
 // Input
 
-void AUnrealExamplesCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
+void AExampleCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
-	PlayerInputComponent->BindAxis("Move Forward / Backward", this, &AUnrealExamplesCharacter::MoveForward);
-	PlayerInputComponent->BindAxis("Move Right / Left", this, &AUnrealExamplesCharacter::MoveRight);
+	PlayerInputComponent->BindAxis("Move Forward / Backward", this, &AExampleCharacter::MoveForward);
+	PlayerInputComponent->BindAxis("Move Right / Left", this, &AExampleCharacter::MoveRight);
 
 	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
 	// "turn" handles devices that provide an absolute delta, such as a mouse.
 	// "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
 	PlayerInputComponent->BindAxis("Turn Right / Left Mouse", this, &APawn::AddControllerYawInput);
-	PlayerInputComponent->BindAxis("Turn Right / Left Gamepad", this, &AUnrealExamplesCharacter::TurnAtRate);
+	PlayerInputComponent->BindAxis("Turn Right / Left Gamepad", this, &AExampleCharacter::TurnAtRate);
 	PlayerInputComponent->BindAxis("Look Up / Down Mouse", this, &APawn::AddControllerPitchInput);
-	PlayerInputComponent->BindAxis("Look Up / Down Gamepad", this, &AUnrealExamplesCharacter::LookUpAtRate);
+	PlayerInputComponent->BindAxis("Look Up / Down Gamepad", this, &AExampleCharacter::LookUpAtRate);
 
 	// handle touch devices
-	PlayerInputComponent->BindTouch(IE_Pressed, this, &AUnrealExamplesCharacter::TouchStarted);
-	PlayerInputComponent->BindTouch(IE_Released, this, &AUnrealExamplesCharacter::TouchStopped);
+	PlayerInputComponent->BindTouch(IE_Pressed, this, &AExampleCharacter::TouchStarted);
+	PlayerInputComponent->BindTouch(IE_Released, this, &AExampleCharacter::TouchStopped);
 }
 
-void AUnrealExamplesCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
+void AExampleCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
 {
 	Jump();
 }
 
-void AUnrealExamplesCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
+void AExampleCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
 {
 	StopJumping();
 }
 
-void AUnrealExamplesCharacter::TurnAtRate(float Rate)
+void AExampleCharacter::TurnAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerYawInput(Rate * TurnRateGamepad * GetWorld()->GetDeltaSeconds());
 }
 
-void AUnrealExamplesCharacter::LookUpAtRate(float Rate)
+void AExampleCharacter::LookUpAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * TurnRateGamepad * GetWorld()->GetDeltaSeconds());
 }
 
-void AUnrealExamplesCharacter::MoveForward(float Value)
+void AExampleCharacter::MoveForward(float Value)
 {
 	if ((Controller != nullptr) && (Value != 0.0f))
 	{
@@ -113,7 +118,7 @@ void AUnrealExamplesCharacter::MoveForward(float Value)
 	}
 }
 
-void AUnrealExamplesCharacter::MoveRight(float Value)
+void AExampleCharacter::MoveRight(float Value)
 {
 	if ( (Controller != nullptr) && (Value != 0.0f) )
 	{
