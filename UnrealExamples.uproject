@@ -26,6 +26,10 @@
 		{
 			"Name": "ReadyPlayerMe",
 			"Enabled": true
+		},
+		{
+			"Name": "WebBrowserWidget",
+			"Enabled": true
 		}
 	]
 }
