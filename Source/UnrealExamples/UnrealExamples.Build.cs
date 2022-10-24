@@ -10,6 +10,9 @@ public class UnrealExamples : ModuleRules
 
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay" });
 
-		PrivateDependencyModuleNames.AddRange(new string[] { "ReadyPlayerMe", "WebBrowserWidget", "WebBrowser", "UMG" });
+		PrivateDependencyModuleNames.AddRange(new string[] { "ReadyPlayerMe" });
+
+		// Dependencies Web Browser
+		PrivateDependencyModuleNames.AddRange(new string[] { "WebBrowserWidget", "WebBrowser", "UMG" });
 	}
 }
