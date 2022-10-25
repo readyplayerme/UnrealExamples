@@ -1,6 +1,6 @@
 # Ready Player Me In-Engine Rendering
 
-![img-livelink-sample](https://user-images.githubusercontent.com/7085672/164030100-8063b64f-2162-4abf-a642-0193964ab04c.png)
+![Screenshot 2022-10-25 230024](https://user-images.githubusercontent.com/108666572/197881399-d36a2f7d-c958-4bb2-be64-c267c2b27c1e.png)
 
 Example demonstrates how to render the ReadyPlayerMe avatars in the 2D space, to create images or 2D Animations.
 
@@ -23,7 +23,7 @@ The render actor contains the following components:
 - SceneCaptureComponent2D. Captures the images or videos of the skeletal mesh.
 - ReadyPlayerMe. We need it to load the Avatar and update the skeletal mesh.
 
-![img-anim-graph](https://user-images.githubusercontent.com/7085672/164032665-9ed72dbb-730f-4e02-8fad-e9d9558b8afb.png)
+![Screenshot 2022-10-25 225717](https://user-images.githubusercontent.com/108666572/197881519-43ce221c-cd79-4cff-aad2-308d1b73bbbf.png)
 
 Additionally other effects, assets or meshes can be added to the actor, for customizing the image.
 
@@ -34,8 +34,16 @@ The SceneCaptureComponent2D should point to the skeletal mesh, we can rotate and
 ### Event Graph
 
 In the event graph we load the avatar and set the capture component to only record the actor components.
+
+![Screenshot 2022-10-25 225809](https://user-images.githubusercontent.com/108666572/197881696-1f9fcf6c-8814-447d-921e-89cba2052cda.png)
+
 When the avatar is loaded we create a dynamic material instance and a render target. Then we connect them so that rendered texture will be applied to the created material instance.
+
+![Screenshot 2022-10-25 225906](https://user-images.githubusercontent.com/108666572/197881762-5ef3591b-e4dd-4818-adbd-3771745722e0.png)
+
 We enable the scene capture component, to render images or animations. If we render an image them we destroy the actor after the image is taken.
+
+![Screenshot 2022-10-25 230525](https://user-images.githubusercontent.com/108666572/197881897-5e128e34-c3ec-4823-8d81-7797a9f51ee8.png)
 
 # Render Image
 
