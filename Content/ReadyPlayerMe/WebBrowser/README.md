@@ -1,11 +1,10 @@
 # UE Avatar Creator Integration Example
 
-This repository contains an Unreal Engine 5 sample project that uses the Unreal Engine Web Browser module (and Web Browser Widget) to embed the Ready Player Me Avatar Creator inside an application to create a seamless integration.
+Example uses the Unreal Engine Web Browser module (and Web Browser Widget) to embed the Ready Player Me Avatar Creator inside an application to create a seamless integration. 
 
-![img-web-browser-in-game](https://user-images.githubusercontent.com/7085672/163359540-e51de977-89ac-440b-8723-b9217681b00d.png)
+![Screenshot 2022-10-26 121009](https://user-images.githubusercontent.com/108666572/198000086-7771d6a5-70cc-4b39-b087-b0533257d9be.png)
 
-![img-loaded-avatar](https://user-images.githubusercontent.com/7085672/163359554-7cb22446-5a96-4353-ac30-2d02b37468b5.png)
-
+![Screenshot 2022-10-26 121106](https://user-images.githubusercontent.com/108666572/198000119-79ea06ea-4a12-458d-8c7d-88cf7d7ab208.png)
 
 *NOTE: The Web Browser module will only work with our readyplayer.me website in Unreal Engine 5. The Web Browser module in Unreal Engine 4 uses a very old version of chromium which does not support all the modern web browser features.*
 
@@ -13,15 +12,15 @@ This repository contains an Unreal Engine 5 sample project that uses the Unreal 
 
 The WebBrowserDemo map located in the `Content` folder is a good starting point for anybody wanting to use the Web Browser module to seamlessly integrate our RPM Avatar Creator into you game or application.  The logic for this is rather simple, if you open up the Level Blueprint you will see this network of nodes.
 
-![img-browser-bp](https://user-images.githubusercontent.com/7085672/163360368-c277f209-0cd5-4dc5-a9e4-df9bc1fec58b.png)
+![Screenshot 2022-10-26 122813](https://user-images.githubusercontent.com/108666572/198003565-c192c23d-9d34-4b10-ac4b-783bc1db4061.png)
 
 In the first group of nodes, connected to the `BeginPlay` event we create and add our custom Ready Player Me Browser widget to the viewport before setting `ShowMouseCursor` to true so that the user can see the cursor and interact with the browser widget.
 
-![img-create-widget-nodes](https://user-images.githubusercontent.com/7085672/163360441-e907ae6a-eda4-48c4-9de0-aa0ee1e552e9.png)
+![Screenshot 2022-10-26 122603](https://user-images.githubusercontent.com/108666572/198003525-3be3ec33-c514-4945-8c85-ea3250e92564.png)
 
 Next we bind the RPM Browser widget's Avatar Generated Event to run the Load New Avatar event on a RPM Actor blueprint present in the map. The Avatar Generated Event is called from the web browser widget once the avatar creation process is complete and it returns a URL to the RPM avatar GLB file, which we subsequently load into the scene.
 
-![img-bind-event](https://user-images.githubusercontent.com/7085672/163360486-14c3aa31-d19c-46df-a825-623bccc10d1c.png)
+![Screenshot 2022-10-26 122603](https://user-images.githubusercontent.com/108666572/198003202-25142a00-e7ee-4077-9c3c-9f26cd12a43d.png)
 
 # Browser Widget Blueprint
 
