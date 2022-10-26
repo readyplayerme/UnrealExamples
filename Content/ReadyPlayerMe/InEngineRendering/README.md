@@ -7,11 +7,11 @@ Example demonstrates how to render the ReadyPlayerMe avatars in the 2D space, to
 # Quick Start
 By default the `InEngineRendering` map can be found in the `Content > ReadyPlayerMe > InEngineRendering > Maps` folder as below.
 
-In the Level Blueprint of the map the RenderOverlay widget is added to the viewport. On the startup the images will be loaded and displayed on the RenderOverlay.
+In the Level Blueprint of the map the `RenderOverlay` widget is added to the viewport. On the startup the images will be loaded and displayed on the RenderOverlay.
 
 To render different avatars you can do the following. In the RenderOverlay select one of the two images and change the `Url` parameter.
 
-![img-live-link-actor](https://user-images.githubusercontent.com/7085672/164033730-15220078-1597-49dd-9c40-d5e8b5410398.png)
+![Screenshot 2022-10-26 102635](https://user-images.githubusercontent.com/108666572/197974743-2a4b0050-9c33-456f-82e8-568a57c05c05.png)
 
 Now hit play and this time it should load the new avatar from the URL you provided.
 
@@ -27,7 +27,7 @@ The render actor contains the following components:
 
 Additionally other effects, assets or meshes can be added to the actor, for customizing the image.
 
-We need to set the **Animation Asset** for our skeletal mesh. Depending if we want to have an animation or an image, we can set it to a **Pose asset** or an **Animation asset**.
+We need to set the **Animation Asset** for our skeletal mesh. Depending if we want to have an animation or an image, we can set it to a `Pose asset` or an `Animation asset`.
 
 The SceneCaptureComponent2D should point to the skeletal mesh, we can rotate and move it to customize the rendering area. We also need to uncheck the **Visible**, **Capture Every Frame** and **Capture On Movement** checkboxes, we will enable them from the blueprint.
 
@@ -47,16 +47,24 @@ We enable the scene capture component, to render images or animations. If we ren
 
 # Render Image
 
-To display the rendered image we need to create an image BP and inherit it from the **UMG.Image**.
+To display the rendered image we need to create an image BP and inherit it from the `UMG.Image`.
 Initially we hide the image, and we show it when the image is loaded.
 We spawn the render actor outside of the visible area. We load the render of the actor, when it's loaded we set the brush of the image from the generated material.
+
+![Screenshot 2022-10-26 101905](https://user-images.githubusercontent.com/108666572/197973193-ca66cc2d-b7fb-4237-a9c2-407a2d0a3912.png)
+
 When the image is destroyed we destroy the render actor.
 Additionally we add **Url** and **Capture Animation** parameters to have customizable images.
 
+![Screenshot 2022-10-26 102113](https://user-images.githubusercontent.com/108666572/197973402-ac61c86c-9300-4fe6-a510-5b13b39bf158.png)
+
+
 # Render Overlay
 
-We can add **RenderImages** to any widget. Render Overlay contains two instances of the RenderImage.
+We can add `RenderImages` to any widget. Render Overlay contains two instances of the RenderImage.
 We need to load the images when the Widget is constructed and destroy the images when the Widget is destroyed.
+
+![Screenshot 2022-10-26 102259](https://user-images.githubusercontent.com/108666572/197973814-e6152711-294e-47c9-82f1-6f56a648657f.png)
 
 ## Dependencies
 - Ready Player Me Unreal SDK 
