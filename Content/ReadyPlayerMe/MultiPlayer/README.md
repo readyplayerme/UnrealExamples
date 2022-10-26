@@ -1,12 +1,12 @@
-# Ready Player Me UE4 Multiplayer Example
+# Multiplayer Example
 
-![img-multiplayer](https://user-images.githubusercontent.com/7085672/164045214-41aebb0a-671f-4dd4-b62b-9ba783819372.png)
+![Screenshot 2022-10-26 141117](https://user-images.githubusercontent.com/108666572/198023314-57c84fbc-6221-4cd2-b7df-743eb4485f72.png)
 
-This repository contains an Unreal Engine 4 example project that demonstrates how to add Ready Player Me avatars to a multiplayer game that requires replication in regards to avatar and mesh loading for multiple game clients.
+Example demonstrates demonstrates how to add Ready Player Me avatars to a multiplayer game that requires replication in regards to avatar and mesh loading for multiple game clients.
 
 # Quick Start
 
-By default the project should open the ThirdPersonExampleMap when you open up the project. If not you can find it in `Content > ReadyPlayerMe > Maps`. With the map open click on the small arrow next to the Play button and set the `Number of Players` and set `Net Mode = Play As Listen Server` as below.
+The map is located in `Content > ReadyPlayerMe > Multiplayer > Maps`. With the map open click on the three tods next to the Play button and set the `Number of Players` and set `Net Mode` to `Play As Listen Server` as below.
 
 ![Screenshot 2022-10-26 134506](https://user-images.githubusercontent.com/108666572/198020307-833db847-3090-409b-aa2b-b6fd2a9c79cf.png)
 
