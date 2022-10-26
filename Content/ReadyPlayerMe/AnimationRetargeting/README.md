@@ -1,40 +1,32 @@
-# Ready Player Me UE5 Third Person Character Example
+# Third Person Character Animation Retargeting Example
 
 ![Screenshot 2022-10-06 141418](https://user-images.githubusercontent.com/108666572/194309906-d7dc5108-2cb4-4005-baf7-b0d88af69c50.png)
 
-This repository contains an example Unreal Engine 5 project that creates a character controller using a Ready Player Me avatar. This is to serve as a reference for anybody that wants to integrate our 3D avatars into their Unreal Engine project. 
+Example demonstrates how to create a character using a ReadyPlayerMe avatar and retarget animations to make the character playable with the animations from third person character.
+
+# Avatar Loader UI Widget
+
+When you run the application and press Q the UI panel should display as below. By changing the url the avatar for the character will be changed at runtime.
+
+![Screenshot 2022-10-06 142208](https://user-images.githubusercontent.com/108666572/194311325-0265c0fb-d65a-420c-a3fd-93cf62db0491.png)
 
 # Map
 
-The ThirdPersonExampleMap is loaded on startup by default and can be found in the projects `Content > ReadyPlayerMe > Maps` folder as below.
-
-![Screenshot 2022-10-06 141603](https://user-images.githubusercontent.com/108666572/194310218-1262ab44-8ea0-463d-a320-3a8ae6424081.png)
-
-There is no custom code or actors in this map however if you open up the World Settings you will notice we set a GameMode Override to use our TP_GameMode asset. This game mode is used to set the Default Pawn Class to be our RPM_ThirdPersonCharacter.
-
-![Screenshot 2022-10-06 141717](https://user-images.githubusercontent.com/108666572/194310429-93ea9b96-74a9-4eae-b3cd-b3c420cfa397.png)
+By default the `ThirdPersonExampleMap` map can be found in the `Content > ReadyPlayerMe > AnimationRetargeting > Maps` folder.
+In the Level Blueprint of the map the we setup a whdget to be able to runtime swap the avatar by changing the avatar url.
 
 # Character Blueprint
 
-You can find our character blueprint named `RPM_ThirdPersonCharacter` in the projects `Content > ReadyPlayerMe > Blueprints` folder. 
+You can find our character blueprint named `RPM_ThirdPersonCharacter` in the projects `Content > ReadyPlayerMe > Blueprints` folder.
+The game mode for this example uses this character blueprint to as a `Default Pawn Class`.
 
 This character was created simply by duplicating the example Unreal Third Person Character blueprint (that uses mannequin skeleton and mesh), then we reassigned the skeletal mesh and the animation blueprint as well as added a ReadyPlayerMeComponent to handle the loading of our ReadyPlayerMe avatars at runtime. 
 
 # Animations 
 
-If you look in the folder `Content > ReadyPlayerMe > Animations` you will find all the animations, blendspaces and animation blueprints used in our example.
+If you look in the folder `Content > ReadyPlayerMe > AnimationRetargeting > Animations` you will find all the animations, blendspaces and animation blueprints used in our example.
 
 ![Screenshot 2022-10-06 141851](https://user-images.githubusercontent.com/108666572/194310719-e79f8cd0-87ef-425e-a61c-a1500ed6440f.png)
-
-# Avatar Loader UI Widget
-
-The Avatar Loader UI Widget get be found in `Content > ReadyPlayerMe > Widgets`.
-
-![Screenshot 2022-10-06 142105](https://user-images.githubusercontent.com/108666572/194311106-107ffdde-a706-4a9b-a542-e62bf12e9196.png)
-
-When you run the application and press Q the UI panel should display as below.
-
-![Screenshot 2022-10-06 142208](https://user-images.githubusercontent.com/108666572/194311325-0265c0fb-d65a-420c-a3fd-93cf62db0491.png)
 
 # How to retarget animations
 
