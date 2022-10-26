@@ -1,6 +1,6 @@
 # Live Link Example
 
-![img-livelink-sample](https://user-images.githubusercontent.com/7085672/164030100-8063b64f-2162-4abf-a642-0193964ab04c.png)
+![Screenshot 2022-10-26 132002](https://user-images.githubusercontent.com/108666572/198013412-b54d087e-7b87-4504-a37d-40f8a53d1edd.png)
 
 Example demonstrates how to use the Live Link plugin to apply facial tracking and animations onto a Ready Player Me Avatar.
 
