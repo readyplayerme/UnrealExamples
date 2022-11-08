@@ -8,7 +8,7 @@ Example uses the Unreal Engine Web Browser module (and Web Browser Widget) to em
 
 *NOTE: The Web Browser module will only work with our readyplayer.me website in Unreal Engine 5. The Web Browser module in Unreal Engine 4 uses a very old version of chromium which does not support all the modern web browser features.*
 
-# Requirements
+# Dependencies
 
 To enable the WebBrowser support for our project, WebBrowserWidget plugins need to be enabled in the uproject file.
 Additionally to ba able to access it through the C++ code we need to add the followwing modules to our `UnrealExamplesBuild.cs`file `WebBrowserWidget`, `WebBrowser`, `UMG`.
@@ -111,16 +111,3 @@ Finally we execute the custom javascript that we use to listen to the website ev
 ```cpp
 this->ExecuteJavascript(JavascriptSnippet);
 ```
-
-## Dependencies
-- Ready Player Me Unreal SDK
-- glTFRuntime (Third party plugin)
-
-## Links
-**Ready Player Me Unreal SDK**
-- [Documentation](https://docs.readyplayer.me/ready-player-me/integration-guides/unreal-engine-4)
-- [Download](https://docs.readyplayer.me/ready-player-me/integration-guides/unreal-engine-4/unreal-plugin-download)
-- [Support](https://docs.readyplayer.me/ready-player-me/integration-guides/unreal-engine-4/troubleshooting)
-
-**glTFRuntime**
-- [Documentation](https://github.com/rdeioris/glTFRuntime-docs/blob/master/README.md)

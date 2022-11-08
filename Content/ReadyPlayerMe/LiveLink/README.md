@@ -1,10 +1,10 @@
-# Live Link Example
+# LiveLink Example
 
 ![Screenshot 2022-10-26 132002](https://user-images.githubusercontent.com/108666572/198013412-b54d087e-7b87-4504-a37d-40f8a53d1edd.png)
 
-Example demonstrates how to use the Live Link plugin to apply facial tracking and animations onto a Ready Player Me Avatar.
+Example demonstrates how to use the LiveLink plugin to apply facial tracking and animations onto a Ready Player Me Avatar.
 
-# Requirements
+# Dependencies
 To enable the LiveLink support for our project, `LiveLink` and `AppleARKitFaceSupport` plugins need to be enabled in the uproject file.
 
 # Quick Start
@@ -40,16 +40,3 @@ In the next group of nodes we apply the head rotation using local yaw, pitch, ro
 Now lets open the Event Graph, here you can see how we get the head rotation data from the LiveLink plugin. First we retrieve the data using the Evaluate Live Link Frame node. Then we get the property for `headYaw`, `headPitch`, `headRoll` and assign them to the local variables `HeadYaw`, `HeadPitch`, `HeadRoll`. We created these local variables so that we can store the rotation information to later use it in the AnimGraph as mentioned in the previous section.
 
 ![Screenshot 2022-10-26 131559](https://user-images.githubusercontent.com/108666572/198012545-c0ac9e8d-65cb-48da-a80e-254d4f61ad24.png)
-
-## Dependencies
-- Ready Player Me Unreal SDK 
-- glTFRuntime (Third party plugin)
-
-## Links
-**Ready Player Me Unreal SDK**
-- [Documentation](https://docs.readyplayer.me/ready-player-me/integration-guides/unreal-engine-4)
-- [Download](https://docs.readyplayer.me/ready-player-me/integration-guides/unreal-engine-4/unreal-plugin-download)
-- [Support](https://docs.readyplayer.me/ready-player-me/integration-guides/unreal-engine-4/troubleshooting)
-
-**glTFRuntime**
-- [Documentation](https://github.com/rdeioris/glTFRuntime-docs/blob/master/README.md)
