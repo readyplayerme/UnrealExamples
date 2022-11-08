@@ -79,6 +79,12 @@ There are 2 event dispatchers `OnLoadUrl` and `OnCloseLoaderPanel`, these are he
 
 ![Screenshot 2022-10-26 135223](https://user-images.githubusercontent.com/108666572/198021230-a8ca4ea4-f5a7-4e41-8409-a044825e1688.png)
 
+ ## Late joining clients
+
+ When the clients are joining the game after all the avatars are loaded, they will not be able to see the loaded avatars, because the LoadAvatarClient would not be called for them. We need to first make the Url variable replicated, so it would be updated when the player joins. In the begin play we need to load the avatar if the url is set.
+
+![Screenshot 2022-11-08 134253](https://user-images.githubusercontent.com/3124894/200618285-17e4f538-4a56-43b5-8f3f-fb72527de5a9.png)
+
  # Player Controller
 
  The player controller RPM_PlayerController located at `Content > ReadyPlayerMe > Blueprints` also has some custom properties and functionality added to it.
