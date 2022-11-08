@@ -65,16 +65,3 @@ We can add `RenderImages` to any widget. Render Overlay contains two instances o
 We need to load the images when the Widget is constructed and destroy the images when the Widget is destroyed.
 
 ![Screenshot 2022-10-26 102259](https://user-images.githubusercontent.com/108666572/197973814-e6152711-294e-47c9-82f1-6f56a648657f.png)
-
-## Dependencies
-- Ready Player Me Unreal SDK 
-- glTFRuntime (Third party plugin)
-
-## Links
-**Ready Player Me Unreal SDK**
-- [Documentation](https://docs.readyplayer.me/ready-player-me/integration-guides/unreal-engine-4)
-- [Download](https://docs.readyplayer.me/ready-player-me/integration-guides/unreal-engine-4/unreal-plugin-download)
-- [Support](https://docs.readyplayer.me/ready-player-me/integration-guides/unreal-engine-4/troubleshooting)
-
-**glTFRuntime**
-- [Documentation](https://github.com/rdeioris/glTFRuntime-docs/blob/master/README.md)
