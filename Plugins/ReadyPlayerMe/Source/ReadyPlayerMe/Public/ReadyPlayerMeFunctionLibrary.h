@@ -7,13 +7,15 @@
 #include "ReadyPlayerMeFunctionLibrary.generated.h"
 
 /**
- * 
+ * Static functions to be used from the blueprint.
  */
 UCLASS()
 class READYPLAYERME_API UReadyPlayerMeFunctionLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 
+public:
+	/** Clears avatar cache folder. */
 	UFUNCTION(BlueprintCallable, Category = "Ready Player Me", meta = (DisplayName = "Clean Avatar Cache"))
 	static void ClearAvatarCache();
 	

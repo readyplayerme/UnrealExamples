@@ -7,7 +7,7 @@
 #include "ReadyPlayerMeActor.generated.h"
 
 /** Intended to be used as an actor for runtime loading and displaying the avatars. */
-UCLASS()
+UCLASS(BlueprintType)
 class READYPLAYERME_API AReadyPlayerMeActor : public AActor
 {
 	GENERATED_BODY()

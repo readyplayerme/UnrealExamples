@@ -19,6 +19,17 @@ public:
 		return "";
 	}
 
+	static bool IsCppPlugin()
+	{
+		// Implementation needs to be in the header, because the editor module needs to access it.
+		const TSharedPtr<IPlugin> Plugin = IPluginManager::Get().FindPlugin(GetPluginName());
+		if (Plugin)
+		{
+			return Plugin->GetType() == EPluginType::Project;
+		}
+		return false;
+	}
+
 	static FString GetPluginName()
 	{
 		return "ReadyPlayerMe";

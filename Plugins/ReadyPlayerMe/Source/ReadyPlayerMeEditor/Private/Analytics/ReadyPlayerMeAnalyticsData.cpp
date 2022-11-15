@@ -31,4 +31,5 @@ FReadyPlayerMeAnalyticsData::FReadyPlayerMeAnalyticsData()
 	Platform = UGameplayStatics::GetPlatformName();
 	DeviceId = GetDeviceId();
 	AppIdentifier = UKismetSystemLibrary::GetGameBundleId();
+	bIsCppPlugin = FReadyPlayerMePluginInfo::IsCppPlugin();
 }

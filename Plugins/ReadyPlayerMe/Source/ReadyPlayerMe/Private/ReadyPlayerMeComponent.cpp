@@ -12,6 +12,9 @@
 #include "Media/Public/IMediaTracks.h"
 
 UReadyPlayerMeComponent::UReadyPlayerMeComponent()
+	: TargetSkeleton(nullptr)
+	, AvatarConfig(nullptr)
+	, SkeletalMeshComponent(nullptr)
 {
 	PrimaryComponentTick.bCanEverTick = false;
 	OnAvatarDownloadCompleted.BindDynamic(this, &UReadyPlayerMeComponent::OnAvatarDownloaded);
@@ -63,7 +66,8 @@ void UReadyPlayerMeComponent::LoadSkeletalMesh(UglTFRuntimeAsset* Asset)
 		AvatarMetadata.BodyType = FReadyPlayerMeMetadataExtractor::GetBodyTypeFromAsset(Asset);
 	}
 	const FString RootBoneName = FReadyPlayerMeMetadataExtractor::GetRootBoneName(AvatarMetadata.BodyType);
-	Asset->LoadSkeletalMeshRecursiveAsync(RootBoneName, {}, OnSkeletalMeshCallback, FReadyPlayerMeGlTFConfigCreator::GetGlTFRuntimeSkeletalMeshConfig(RootBoneName, TargetSkeleton));
+	FReadyPlayerMeGlTFConfigCreator::OverrideConfig(SkeletalMeshConfig, RootBoneName, TargetSkeleton);
+	Asset->LoadSkeletalMeshRecursiveAsync(RootBoneName, {}, OnSkeletalMeshCallback, SkeletalMeshConfig);
 }
 
 void UReadyPlayerMeComponent::OnSkeletalMeshLoaded(USkeletalMesh* SkeletalMesh)
@@ -75,6 +79,10 @@ void UReadyPlayerMeComponent::OnSkeletalMeshLoaded(USkeletalMesh* SkeletalMesh)
 
 void UReadyPlayerMeComponent::InitSkeletalMeshComponent()
 {
+	if (IsValid(SkeletalMeshComponent))
+	{
+		return;
+	}
 	AActor* ThisActor = GetOwner();
 	SkeletalMeshComponent = ThisActor->FindComponentByClass<USkeletalMeshComponent>();
 	if (!SkeletalMeshComponent)
@@ -94,5 +102,5 @@ void UReadyPlayerMeComponent::LoadRender(const ERenderSceneType& SceneType, cons
 		return;
 	}
 	RenderLoader = NewObject<UReadyPlayerMeRenderLoader>(this,TEXT("RenderLoader"));
-	RenderLoader->Load(UrlShortcode, SceneType, AvatarMetadata.OutfitGender, OnCompleted, OnFailed);
+	RenderLoader->Load(UrlShortcode, SceneType, OnCompleted, OnFailed);
 }
