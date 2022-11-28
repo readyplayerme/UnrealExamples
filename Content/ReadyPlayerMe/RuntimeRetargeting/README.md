@@ -21,6 +21,10 @@ Create an animation blueprint and set the base skeleton to the `RPM_Mixamo_Skele
 To be able to retarget the animations from the UE5 Manny to the RPM_FullBody avatar we need to creat an IKRetargeter. For more info about how to creat an IKRig and IKRetargeter, you can check [here](https://github.com/readyplayerme/UnrealExamples/tree/main/Content/ReadyPlayerMe/AnimationRetargeting#how-to-retarget-animations).
 Create a `Retarget Pose From Mesh` node and connect it to the output pose. Set the `IKRetargeter Asset` to the `RTG_UE5_Manny_RPM_FullBody`. Make sure that `Use Attached Parent` checkbox is checked.
 
+![Screenshot 2022-11-28 182840](https://user-images.githubusercontent.com/3124894/204368902-10f2aac3-5dc3-4288-b74f-63558e3574c8.png)
+
+![Screenshot 2022-11-28 182921](https://user-images.githubusercontent.com/3124894/204368935-ec2df095-7c7e-4f1c-9468-26428648bde8.png)
+
 # Character Blueprint
 
 You can find our character blueprint named `BP_RPM_RuntimeCharacter` in the projects `Content > ReadyPlayerMe > RuntimeRetargeting > Blueprints` folder.
@@ -30,11 +34,15 @@ The character was created by duplicating the example Unreal Third Person Charact
 
 We add another skeletal mesh component as a child of the Manny skeletal mesh component. The movement of the character will be handled by the UE5 Mannequin, our character will follow the movements of the Mannequin.
 
+![Screenshot 2022-11-28 182227](https://user-images.githubusercontent.com/3124894/204370248-0fc256b2-c166-4806-8d2f-c9f9ec173dc1.png)
+
 We set custom animation blueprint to the newly created RpmSkeletalMesh component. The animation blueprint will runtime retarget the animations from the Mannequin to the RPM using animation retargeter.
 
 Inside of the Blueprint in `BeginPlay` we override the skeletal mesh component of the ReadyPlayerMe component. This way at runtime the avatar mesh will be set to the newly created `RpmSkeletalMesh` component.
 
 Now in `BeginPlay` we load the avatar. Make sure that the `SkeletalMesh` of the `RpmSkeletalMesh` component is not set, otherwise the animations will break after the avatar is loaded.
+
+![Screenshot 2022-11-28 182156](https://user-images.githubusercontent.com/3124894/204370152-dd73e8c5-5900-445b-9c4d-4f5b1783ffcd.png)
 
 When running the game you will see that two meshes are shown on top of each other, RPM and the Manny. We need to hide the Manny, uncheck the `Visible` checkbox of the Manny skeletal mesh component.
 Makes sure that the `Visibility Based Anim Tick Option` is set to `Always Tick Pose and Refresh Bones`, this will ensure that our character will follow the movements of the Manny character.
@@ -45,6 +53,8 @@ Since the IK for the `Manny` is properly set-up, we don't need to setup IK for o
 Make sure that the `Retarget IK` checkbox is unchecked in the animation retargeter, so that IK will be applied only to the Manny.
 
 ![Screenshot 2022-10-10 095350](https://user-images.githubusercontent.com/108666572/194822530-ef52c70e-7e7b-4e2a-95c8-82a16b48770b.png)
+
+![Screenshot 2022-11-28 182800](https://user-images.githubusercontent.com/3124894/204370102-537f8a51-ee7b-4007-bb54-afb402524cf4.png)
 
 Make sure to assign the Override Physical Asset in the SkeletalMeshComponent of the character blueprint. You might encounter issues with shadows otherwise.
 
