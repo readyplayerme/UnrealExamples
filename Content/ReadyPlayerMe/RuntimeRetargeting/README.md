@@ -1,8 +1,8 @@
 # Runtime Animation Retargeting Example
 
-![Screenshot 2022-10-06 141418](https://user-images.githubusercontent.com/108666572/194309906-d7dc5108-2cb4-4005-baf7-b0d88af69c50.png)
+![Screenshot 2022-10-10 095350](https://user-images.githubusercontent.com/108666572/194822530-ef52c70e-7e7b-4e2a-95c8-82a16b48770b.png)
 
-Example demonstrates how to use the runtime retargeting to runtime retarget the animations from the Mannequin to the ReadyPlayerMe character. The runtime retargeting can be applied to retarget the animations from any character to the ReadyPlayerMe avatar.
+Example demonstrates how to use the runtime retargeting to retarget the animations from the Mannequin to the ReadyPlayerMe character. The runtime retargeting can be applied to retarget the animations from any character to the ReadyPlayerMe avatar.
 
 # Use cases
 
@@ -32,12 +32,14 @@ We add another skeletal mesh component as a child of the Manny skeletal mesh com
 
 We set custom animation blueprint to the newly created RpmSkeletalMesh component. The animation blueprint will runtime retarget the animations from the Mannequin to the RPM using animation retargeter.
 
-Inside of the Blueprint in BeginPlay we override the skeletal mesh component of the ReadyPlayerMe component. This way at runtime the avatar mesh will be set to the newly created RpmSkeletalMesh component.
+Inside of the Blueprint in `BeginPlay` we override the skeletal mesh component of the ReadyPlayerMe component. This way at runtime the avatar mesh will be set to the newly created `RpmSkeletalMesh` component.
 
-Now in BeginPlay we load the avatar. Make sure that the SkeletalMesh of the RpmSkeletalMesh component is not set, otherwise the animations will break after the avatar is loaded.
+Now in `BeginPlay` we load the avatar. Make sure that the `SkeletalMesh` of the `RpmSkeletalMesh` component is not set, otherwise the animations will break after the avatar is loaded.
 
 When running the game you will see that two meshes are shown on top of each other, RPM and the Manny. We need to hide the Manny, uncheck the `Visible` checkbox of the Manny skeletal mesh component.
 Makes sure that the `Visibility Based Anim Tick Option` is set to `Always Tick Pose and Refresh Bones`, this will ensure that our character will follow the movements of the Manny character.
+
+# IK
 
 Since the IK for the `Manny` is properly set-up, we don't need to setup IK for our character, it will work out of the box.
 Make sure that the `Retarget IK` checkbox is unchecked in the animation retargeter, so that IK will be applied only to the Manny.

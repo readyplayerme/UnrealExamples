@@ -61,8 +61,3 @@ There will be proper IK support in the upcoming versions of the SDK. For now if 
 Make sure to assign the Override Physical Asset in the SkeletalMeshComponent of the character blueprint. You might encounter issues with shadows otherwise.
 
 ![Screenshot 2022-10-06 144007](https://user-images.githubusercontent.com/108666572/194314869-e4453faf-7ce8-420a-831f-0a94cffa0bb2.png)
-
-## Note
-
-Currently the runtime retargeting doesn't work with the loaded RPM avatars.
-
