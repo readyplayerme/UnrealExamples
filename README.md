@@ -18,7 +18,7 @@ Example demonstrates the animation retargeting from the UE5 Mannequin to ReadyPl
 
 ## Runtime Animation Retargeting
 
-![Screenshot 2022-10-10 095350](https://user-images.githubusercontent.com/108666572/194822530-ef52c70e-7e7b-4e2a-95c8-82a16b48770b.png)
+![Screenshot 2022-11-29 115934](https://user-images.githubusercontent.com/3124894/204512563-558b6d48-0fcf-433f-aa80-70f4c70f4b03.png)
 
 [**Example**](https://github.com/readyplayerme/UnrealExamples/tree/main/Content/ReadyPlayerMe/RuntimeRetargeting#readme)
 
