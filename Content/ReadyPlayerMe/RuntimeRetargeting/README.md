@@ -1,6 +1,6 @@
 # Runtime Animation Retargeting Example
 
-![Screenshot 2022-10-10 095350](https://user-images.githubusercontent.com/108666572/194822530-ef52c70e-7e7b-4e2a-95c8-82a16b48770b.png)
+![Screenshot 2022-11-29 115901](https://user-images.githubusercontent.com/3124894/204512386-db962d1b-9f2c-4fff-8ce4-44f76569935b.png)
 
 Example demonstrates how to use the runtime retargeting to retarget the animations from the Mannequin to the ReadyPlayerMe character. The runtime retargeting can be applied to retarget the animations from any character to the ReadyPlayerMe avatar.
 
@@ -54,7 +54,7 @@ The `Visibility Based Anim Tick Option` property should be set to `Always Tick P
 Since the IK for the `Manny` is properly set-up, we don't need to setup IK for our character, it will work out of the box.
 The `Retarget IK` checkbox should be unchecked in the animation retargeter, so that IK will be applied only to the Manny.
 
-![Screenshot 2022-10-10 095350](https://user-images.githubusercontent.com/108666572/194822530-ef52c70e-7e7b-4e2a-95c8-82a16b48770b.png)
+![Screenshot 2022-11-29 115934](https://user-images.githubusercontent.com/3124894/204512563-558b6d48-0fcf-433f-aa80-70f4c70f4b03.png)
 
 ![Screenshot 2022-11-28 182800](https://user-images.githubusercontent.com/3124894/204370102-537f8a51-ee7b-4007-bb54-afb402524cf4.png)
 
