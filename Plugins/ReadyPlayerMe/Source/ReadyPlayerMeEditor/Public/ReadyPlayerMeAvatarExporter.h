@@ -30,7 +30,7 @@ private:
 	class UReadyPlayerMeAvatarLoader* AvatarLoader;
 
 	UFUNCTION()
-	void OnAvatarDownloaded(UglTFRuntimeAsset* Asset, const FAvatarMetadata& Metadata);
+	void OnAvatarDownloaded(class UglTFRuntimeAsset* Asset, const FAvatarMetadata& Metadata);
 
 	UFUNCTION()
 	void OnAvatarDownloadFailed(const FString& ErrorMessage);

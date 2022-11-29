@@ -75,12 +75,26 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me")
 	class UReadyPlayerMeAvatarConfig* AvatarConfig;
 
+	/**
+	 * Skeletal mesh component would be used for setting the skeletal mesh of the loaded avatar.
+	 * If not set, It will be initialised with the skeletal mesh component of the parent actor.
+	 * For runtime animation retargeting, if the actor has multiple skeletal mesh components, this property needs to be set.
+	 */
 	UPROPERTY(BlueprintReadWrite, Category="Ready Player Me")
 	USkeletalMeshComponent* SkeletalMeshComponent;
 
+	/**
+	 * glTFRuntime skeletal mesh config that will be used for loading the avatar.
+	 * This property should be changed only for very custom cases.
+	 * @note Changing this property might break the avatar.
+	 */
 	UPROPERTY(BlueprintReadWrite, Category="Ready Player Me")
 	FglTFRuntimeSkeletalMeshConfig SkeletalMeshConfig;
 
+	/**
+	 * Immediately cancels the avatar loading.
+	 * When the garbage collector is removing the AvatarLoader, avatar loading gets automatically cancelled.
+	 */
 	UFUNCTION(BlueprintCallable, Category = "Ready Player Me", meta = (DisplayName = "Cancel Avatar"))
 	void CancelAvatarLoad();
 

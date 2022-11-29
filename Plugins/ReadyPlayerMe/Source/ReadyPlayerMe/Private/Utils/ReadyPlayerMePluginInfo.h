@@ -11,7 +11,7 @@ public:
 	static FString GetPluginVersion()
 	{
 		// Implementation needs to be in the header, because the editor module needs to access it.
-		const TSharedPtr<IPlugin> Plugin = IPluginManager::Get().FindPlugin(GetPluginName());
+		const TSharedPtr<IPlugin> Plugin = IPluginManager::Get().FindPlugin(GetRPMPluginName());
 		if (Plugin)
 		{
 			return Plugin->GetDescriptor().VersionName;
@@ -22,7 +22,7 @@ public:
 	static bool IsCppPlugin()
 	{
 		// Implementation needs to be in the header, because the editor module needs to access it.
-		const TSharedPtr<IPlugin> Plugin = IPluginManager::Get().FindPlugin(GetPluginName());
+		const TSharedPtr<IPlugin> Plugin = IPluginManager::Get().FindPlugin(GetRPMPluginName());
 		if (Plugin)
 		{
 			return Plugin->GetType() == EPluginType::Project;
@@ -30,8 +30,19 @@ public:
 		return false;
 	}
 
-	static FString GetPluginName()
+	static bool IsDracoPluginIncluded()
+	{
+		const TSharedPtr<IPlugin> Plugin = IPluginManager::Get().FindPlugin(GetDracoPluginName());
+		return Plugin.IsValid();
+	}
+
+	static FString GetRPMPluginName()
 	{
 		return "ReadyPlayerMe";
+	}
+
+	static FString GetDracoPluginName()
+	{
+		return "glTFRuntimeDraco";
 	}
 };
