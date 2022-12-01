@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.19.0] 2022-11-30
+
+## Added
+
+- Access to the skeletal mesh config for material customization 
+- Runtime animation retargeting support
+- Editor widget for exporting skeletal mesh without materials
+- Support for Draco mesh compression
+
+## Fixed
+
+- Updated glTFRuntime plugin to the version 20220823 to support UE5.1
+- Added missing ARKit morph targets to the avatar config
+- Changed the render request functionality to use avatar-api
+- Removed the Viseme and ARKit morph targets from DA_StandardMorphTargets
+
 ## [0.18.1] 2022-10-07
 
 ## Fixed

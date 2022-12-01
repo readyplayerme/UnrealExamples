@@ -23,6 +23,8 @@ public:
 		ToolTip = "If checked, the loaded avatars will be saved in the local storage."))
 	bool bEnableAvatarCaching;
 
+	static void SetAvatarCaching(bool bEnableCaching);
+
 #if WITH_EDITOR
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 

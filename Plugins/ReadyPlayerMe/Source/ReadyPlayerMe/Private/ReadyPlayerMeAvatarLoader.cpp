@@ -8,6 +8,10 @@
 #include "Utils/ReadyPlayerMeRequestCreator.h"
 #include "Utils/ReadyPlayerMeUrlConvertor.h"
 #include "Utils/ReadyPlayerMePluginInfo.h"
+#include "Storage/ReadyPlayerMeAvatarCacheHandler.h"
+
+#include "Components/SkeletalMeshComponent.h"
+#include "glTFRuntimeFunctionLibrary.h"
 
 static const FString HEADER_LAST_MODIFIED = "Last-Modified";
 constexpr float METADATA_REQUEST_TIMEOUT = 20.f;
@@ -50,7 +54,7 @@ void UReadyPlayerMeAvatarLoader::LoadAvatar(const FString& UrlShortcode, UReadyP
 	OnAvatarDownloadCompleted = OnDownloadCompleted;
 	OnAvatarLoadFailed = OnLoadFailed;
 	AvatarUri = FReadyPlayerMeUrlConvertor::CreateAvatarUri(Url, AvatarConfig);
-	CacheHandler = MakeUnique<FReadyPlayerMeAvatarCacheHandler>(*AvatarUri);
+	CacheHandler = MakeShared<FReadyPlayerMeAvatarCacheHandler>(*AvatarUri);
 	if (CacheHandler->ShouldLoadFromCache())
 	{
 		bIsTryingToUpdate = true;
@@ -150,6 +154,7 @@ void UReadyPlayerMeAvatarLoader::OnAvatarModelReceived(FHttpRequestPtr Request, 
 	}
 	if (bSuccess && Response.IsValid() && EHttpResponseCodes::IsOk(Response->GetResponseCode()))
 	{
+		UE_LOG(LogReadyPlayerMe, Log, TEXT("Model Downloaded in [%.1fs]"), (FDateTime::Now() - AvatarDownloadTime).GetTotalSeconds());
 		GlTFRuntimeAsset = UglTFRuntimeFunctionLibrary::glTFLoadAssetFromData(Response->GetContent(), FReadyPlayerMeGlTFConfigCreator::GetGlTFRuntimeConfig());
 		if (GlTFRuntimeAsset == nullptr)
 		{
@@ -175,6 +180,7 @@ void UReadyPlayerMeAvatarLoader::LoadAvatarMetadata()
 
 void UReadyPlayerMeAvatarLoader::LoadAvatarModel()
 {
+	AvatarDownloadTime = FDateTime::Now();
 	AvatarModelRequest = FReadyPlayerMeRequestCreator::MakeHttpRequest(AvatarUri->ModelUrl, AVATAR_REQUEST_TIMEOUT);
 	AvatarModelRequest->OnProcessRequestComplete().BindUObject(this, &UReadyPlayerMeAvatarLoader::OnAvatarModelReceived);
 	AddRPMHeaders(AvatarModelRequest);

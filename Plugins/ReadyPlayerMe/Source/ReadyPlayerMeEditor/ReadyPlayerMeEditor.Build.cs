@@ -31,6 +31,7 @@ public class ReadyPlayerMeEditor : ModuleRules
 			{
 				"CoreUObject",
 				"Engine",
+				"glTFRuntime",
 				"Json",
 				"JsonUtilities",
 				"HTTP",

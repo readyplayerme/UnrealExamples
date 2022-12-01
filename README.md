@@ -16,6 +16,14 @@ The examples are located in `Content > ReadyPlayerMe` folder. Each example has d
 
 Example demonstrates the animation retargeting from the UE5 Mannequin to ReadyPlayerMe avatar, and creating a controllable character.
 
+## Runtime Animation Retargeting
+
+![Screenshot 2022-11-29 115934](https://user-images.githubusercontent.com/3124894/204512563-558b6d48-0fcf-433f-aa80-70f4c70f4b03.png)
+
+[**Example**](https://github.com/readyplayerme/UnrealExamples/tree/main/Content/ReadyPlayerMe/RuntimeRetargeting#readme)
+
+Example demonstrates how to use the runtime retargeting to retarget the animations from the Mannequin to the ReadyPlayerMe character. The runtime retargeting can be applied to retarget the animations from any character to the ReadyPlayerMe avatar.
+
 ## Avatar Creator
 
 ![Screenshot 2022-10-26 121009](https://user-images.githubusercontent.com/108666572/198000086-7771d6a5-70cc-4b39-b087-b0533257d9be.png)

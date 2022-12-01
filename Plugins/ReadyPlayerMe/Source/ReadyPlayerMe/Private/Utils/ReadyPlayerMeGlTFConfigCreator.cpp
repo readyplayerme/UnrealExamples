@@ -2,38 +2,17 @@
 
 
 #include "Utils/ReadyPlayerMeGlTFConfigCreator.h"
-#include "glTFRuntimeParser.h"
 
-FglTFRuntimeSkeletonConfig FReadyPlayerMeGlTFConfigCreator::GetGlTFRuntimeSkeletonConfig(const FString& RootBoneName, USkeleton* Skeleton)
+void FReadyPlayerMeGlTFConfigCreator::OverrideConfig(FglTFRuntimeSkeletalMeshConfig& SkeletalMeshConfig, const FString& RootBoneName, USkeleton* Skeleton)
 {
-	FglTFRuntimeSkeletonConfig SkeletonConfig;
-	SkeletonConfig.CopyRotationsFrom = Skeleton;
-	SkeletonConfig.bAddRootBone = true;
-	SkeletonConfig.RootBoneName = RootBoneName;
-	return SkeletonConfig;
-}
+	SkeletalMeshConfig.MorphTargetsDuplicateStrategy = EglTFRuntimeMorphTargetsDuplicateStrategy::Merge;
+	SkeletalMeshConfig.bAddVirtualBones = true;
+	SkeletalMeshConfig.Skeleton = Skeleton;
+	SkeletalMeshConfig.MaterialsConfig.bMergeSectionsByMaterial = true;
 
-FglTFRuntimeMaterialsConfig FReadyPlayerMeGlTFConfigCreator::GetGlTFRuntimeMaterialsConfig()
-{
-	FglTFRuntimeMaterialsConfig MaterialsConfig;
-	MaterialsConfig.bMergeSectionsByMaterial = true;
-
-	return MaterialsConfig;
-}
-
-FglTFRuntimeSkeletalMeshConfig FReadyPlayerMeGlTFConfigCreator::GetGlTFRuntimeSkeletalMeshConfig(const FString& RootBoneName, USkeleton* Skeleton)
-{
-	FglTFRuntimeSkeletalMeshConfig RuntimeSkeletalMeshConfig;
-	RuntimeSkeletalMeshConfig.SkeletonConfig = GetGlTFRuntimeSkeletonConfig(RootBoneName, Skeleton);
-	RuntimeSkeletalMeshConfig.MorphTargetsDuplicateStrategy = EglTFRuntimeMorphTargetsDuplicateStrategy::Merge;
-	RuntimeSkeletalMeshConfig.MaterialsConfig = GetGlTFRuntimeMaterialsConfig();
-	RuntimeSkeletalMeshConfig.bAddVirtualBones = true;
-	if (Skeleton)
-	{
-		RuntimeSkeletalMeshConfig.Skeleton = Skeleton;
-	}
-
-	return RuntimeSkeletalMeshConfig;
+	SkeletalMeshConfig.SkeletonConfig.CopyRotationsFrom = Skeleton;
+	SkeletalMeshConfig.SkeletonConfig.bAddRootBone = true;
+	SkeletalMeshConfig.SkeletonConfig.RootBoneName = RootBoneName;
 }
 
 FglTFRuntimeConfig FReadyPlayerMeGlTFConfigCreator::GetGlTFRuntimeConfig()

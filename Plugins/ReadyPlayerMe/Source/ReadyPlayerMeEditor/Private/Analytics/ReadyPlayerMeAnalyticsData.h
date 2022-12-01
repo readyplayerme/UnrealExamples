@@ -14,6 +14,7 @@ struct FReadyPlayerMeAnalyticsData
 	FString Platform;
 	FString DeviceId;
 	FString AppIdentifier;
+	bool bIsCppPlugin;
 
 	FReadyPlayerMeAnalyticsData();
 };
