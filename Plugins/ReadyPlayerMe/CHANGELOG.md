@@ -17,7 +17,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Updated glTFRuntime plugin to the version 20220823 to support UE5.1
 - Added missing ARKit morph targets to the avatar config
 - Changed the render request functionality to use avatar-api
-- Added virtual bones for the IK the in full body avatar
 - Removed the Viseme and ARKit morph targets from DA_StandardMorphTargets
 
 ## [0.18.1] 2022-10-07

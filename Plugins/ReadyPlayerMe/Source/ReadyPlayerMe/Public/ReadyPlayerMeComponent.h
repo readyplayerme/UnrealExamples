@@ -76,7 +76,7 @@ public:
 	class UReadyPlayerMeAvatarConfig* AvatarConfig;
 
 	/**
-	 * Skeletal mesh component would be used for setting the skeletal mesh of the loaded avatar.
+	 * Skeletal mesh component used for setting the skeletal mesh of the loaded avatar.
 	 * If not set, It will be initialised with the skeletal mesh component of the parent actor.
 	 * For runtime animation retargeting, if the actor has multiple skeletal mesh components, this property needs to be set.
 	 */
