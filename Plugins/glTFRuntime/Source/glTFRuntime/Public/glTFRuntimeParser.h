@@ -98,6 +98,14 @@ struct FglTFRuntimeBasisMatrix
 	{
 		return FBasisVectorMatrix(XAxis, YAxis, ZAxis, Origin);
 	}
+
+	FglTFRuntimeBasisMatrix()
+	{
+		XAxis = FVector::ZeroVector;
+		YAxis = FVector::ZeroVector;
+		ZAxis = FVector::ZeroVector;
+		Origin = FVector::ZeroVector;
+	}
 };
 
 USTRUCT(BlueprintType)
@@ -214,6 +222,11 @@ struct FglTFRuntimeScene
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "glTFRuntime")
 	TArray<int32> RootNodesIndices;
+
+	FglTFRuntimeScene()
+	{
+		Index = INDEX_NONE;
+	}
 };
 
 
@@ -311,6 +324,11 @@ struct FglTFRuntimeBone
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "glTFRuntime")
 	FTransform Transform;
+
+	FglTFRuntimeBone()
+	{
+		ParentIndex = INDEX_NONE;
+	}
 };
 
 USTRUCT(BlueprintType)
@@ -342,12 +360,19 @@ struct FglTFRuntimeImagesConfig
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "glTFRuntime")
 	bool bSRGB;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "glTFRuntime")
+	int32 MaxWidth;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "glTFRuntime")
+	int32 MaxHeight;
 
 	FglTFRuntimeImagesConfig()
 	{
 		Compression = TextureCompressionSettings::TC_Default;
 		Group = TextureGroup::TEXTUREGROUP_World;
 		bSRGB = false;
+		MaxWidth = 0;
+		MaxHeight = 0;
 	}
 };
 
@@ -424,6 +449,9 @@ struct FglTFRuntimeMaterialsConfig
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "glTFRuntime")
 	FString Variant;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "glTFRuntime")
+	bool bSkipLoad;
+
 	FglTFRuntimeMaterialsConfig()
 	{
 		CacheMode = EglTFRuntimeCacheMode::ReadWrite;
@@ -432,6 +460,7 @@ struct FglTFRuntimeMaterialsConfig
 		SpecularFactor = 0;
 		bDisableVertexColors = false;
 		bMaterialsOverrideMapInjectParams = false;
+		bSkipLoad = false;
 	}
 };
 
@@ -566,6 +595,20 @@ struct FglTFRuntimeProceduralMeshConfig
 		bBuildSimpleCollision = false;
 		bUseComplexAsSimpleCollision = false;
 		PivotPosition = EglTFRuntimePivotPosition::Asset;
+	}
+};
+
+USTRUCT(BlueprintType)
+struct FglTFRuntimeLightConfig
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "glTFRuntime")
+	float DefaultAttenuationMultiplier;
+
+	FglTFRuntimeLightConfig()
+	{
+		DefaultAttenuationMultiplier = 1.0;
 	}
 };
 
@@ -1061,6 +1104,7 @@ struct FglTFRuntimeSkeletalMeshContext : public FGCObject
 		}
 #endif
 		SkeletalMesh = NewObject<USkeletalMesh>(Outer, NAME_None, Flags);
+		SkeletalMesh->NeverStream = true;
 		BoundingBox = FBox(EForceInit::ForceInitToZero);
 		SkinIndex = -1;
 	}
@@ -1070,7 +1114,7 @@ struct FglTFRuntimeSkeletalMeshContext : public FGCObject
 		return "FglTFRuntimeSkeletalMeshContext_Referencer";
 	}
 
-	void AddReferencedObjects(FReferenceCollector& Collector)
+	void AddReferencedObjects(FReferenceCollector& Collector) override
 	{
 		Collector.AddReferencedObject(SkeletalMesh);
 	}
@@ -1468,6 +1512,7 @@ public:
 	bool GetBooleanFromExtras(const FString& Key, bool& Value) const;
 
 	bool LoadAudioEmitter(const int32 EmitterIndex, FglTFRuntimeAudioEmitter& Emitter);
+	ULightComponent* LoadPunctualLight(const int32 PunctualLightIndex, AActor* Actor, const FglTFRuntimeLightConfig& LightConfig);
 
 	TArray<FString> ExtensionsUsed;
 	TArray<FString> ExtensionsRequired;
@@ -1563,6 +1608,7 @@ public:
 	TArray<int32> GetJsonExtensionObjectIndices(TSharedRef<FJsonObject> JsonObject, const FString& ExtensionName, const FString& FieldName);
 	TArray<double> GetJsonExtensionObjectNumbers(TSharedRef<FJsonObject> JsonObject, const FString& ExtensionName, const FString& FieldName);
 	TArray<TSharedRef<FJsonObject>> GetJsonObjectArrayOfObjects(TSharedRef<FJsonObject> JsonObject, const FString& FieldName);
+	FVector4 GetJsonObjectVector4(TSharedRef<FJsonObject> JsonObject, const FString& FieldName, const FVector4 DefaultValue);
 
 	bool GetRootBoneIndex(TSharedRef<FJsonObject> JsonSkinObject, int64& RootBoneIndex, TArray<int32>& Joints, const FglTFRuntimeSkeletonConfig& SkeletonConfig);
 protected:

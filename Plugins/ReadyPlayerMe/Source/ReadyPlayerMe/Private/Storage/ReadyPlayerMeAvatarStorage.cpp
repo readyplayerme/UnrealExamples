@@ -43,7 +43,7 @@ void FReadyPlayerMeAvatarStorage::DeleteDirectory(const FString& Path)
 		return;
 	}
 	IPlatformFile& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
-	if (!PlatformFile.DirectoryExists(*Path) && !PlatformFile.DeleteDirectoryRecursively(*Path))
+	if (PlatformFile.DirectoryExists(*Path) && !PlatformFile.DeleteDirectoryRecursively(*Path))
 	{
 		UE_LOG(LogReadyPlayerMe, Warning, TEXT("Failed to delete directory"));
 	}
@@ -67,7 +67,7 @@ bool FReadyPlayerMeAvatarStorage::CheckAndRemoveExistingFile(const FString& File
 		return false;
 	}
 
-	if (FPaths::FileExists(*FilePath) && !IFileManager::Get().Delete(*FilePath))
+	if (PlatformFile.FileExists(*FilePath) && !PlatformFile.DeleteFile(*FilePath))
 	{
 		UE_LOG(LogReadyPlayerMe, Warning, TEXT("Failed to delete the existing file"));
 		return false;

@@ -2,44 +2,16 @@
 
 
 #include "ReadyPlayerMeRenderLoader.h"
-#include "Utils/ReadyPlayerMeRenderRequestParams.h"
-#include "Utils/ReadyPlayerMeUrlConvertor.h"
-#include "Utils/ReadyPlayerMeRequestCreator.h"
+#include "Utils/ReadyPlayerMeRenderUrlConvertor.h"
 #include "Blueprint/AsyncTaskDownloadImage.h"
 #include "Engine/Texture2DDynamic.h"
 
-static const FString& RENDER_API_URL = "https://render.readyplayer.me/render";
-constexpr float RENDER_REQUEST_TIMEOUT = 60.f;
-
-void UReadyPlayerMeRenderLoader::OnRenderCallback(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bSuccess)
-{
-	if (bSuccess && Response.IsValid() && EHttpResponseCodes::IsOk(Response->GetResponseCode()))
-	{
-		const FString ImageUrl = FReadyPlayerMeRenderRequestParams::ExtractUrlFromRenderResponse(Response->GetContentAsString());
-		if (FReadyPlayerMeUrlConvertor::IsUrl(ImageUrl))
-		{
-			DownloadRenderedImage(ImageUrl);
-			return;
-		}
-	}
-	(void)OnDownloadImageFailed.ExecuteIfBound("Failed to render the portrait");
-}
-
-void UReadyPlayerMeRenderLoader::Load(const FString& ModelUrl, const ERenderSceneType& SceneType, const EAvatarGender& Gender, const FDownloadImageCompleted& OnCompleted, const FDownloadImageFailed& OnFailed)
+void UReadyPlayerMeRenderLoader::Load(const FString& ModelUrl, const ERenderSceneType& SceneType, const FDownloadImageCompleted& OnCompleted, const FDownloadImageFailed& OnFailed)
 {
 	OnDownloadImageCompleted = OnCompleted;
 	OnDownloadImageFailed = OnFailed;
-	RequestRender(ModelUrl, SceneType, Gender);
-}
-
-void UReadyPlayerMeRenderLoader::RequestRender(const FString& ModelUrl, const ERenderSceneType& SceneType, const EAvatarGender& Gender)
-{
-	auto HttpRequest = FReadyPlayerMeRequestCreator::MakeHttpRequest(RENDER_API_URL, RENDER_REQUEST_TIMEOUT);
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
-	HttpRequest->SetContentAsString(FReadyPlayerMeRenderRequestParams::SerializeRenderRequestContent(ModelUrl, SceneType, Gender));
-	HttpRequest->OnProcessRequestComplete().BindUObject(this, &UReadyPlayerMeRenderLoader::OnRenderCallback);
-	HttpRequest->ProcessRequest();
+	const FString Url = FReadyPlayerMeRenderUrlConvertor::CreateRenderUrl(ModelUrl, SceneType);
+	DownloadRenderedImage(Url);
 }
 
 void UReadyPlayerMeRenderLoader::DownloadRenderedImage(const FString& ImageUrl)
@@ -53,11 +25,11 @@ void UReadyPlayerMeRenderLoader::DownloadRenderedImage(const FString& ImageUrl)
 void UReadyPlayerMeRenderLoader::OnTexture2DDownloaded(UTexture2DDynamic* Texture)
 {
 	DownloadImageTask = nullptr;
-	OnDownloadImageCompleted.ExecuteIfBound(Texture);
+	(void)OnDownloadImageCompleted.ExecuteIfBound(Texture);
 }
 
-void UReadyPlayerMeRenderLoader::OnTexture2DDownloadFailed(UTexture2DDynamic* Texture)
+void UReadyPlayerMeRenderLoader::OnTexture2DDownloadFailed(UTexture2DDynamic*)
 {
 	DownloadImageTask = nullptr;
-	OnDownloadImageCompleted.ExecuteIfBound(Texture);
+	(void)OnDownloadImageFailed.ExecuteIfBound(TEXT("Failed to Download the image"));
 }

@@ -122,7 +122,17 @@ enum class EAvatarMorphTarget : uint8
 	MouthSmile UMETA(DisplayName = "MouthSmile"),
 	EyesClosed UMETA(DisplayName = "EyesClosed"),
 	EyesLookUp UMETA(DisplayName = "EyesLookUp"),
-	EyesLookDown UMETA(DisplayName = "EyesLookDown")
+	EyesLookDown UMETA(DisplayName = "EyesLookDown"),
+
+	EyeLookDownLeft UMETA(DisplayName = "EyeLookDownLeft"),
+	EyeLookInLeft UMETA(DisplayName = "EyeLookInLeft"),
+	EyeLookOutLeft UMETA(DisplayName = "EyeLookOutLeft"),
+	EyeLookUpLeft UMETA(DisplayName = "EyeLookUpLeft"),
+	EyeLookDownRight UMETA(DisplayName = "EyeLookDownRight"),
+	EyeLookInRight UMETA(DisplayName = "EyeLookInRight"),
+	EyeLookOutRight UMETA(DisplayName = "EyeLookOutRight"),
+	EyeLookUpRight UMETA(DisplayName = "EyeLookUpRight"),
+	TongueOut UMETA(DisplayName = "TongueOut"),
 };
 
 DECLARE_DYNAMIC_DELEGATE_TwoParams(FAvatarDownloadCompleted, class UglTFRuntimeAsset*, Asset, const FAvatarMetadata&, Metadata);

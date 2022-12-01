@@ -69,6 +69,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ready Player Me")
 	bool bUseHands = true;
 
+	/**
+	 * If set to true the avatar will be compressed with the Draco mesh compression.
+	 *
+	 * @note If the glTFRuntimeDraco plugin is not listed as a project dependency, this property will be ignored.
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ready Player Me")
+	bool bUseDracoMeshCompression = false;
+
 	/** The selected morph target group (blend shapes) will be included in the avatar. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ready Player Me")
 	class UReadyPlayerMeMorphTargetGroup* MorphTargetGroup;

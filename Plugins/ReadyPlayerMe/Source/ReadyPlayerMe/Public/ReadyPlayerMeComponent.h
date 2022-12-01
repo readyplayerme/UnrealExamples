@@ -5,13 +5,13 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "ReadyPlayerMeTypes.h"
-#include "glTFRuntimeFunctionLibrary.h"
+#include "glTFRuntimeParser.h"
 #include "ReadyPlayerMeComponent.generated.h"
 
 class UglTFRuntimeAsset;
 
 /**
- * responsible for the loading of the avatar and visualizing it by setting the SkeletalMesh of the avatar.
+ * Responsible for the loading of the avatar and visualizing it by setting the SkeletalMesh of the avatar.
  * It also provides useful functions for loading the avatar and loading a rendered image of the avatar.
  *
  * @see ReadyPlayerMeAvatarLoader
@@ -68,20 +68,37 @@ public:
 	/** It provides a flexibility to chose the skeleton that will be used for the loaded avatar.
 	 * If it's not set the default skeleton will be used for the loaded avatar. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me")
-	class USkeleton* TargetSkeleton;
+	USkeleton* TargetSkeleton;
 
 	/** Avatar configuration asset data. Used to load the avatar with the specific configs.
 	 * If no config is set, the partner specific configs will be used for loading the avatar. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me")
 	class UReadyPlayerMeAvatarConfig* AvatarConfig;
 
+	/**
+	 * Skeletal mesh component used for setting the skeletal mesh of the loaded avatar.
+	 * If not set, It will be initialised with the skeletal mesh component of the parent actor.
+	 * For runtime animation retargeting, if the actor has multiple skeletal mesh components, this property needs to be set.
+	 */
+	UPROPERTY(BlueprintReadWrite, Category="Ready Player Me")
+	USkeletalMeshComponent* SkeletalMeshComponent;
+
+	/**
+	 * glTFRuntime skeletal mesh config that will be used for loading the avatar.
+	 * This property should be changed only for very custom cases.
+	 * @note Changing this property might break the avatar.
+	 */
+	UPROPERTY(BlueprintReadWrite, Category="Ready Player Me")
+	FglTFRuntimeSkeletalMeshConfig SkeletalMeshConfig;
+
+	/**
+	 * Immediately cancels the avatar loading.
+	 * When the garbage collector is removing the AvatarLoader, avatar loading gets automatically cancelled.
+	 */
 	UFUNCTION(BlueprintCallable, Category = "Ready Player Me", meta = (DisplayName = "Cancel Avatar"))
 	void CancelAvatarLoad();
 
 private:
-	UPROPERTY()
-	USkeletalMeshComponent* SkeletalMeshComponent;
-
 	UPROPERTY()
 	class UReadyPlayerMeAvatarLoader* AvatarLoader;
 

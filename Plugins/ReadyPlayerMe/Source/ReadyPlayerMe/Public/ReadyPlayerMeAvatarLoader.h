@@ -5,13 +5,13 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "ReadyPlayerMeTypes.h"
-#include "Storage/ReadyPlayerMeAvatarCacheHandler.h"
-#include "glTFRuntimeFunctionLibrary.h"
+#include "Runtime/Launch/Resources/Version.h"
 #include "Interfaces/IHttpRequest.h"
 #include "ReadyPlayerMeAvatarLoader.generated.h"
+
 /**
- * It's responsible for Loading the avatar from the url and storing it in the local storage.
- * ReadyPlayerMeAvatarLoader is used by ReadyPlayerMeActorComponent for loading the avatar.
+ * Responsible for Loading the avatar from the url and storing it in the local storage.
+ * ReadyPlayerMeAvatarLoader is used by ReadyPlayerMeComponent for loading the avatar.
  */
 UCLASS(BlueprintType)
 class READYPLAYERME_API UReadyPlayerMeAvatarLoader : public UObject
@@ -33,6 +33,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Ready Player Me", meta = (DisplayName = "Load Avatar", AutoCreateRefTerm = "OnLoadFailed"))
 	void LoadAvatar(const FString& UrlShortcode, class UReadyPlayerMeAvatarConfig* AvatarConfig, const FAvatarDownloadCompleted& OnDownloadCompleted, const FAvatarLoadFailed& OnLoadFailed);
 
+	/**
+	 * Cancels the avatar downloading process. This function is called during garbage collection, but it can also be called manually.
+	 */
 	UFUNCTION(BlueprintCallable, Category = "Ready Player Me", meta = (DisplayName = "Cancel Avatar Load"))
 	void CancelAvatarLoad();
 
@@ -61,12 +64,13 @@ private:
 	TOptional<FAvatarMetadata> AvatarMetadata;
 	TOptional<FAvatarUri> AvatarUri;
 
-	TUniquePtr<FReadyPlayerMeAvatarCacheHandler> CacheHandler;
+	TSharedPtr<class FReadyPlayerMeAvatarCacheHandler> CacheHandler;
 
 	FAvatarDownloadCompleted OnAvatarDownloadCompleted;
 	FAvatarLoadFailed OnAvatarLoadFailed;
 
 	bool bIsTryingToUpdate;
+	FDateTime AvatarDownloadTime;
 
 #if ENGINE_MAJOR_VERSION > 4 || ENGINE_MINOR_VERSION > 25
 	TSharedPtr<IHttpRequest, ESPMode::ThreadSafe> AvatarMetadataRequest;

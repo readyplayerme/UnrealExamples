@@ -4,15 +4,13 @@
 
 #include "CoreMinimal.h"
 
+#include "glTFRuntimeParser.h"
+
 class FReadyPlayerMeGlTFConfigCreator
 {
 public:
-	static struct FglTFRuntimeSkeletalMeshConfig GetGlTFRuntimeSkeletalMeshConfig(const FString& RootBoneName, USkeleton* Skeleton = nullptr );
+	static void OverrideConfig(FglTFRuntimeSkeletalMeshConfig& SkeletalMeshConfig, const FString& RootBoneName, USkeleton* Skeleton);
 
-	static struct FglTFRuntimeConfig GetGlTFRuntimeConfig();
+	static FglTFRuntimeConfig GetGlTFRuntimeConfig();
 
-private:
-	static struct FglTFRuntimeSkeletonConfig GetGlTFRuntimeSkeletonConfig(const FString& RootBoneName, USkeleton* Skeleton);
-
-	static struct FglTFRuntimeMaterialsConfig GetGlTFRuntimeMaterialsConfig();
 };
