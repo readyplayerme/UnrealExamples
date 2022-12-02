@@ -14,7 +14,7 @@ enum class ESelectBodyType : uint8
 	None,
 	Select,
 	FullBody,
-	HalfBody,
+	HalfBody
 };
 
 UENUM(BlueprintType)
@@ -22,7 +22,26 @@ enum class ESelectGender : uint8
 {
 	None,
 	Male,
-	Female,
+	Female
+};
+
+UENUM(BlueprintType)
+enum class ELanguage : uint8
+{
+	Default UMETA(DisplayName = "Default"),
+	En UMETA(DisplayName = "English"),
+	EnIe UMETA(DisplayName = "English (Ireland)"),
+	De UMETA(DisplayName = "German"),
+	Fr UMETA(DisplayName = "French"),
+	Es UMETA(DisplayName = "Spanish"),
+	EsMx UMETA(DisplayName = "Spanish (Mexican)"),
+	Pt UMETA(DisplayName = "Portuguese"),
+	PtBr UMETA(DisplayName = "Portuguese (Brazil)"),
+	It UMETA(DisplayName = "Italian"),
+	Tr UMETA(DisplayName = "Turkish"),
+	Jp UMETA(DisplayName = "Japanese"),
+	Kr UMETA(DisplayName = "Korean"),
+	Ch UMETA(DisplayName = "Chinese"),
 };
 
 /**
@@ -42,7 +61,13 @@ public:
 	void BindBrowserToObject();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me")
+	FString PartnerDomain = "demo";
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me")
 	bool bClearCache = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me")
+	bool bQuickStart = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me")
 	ESelectBodyType SelectBodyType = ESelectBodyType::None;
@@ -50,9 +75,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me")
 	ESelectGender SelectGender = ESelectGender::None;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me")
+	ELanguage Language = ELanguage::Default;
+
 protected:
 	virtual TSharedRef<SWidget> RebuildWidget() override;
 	
 	UPROPERTY()
 	UWebLink* WebLinkObject;
+
+private:
+	void AddBodyTypeParam(TArray<FString>& Params) const;
+	void AddGenderParam(TArray<FString>& Params) const;
 };
