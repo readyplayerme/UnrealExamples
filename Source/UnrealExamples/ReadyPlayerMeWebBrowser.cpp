@@ -89,11 +89,8 @@ TSharedRef<SWidget> UReadyPlayerMeWebBrowser::RebuildWidget()
 	{
 		Params.Add(QuickStartParam);
 	}
-	else
-	{
-		AddBodyTypeParam(Params);
-		AddGenderParam(Params);
-	}
+	AddBodyTypeParam(Params);
+	AddGenderParam(Params);
 
 	FString UrlQueryStr;
 	if (!Params.IsEmpty())
