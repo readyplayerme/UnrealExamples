@@ -35,13 +35,15 @@ To display and interact with the a web browser inside unreal you need to use a U
 
 It is set up this way so that the RPM Browser Widgets position, padding and anchor settings can be easily adjusted relative to the Canvas Panel. If you select the `RPM_Browser` object in the hierachy you will most likely need to update the `InitialUrl` setting. This is the Url that will be loaded when this Widget is created/added to the scene.
 
-![img-initial-url](https://user-images.githubusercontent.com/7085672/163363941-bdf5ef85-b3b2-4069-ae23-733282017894.png)
+Select the RPM_Browser object in the hierachy, in the ReadyPlayerMe category there are several parameters that can be used to generate the initial url of the WebBrowser.
+- **Partner Domain**: By default it's set to demo, however as the name suggests this is only recommended for demo's. We highly recommend you become a Ready Player Me partner and get your own partner space. Once you have your own partner space setup you update this parameter accordingly.
+- **Clean Cache**: Provides a Kiosk experience
+- **Quick Start**: Enters the Quicks Start view.
+- **Body Type**: Skip the body type selection step when opening the avatar view.
+- **Gender**: Skip the gender selection step when opening the avatar view.
+- **Language**: By default the system language will be used for opening the browser, However the language can be customized.
 
-By default we set it to demo.readyplayer.me/avatar however as the name suggests this is only recommended for demo's. we highly recommend you become a Ready Player Me partner and get your own partner space. For example "yourprojectname.readyplayer.me". Once you have your own partner space setup you update this Initial Url accordingly.
-
-We can also set the parameters for the AvatarCreator WebPage. The **CleanCache** provides a Kiosk experience, by selecting the BodyType and Gender we can skip a step when opening the avatar view.
-
-![Screenshot 2022-10-12 105150](https://user-images.githubusercontent.com/108666572/195347112-0f077374-24af-40fc-9887-8806e427f8ef.png)
+![Screenshot 2022-12-02 173148](https://user-images.githubusercontent.com/3124894/205340278-cc75a168-7813-4e32-bfdb-e44e41f00555.png)
 
 Next open up the Graph for the Ready Player Me Browser Widget and you will see this network of nodes.
 
