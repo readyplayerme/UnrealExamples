@@ -156,7 +156,11 @@ FString FReadyPlayerMeAvatarConfigProcessor::Process(UReadyPlayerMeAvatarConfig*
 	Parameters.Add("meshLod=" + FString::FromInt(static_cast<int>(AvatarConfig->MeshLod)));
 	Parameters.Add("textureAtlas=" + TEXTURE_ATLAS_TO_STRING[AvatarConfig->TextureAtlas]);
 	Parameters.Add("textureSizeLimit=" + TEXTURE_SIZE_LIMIT_TO_STRING[AvatarConfig->TextureSizeLimit]);
-	Parameters.Add(ProcessMorphTargets(AvatarConfig));
+	const FString MorphTargetsStr = ProcessMorphTargets(AvatarConfig);
+	if (!MorphTargetsStr.IsEmpty())
+	{
+		Parameters.Add(MorphTargetsStr);
+	}
 	Parameters.Add("useHands=" + UKismetStringLibrary::Conv_BoolToString(AvatarConfig->bUseHands));
 	Parameters.Add("useDracoMeshCompression=" + UKismetStringLibrary::Conv_BoolToString(UseDraco));
 	return "?" + FString::Join(Parameters, TEXT("&"));

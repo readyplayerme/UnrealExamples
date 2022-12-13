@@ -68,7 +68,7 @@ public:
 	/** It provides a flexibility to chose the skeleton that will be used for the loaded avatar.
 	 * If it's not set the default skeleton will be used for the loaded avatar. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me")
-	USkeleton* TargetSkeleton;
+	class UReadyPlayerMeSkeletonSelector* SkeletonSelector;
 
 	/** Avatar configuration asset data. Used to load the avatar with the specific configs.
 	 * If no config is set, the partner specific configs will be used for loading the avatar. */
@@ -100,6 +100,9 @@ public:
 
 private:
 	UPROPERTY()
+	UAnimBlueprintGeneratedClass* AnimGeneratedClass;
+
+	UPROPERTY()
 	class UReadyPlayerMeAvatarLoader* AvatarLoader;
 
 	UPROPERTY()
@@ -118,6 +121,8 @@ private:
 	FAvatarDownloadCompleted OnAvatarDownloadCompleted;
 
 	FAvatarLoadCompleted OnAvatarLoadCompleted;
+
+	FAvatarLoadFailed OnAvatarLoadFailed;
 
 	FglTFRuntimeSkeletalMeshAsync OnSkeletalMeshCallback;
 };
