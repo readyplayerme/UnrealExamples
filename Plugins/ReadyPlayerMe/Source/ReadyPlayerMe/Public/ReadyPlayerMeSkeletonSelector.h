@@ -10,8 +10,8 @@
 UENUM(BlueprintType)
 enum class ESkeletonType : uint8
 {
-	Masculine UMETA(DisplayName = "Masculine"),
-	Feminine UMETA(DisplayName = "Feminine"),
+	Male UMETA(DisplayName = "Male"),
+	Female UMETA(DisplayName = "Female"),
 	HalfBody UMETA(DisplayName = "Half Body"),
 };
 

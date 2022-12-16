@@ -13,13 +13,13 @@ const FSkeletonProperties* UReadyPlayerMeSkeletonSelector::GetSelectedSkeletonPr
 	}
 	else
 	{
-		if (Metadata.OutfitGender == EAvatarGender::Masculine && Skeletons.Contains(ESkeletonType::Masculine))
+		if (Metadata.OutfitGender == EAvatarGender::Masculine && Skeletons.Contains(ESkeletonType::Male))
 		{
-			return &Skeletons[ESkeletonType::Masculine];
+			return &Skeletons[ESkeletonType::Male];
 		}
-		if (Metadata.OutfitGender == EAvatarGender::Feminine && Skeletons.Contains(ESkeletonType::Feminine))
+		if (Metadata.OutfitGender == EAvatarGender::Feminine && Skeletons.Contains(ESkeletonType::Female))
 		{
-			return &Skeletons[ESkeletonType::Feminine];
+			return &Skeletons[ESkeletonType::Female];
 		}
 	}
 	return nullptr;
