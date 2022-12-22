@@ -4,16 +4,10 @@
 
 Example demonstrates how to create a character using a ReadyPlayerMe avatar and retarget animations to make the character playable with the animations from third person character.
 
-# Avatar Loader UI Widget
-
-When you run the application and press Q the UI panel should display as below. By changing the url the avatar for the character will be changed at runtime.
-
-![Screenshot 2022-10-06 142208](https://user-images.githubusercontent.com/108666572/194311325-0265c0fb-d65a-420c-a3fd-93cf62db0491.png)
-
 # Map
 
 By default the `ThirdPersonExampleMap` map can be found in the `Content > ReadyPlayerMe > AnimationRetargeting > Maps` folder.
-In the Level Blueprint of the map the we setup a whdget to be able to runtime swap the avatar by changing the avatar url.
+In the Level Blueprint of the map the we setup a widget to be able to runtime swap the avatar by changing the avatar url. Press Q for opening the widget.
 
 # Character Blueprint
 
@@ -32,13 +26,18 @@ If you look in the folder `Content > ReadyPlayerMe > AnimationRetargeting > Anim
 
 While our avatars use a skeleton rig based on the Mixamo skeleton, it is possible to retarget animations using the UE4 and UE5 Mannequin skeletons so that they work with our Ready Player Me Avatars. For this example we did exactly that, to retarget animations from the UE5 Mannequn skeleton we first had to setup the IK Rig for the RPM skeleton. Right click in the asset browser and from the `Animation > IK Rig`, now we need to pick the `RPM_Mixamo_SkeletalMesh` skeletal mesh. To do this you need to open up the `UE4_Mannequin_Skeleton` asset located at `Content > Mannequin > Character > Mesh`. 
 
-Different skeletons have different amount of bones, we need to create **IK Chains** so that the chains will match the chains in IK Rig of the UE5 Mannequin. We may also add **IK Solver** for better retargeting. The same IK Rig can be used to retarget animations between Meshes that have different skeletons. You can find more details about UE5 retargeting in the [official UE5 Documentation](https://docs.unrealengine.com/5.0/en-US/ik-rig-animation-retargeting-in-unreal-engine/).
+Different skeletons have different amount of bones, we need to create **IK Chains** so that the chains will match the chains in IK Rig of the UE5 Mannequin. We need to add **Full-Body-IK Solver**, bone settings and IK goals to be able to have IK retargeting. The same IK Rig can be used to retarget animations between Meshes that have different skeletons. You can find more details about UE5 retargeting in the [official UE5 Documentation](https://docs.unrealengine.com/5.0/en-US/ik-rig-animation-retargeting-in-unreal-engine/).
 
 ![Screenshot 2022-10-06 142449](https://user-images.githubusercontent.com/108666572/194311983-97560467-1bae-49d9-a7e0-0a350bed877c.png)
 
-Now we need to create an IK Retargeter that will retarget the animations from UE5 Mannequin to RPM. In the Content Browser right click `Animation > IK Retargeter` Pick the **IK_Mannequin**. UE5 example project comes with IK Rigs for UE4 and UE5 Mannequins. In the newly created retargeter set the **TargetIKRigAsset** to our RPM IK Rig. The two meshes will appear side-by-side. We need to make sure that all the chains are assigned correctly between the two skeletons. Now we need to create a new pose and adjust the pose of the RPM avatar to be ask close to the pose of the Mannequin as possible.
+Now we need to create an IK Retargeter that will retarget the animations from UE5 Mannequin to RPM. In the Content Browser right click `Animation > IK Retargeter` Pick the **IK_Mannequin**. UE5 example project comes with IK Rigs for UE4 and UE5 Mannequins. In the newly created retargeter set the **TargetIKRigAsset** to our RPM IK Rig. The two meshes will appear side-by-side. We need to make sure that all the chains are assigned correctly between the two skeletons. Now we need to create a new pose and adjust the pose of the RPM avatar to be as close to the pose of the Mannequin as possible.
 
-![Screenshot 2022-10-06 142625](https://user-images.githubusercontent.com/108666572/194312206-36a71843-f84d-4878-9d61-665ffef3ace9.png)
+![Screenshot 2022-12-22 143734](https://user-images.githubusercontent.com/3124894/209146243-20664650-41b0-4ff4-833d-3e4fc0ceebe7.png)
+
+We need to do a `Full-Body-IK` retargeting for our character, depending on the use-cases we might need to adjust the hands or the feet of the avatar so they would be in the same position. This is possible to do be cause the both of the skeletons have IK goals for the hands and feet.
+To enable this functionality and adjust the IK goals, select the chains that you need (**LeftArm, RightArm, LeftLeg, RightLeg**) and change the `Blend to Source` value to 1. This functionality might be very useful when retargeting animations for the FPS game, where the gun needs to be positioned correctly in the hands of the avatar.
+
+![Screenshot 2022-12-21 182221](https://user-images.githubusercontent.com/3124894/209146301-c395fc1d-007e-4e1c-84f8-a30c256f344c.png)
 
 We can do the same steps to create UE4_Mannequin to RPM retargeter, if we need to retarget the animations from the UE4 Mannequin.
 

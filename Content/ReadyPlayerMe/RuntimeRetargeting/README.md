@@ -7,8 +7,10 @@ Example demonstrates how to use the runtime retargeting to retarget the animatio
 # Use cases
 
 Runtime retargeting comes with some performance overhead. Another downside is that two meshes will be places on the scene for a single avatar, even though one of them will never be visible.
-It is very easy to use, since no new animations need to be created. It solves the IK issues between the incompatible skeletons.
-For prototyping, runtime retargeting will save some development time.
+
+It is very easy to use, since no new animations need to be created. `Control rig` doesn't need to be created for the IK since the control rig will be applied to the `Mannequin`. For prototyping, runtime retargeting will save some development time.
+
+For the female characters, runtime retargeting will have better results because at runtime the female skeleton will be used for retargeting.
 
 # Map
 
@@ -51,12 +53,9 @@ The `Visibility Based Anim Tick Option` property should be set to `Always Tick P
 
 # IK
 
-Since the IK for the `Manny` is properly set-up, we don't need to setup IK for our character, it will work out of the box.
-The `Retarget IK` checkbox should be unchecked in the animation retargeter, so that IK will be applied only to the Manny.
+Since the IK for the `Manny` is properly set-up, we don't need to setup control rig for our character, it will work out of the box.
 
 ![Screenshot 2022-11-29 115934](https://user-images.githubusercontent.com/3124894/204512563-558b6d48-0fcf-433f-aa80-70f4c70f4b03.png)
-
-![Screenshot 2022-11-28 182800](https://user-images.githubusercontent.com/3124894/204370102-537f8a51-ee7b-4007-bb54-afb402524cf4.png)
 
 Make sure to assign the Override Physical Asset in the SkeletalMeshComponent of the character blueprint. You might encounter issues with shadows otherwise.
 
