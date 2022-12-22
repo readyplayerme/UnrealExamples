@@ -7,8 +7,10 @@ Example demonstrates how to use the runtime retargeting to retarget the animatio
 # Use cases
 
 Runtime retargeting comes with some performance overhead. Another downside is that two meshes will be places on the scene for a single avatar, even though one of them will never be visible.
-It is very easy to use, since no new animations need to be created. `Control rig` doesn't need to be created for the IK since the control rig will be applied to the `Mannequin`.
-For prototyping, runtime retargeting will save some development time.
+
+It is very easy to use, since no new animations need to be created. `Control rig` doesn't need to be created for the IK since the control rig will be applied to the `Mannequin`. For prototyping, runtime retargeting will save some development time.
+
+For the female characters, runtime retargeting will have better results because at runtime the female skeleton will be used for retargeting.
 
 # Map
 
