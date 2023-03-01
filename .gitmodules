@@ -1,0 +1,6 @@
+[submodule "glTFRuntime"]
+	path = Plugins/glTFRuntime
+	url = https://github.com/rdeioris/glTFRuntime.git
+[submodule "ReadyPlayerMe"]
+	path = Plugins/ReadyPlayerMe
+	url = https://github.com/readyplayerme/rpm-unreal-sdk.git
