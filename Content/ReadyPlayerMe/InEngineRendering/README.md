@@ -47,21 +47,17 @@ We enable the scene capture component, to render images or animations. If we ren
 
 # Render Image
 
-To display the rendered image we need to create an image BP and inherit it from the `UMG.Image`.
+To display the rendered image we need to create an widget BP and add an image to it.
 Initially we hide the image, and we show it when the image is loaded.
 We spawn the render actor outside of the visible area. We load the render of the actor, when it's loaded we set the brush of the image from the generated material.
 
 ![Screenshot 2022-10-26 101905](https://user-images.githubusercontent.com/108666572/197973193-ca66cc2d-b7fb-4237-a9c2-407a2d0a3912.png)
 
-When the image is destroyed we destroy the render actor.
+When the widget is destroyed we destroy the render actor.
 Additionally we add **Url** and **Capture Animation** parameters to have customizable images.
 
 ![Screenshot 2022-10-26 102113](https://user-images.githubusercontent.com/108666572/197973402-ac61c86c-9300-4fe6-a510-5b13b39bf158.png)
 
-
 # Render Overlay
 
 We can add `RenderImages` to any widget. Render Overlay contains two instances of the RenderImage.
-We need to load the images when the Widget is constructed and destroy the images when the Widget is destroyed.
-
-![Screenshot 2022-10-26 102259](https://user-images.githubusercontent.com/108666572/197973814-e6152711-294e-47c9-82f1-6f56a648657f.png)
