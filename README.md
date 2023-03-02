@@ -24,7 +24,7 @@ Example demonstrates the animation retargeting from the UE5 Mannequin to ReadyPl
 
 Example demonstrates how to use the runtime retargeting to retarget the animations from the Mannequin to the ReadyPlayerMe character. The runtime retargeting can be applied to retarget the animations from any character to the ReadyPlayerMe avatar.
 
-## Avatar Creator
+## Web Browser
 
 ![Screenshot 2022-10-26 121009](https://user-images.githubusercontent.com/108666572/198000086-7771d6a5-70cc-4b39-b087-b0533257d9be.png)
 
