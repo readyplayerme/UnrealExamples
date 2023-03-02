@@ -1,6 +1,6 @@
-# Avatar Creator Integration Example
+# Web Browser Integration Example
 
-Example uses the Unreal Engine Web Browser module (and Web Browser Widget) to embed the Ready Player Me Avatar Creator inside an application to create a seamless integration. 
+Example uses the Unreal Engine Web Browser module (and Web Browser Widget) to embed the Ready Player Me Web Avatar Creator inside an application to create a seamless integration. 
 
 ![Screenshot 2022-10-26 121009](https://user-images.githubusercontent.com/108666572/198000086-7771d6a5-70cc-4b39-b087-b0533257d9be.png)
 
@@ -15,7 +15,7 @@ Additionally to ba able to access it through the C++ code we need to add the fol
 
 # Web Browser Demo Map
 
-The WebBrowserDemo map located in the `Content` folder is a good starting point for anybody wanting to use the Web Browser module to seamlessly integrate our RPM Avatar Creator into you game or application.  The logic for this is rather simple, if you open up the Level Blueprint you will see this network of nodes.
+The WebBrowserDemo map located in the `Content` folder is a good starting point for anybody wanting to use the Web Browser module to seamlessly integrate our RPM Web Avatar Creator into you game or application.  The logic for this is rather simple, if you open up the Level Blueprint you will see this network of nodes.
 
 ![Screenshot 2022-10-26 122813](https://user-images.githubusercontent.com/108666572/198003565-c192c23d-9d34-4b10-ac4b-783bc1db4061.png)
 
