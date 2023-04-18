@@ -29,7 +29,9 @@ Additionally other effects, assets or meshes can be added to the actor, for cust
 
 We need to set the **Animation Asset** for our skeletal mesh. Depending if we want to have an animation or an image, we can set it to a `Pose asset` or an `Animation asset`.
 
-The SceneCaptureComponent2D should point to the skeletal mesh, we can rotate and move it to customize the rendering area. We also need to uncheck the **Visible**, **Capture Every Frame** and **Capture On Movement** checkboxes, we will enable them from the blueprint.
+The SceneCaptureComponent2D should point to the skeletal mesh, we can rotate and move it to customize the rendering area.
+We also need to uncheck the **Visible**, **Capture Every Frame** and **Capture On Movement** checkboxes, we will enable them from the blueprint.
+**Make** sure to uncheck the Atmosphere checkbox, not to have visual artifacts in the rendered image.
 
 ### Event Graph
 
@@ -41,7 +43,8 @@ When the avatar is loaded we create a dynamic material instance and a render tar
 
 ![Screenshot 2022-10-25 225906](https://user-images.githubusercontent.com/108666572/197881762-5ef3591b-e4dd-4818-adbd-3771745722e0.png)
 
-We enable the scene capture component, to render images or animations. If we render an image them we destroy the actor after the image is taken.
+We enable the scene capture component, to render images or animations.
+If we render an image them we destroy the actor after the image is taken.
 
 ![Screenshot 2022-10-25 230525](https://user-images.githubusercontent.com/108666572/197881897-5e128e34-c3ec-4823-8d81-7797a9f51ee8.png)
 

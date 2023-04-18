@@ -1,6 +1,9 @@
-[submodule "glTFRuntime"]
+[submodule "Plugins/glTFRuntime"]
 	path = Plugins/glTFRuntime
 	url = https://github.com/rdeioris/glTFRuntime.git
-[submodule "ReadyPlayerMe"]
+[submodule "Plugins/ReadyPlayerMe"]
 	path = Plugins/ReadyPlayerMe
 	url = https://github.com/readyplayerme/rpm-unreal-sdk.git
+[submodule "Plugins/RpmAvatarCreator"]
+	path = Plugins/RpmAvatarCreator
+	url = https://github.com/readyplayerme/rpm-unreal-avatar-creator.git
