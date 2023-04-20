@@ -6,7 +6,7 @@ Example uses the Unreal Engine Web Browser module (and Web Browser Widget) to em
 
 ![Screenshot 2022-10-26 121106](https://user-images.githubusercontent.com/108666572/198000119-79ea06ea-4a12-458d-8c7d-88cf7d7ab208.png)
 
-*NOTE: The Web Browser module will only work with our readyplayer.me website in Unreal Engine 5. The Web Browser module in Unreal Engine 4 uses a very old version of chromium which does not support all the modern web browser features.*
+*NOTE: The Web Browser module will only work with our readyplayer.me website in Unreal Engine 5 on Windows platform. The Web Browser module in Unreal Engine 4 uses a very old version of chromium which does not support all the modern web browser features.*
 
 # Dependencies
 
