@@ -58,7 +58,7 @@ Example demonstrates how to use the Live Link plugin to apply facial tracking an
 
 ## In-Engine Rendering
 
-![Screenshot 2022-10-25 230024](https://user-images.githubusercontent.com/108666572/197881399-d36a2f7d-c958-4bb2-be64-c267c2b27c1e.png)
+![Screenshot 2023-03-03 165756](https://user-images.githubusercontent.com/3124894/233416253-9843a7ed-c49d-447c-ba84-a99098cd13ec.png)
 
 [**Example**](https://github.com/readyplayerme/UnrealExamples/tree/main/Content/ReadyPlayerMe/InEngineRendering#readme)
 
