@@ -1,6 +1,6 @@
 # Ready Player Me In-Engine Rendering
 
-![Screenshot 2022-10-25 230024](https://user-images.githubusercontent.com/108666572/197881399-d36a2f7d-c958-4bb2-be64-c267c2b27c1e.png)
+![Screenshot 2023-03-03 165756](https://user-images.githubusercontent.com/3124894/233416253-9843a7ed-c49d-447c-ba84-a99098cd13ec.png)
 
 Example demonstrates how to render the ReadyPlayerMe avatars in the 2D space, to create images or 2D Animations.
 
@@ -54,7 +54,7 @@ To display the rendered image we need to create an widget BP and add an image to
 Initially we hide the image, and we show it when the image is loaded.
 We spawn the render actor outside of the visible area. We load the render of the actor, when it's loaded we set the brush of the image from the generated material.
 
-![Screenshot 2022-10-26 101905](https://user-images.githubusercontent.com/108666572/197973193-ca66cc2d-b7fb-4237-a9c2-407a2d0a3912.png)
+![Screenshot 2023-03-13 214725](https://user-images.githubusercontent.com/3124894/233417212-b56eaae4-04d5-4067-9583-27ed73828eeb.png)
 
 When the widget is destroyed we destroy the render actor.
 Additionally we add **Url** and **Capture Animation** parameters to have customizable images.
