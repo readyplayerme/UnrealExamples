@@ -26,7 +26,7 @@ Example demonstrates how to use the runtime retargeting to retarget the animatio
 
 ## Custom Avatar Creator
 
-![Screenshot 2022-10-26 121009](https://user-images.githubusercontent.com/108666572/198000086-7771d6a5-70cc-4b39-b087-b0533257d9be.png)
+![Screenshot 2023-03-03 165756](https://user-images.githubusercontent.com/3124894/233410933-077ec3c3-c53c-4ed1-b442-3639ed9348f8.png)
 
 [**Example**](https://github.com/readyplayerme/UnrealExamples/tree/main/Content/ReadyPlayerMe/AvatarCreator#readme)
 
