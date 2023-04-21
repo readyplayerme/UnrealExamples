@@ -24,13 +24,21 @@ Example demonstrates the animation retargeting from the UE5 Mannequin to ReadyPl
 
 Example demonstrates how to use the runtime retargeting to retarget the animations from the Mannequin to the ReadyPlayerMe character. The runtime retargeting can be applied to retarget the animations from any character to the ReadyPlayerMe avatar.
 
+## Custom Avatar Creator
+
+![Screenshot 2023-03-03 165756](https://user-images.githubusercontent.com/3124894/233410933-077ec3c3-c53c-4ed1-b442-3639ed9348f8.png)
+
+[**Example**](https://github.com/readyplayerme/UnrealExamples/tree/main/Content/ReadyPlayerMe/AvatarCreator#readme)
+
+Example demonstrates the use of the Ready Player Me Custom Avatar Creator open-source plugin. The plugin is an in-engine implementation of the web avatar creator.
+
 ## Web Browser
 
 ![Screenshot 2022-10-26 121009](https://user-images.githubusercontent.com/108666572/198000086-7771d6a5-70cc-4b39-b087-b0533257d9be.png)
 
 [**Example**](https://github.com/readyplayerme/UnrealExamples/tree/main/Content/ReadyPlayerMe/WebBrowser#readme)
 
-Example Demonstrates the use of the Unreal Engine Web Browser module (and Web Browser Widget) to embed the ReadyPlayerMe Avatar Creator inside an application to create a seamless integration.
+Example demonstrates the use of the Unreal Engine Web Browser module (and Web Browser Widget) to embed the ReadyPlayerMe Web Avatar Creator inside an application to create a seamless integration.
 
 ## Multiplayer
 
@@ -50,7 +58,7 @@ Example demonstrates how to use the Live Link plugin to apply facial tracking an
 
 ## In-Engine Rendering
 
-![Screenshot 2022-10-25 230024](https://user-images.githubusercontent.com/108666572/197881399-d36a2f7d-c958-4bb2-be64-c267c2b27c1e.png)
+![Screenshot 2023-03-03 165756](https://user-images.githubusercontent.com/3124894/233416253-9843a7ed-c49d-447c-ba84-a99098cd13ec.png)
 
 [**Example**](https://github.com/readyplayerme/UnrealExamples/tree/main/Content/ReadyPlayerMe/InEngineRendering#readme)
 
