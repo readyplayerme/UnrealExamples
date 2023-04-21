@@ -28,6 +28,10 @@
 			"Enabled": true
 		},
 		{
+			"Name": "RpmAvatarCreator",
+			"Enabled": true
+		},
+		{
 			"Name": "WebBrowserWidget",
 			"Enabled": true
 		},
