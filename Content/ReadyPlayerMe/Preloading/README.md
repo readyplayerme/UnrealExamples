@@ -31,3 +31,9 @@ Now that we don't need the preloaded avatars in the memory cache we clean the Me
 Preloaded actor contains a simple logic of loading the avatar when it is spawned, using the provided avatar URL.
 
 ![Screenshot 2023-03-02 121909](https://user-images.githubusercontent.com/3124894/233973310-a4f30e63-2bf4-4877-b631-f6e7d77c2acb.png)
+
+For the actor to be able to use the memory cache we need to enable **Use Memory Cache** checkbox in the **ReadyPlayeMeComponent**.
+
+![Screenshot 2023-03-02 121909](https://user-images.githubusercontent.com/3124894/233977455-57a9323b-917c-4173-99cc-4024078d7fa1.png)
+
+**Note:** Avatar Config and Target Skeleton need to be the same, as in the **AvatarPreloadedData** that is used to preload avatars.
