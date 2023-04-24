@@ -64,6 +64,14 @@ Example demonstrates how to use the Live Link plugin to apply facial tracking an
 
 Example demonstrates how to render the ReadyPlayerMe avatars in the 2D space, to create images or 2D Animations.
 
+## Avatar Preloading
+
+![Screenshot 2023-03-03 165756](https://user-images.githubusercontent.com/3124894/233971955-0f905deb-a3ec-4f73-8fe0-c2c5719bc716.png)
+
+[**Example**](https://github.com/readyplayerme/UnrealExamples/tree/main/Content/ReadyPlayerMe/Preloading#readme)
+
+Example demonstrates how to preload Ready Player Me avatars while showing a loading screen, and spawn number of preloaded avatars instantly.
+
 ## Note
 
 Currently the runtime retargeting doesn't work with the loaded RPM avatars.
