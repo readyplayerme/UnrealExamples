@@ -4,6 +4,8 @@
 
 Example demonstrates how to preload Ready Player Me avatars while showing a loading screen, and spawn number of preloaded avatars instantly.
 
+Avatar preloading can also be used along with avatar caching, for reducing preloading time of the cached avatars.
+
 # Preloading Map
 The `PreloadingMap` map located in the `Content > ReadyPlayerMe > Preloading > Maps` folder, it contains the logic of avatar preloading as well as showing loading widget.
 Avatars can be preloaded and spawned in different maps, for the simplicity, in this example we preload and spawn the avatars in the same map.
