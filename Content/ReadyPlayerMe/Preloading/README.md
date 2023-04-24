@@ -1,6 +1,6 @@
 # Avatar Preloading Example
 
-![Screenshot 2022-10-26 132002](https://user-images.githubusercontent.com/108666572/198013412-b54d087e-7b87-4504-a37d-40f8a53d1edd.png)
+![Screenshot 2023-03-03 165756](https://user-images.githubusercontent.com/3124894/233971955-0f905deb-a3ec-4f73-8fe0-c2c5719bc716.png)
 
 Example demonstrates how to preload Ready Player Me avatars while showing a loading screen, and spawn number of preloaded avatars instantly.
 
@@ -11,19 +11,21 @@ Avatars can be preloaded and spawned in different maps, for the simplicity, in t
 When the map opens we show the loading widget so that the player wouldn't see an empty scene.
 While the widget is shown we iterate through all the avatar URLs that we want to load and make PreloadDataArray using the URLs.
 
-![Screenshot 2022-10-26 131037](https://user-images.githubusercontent.com/108666572/198011602-a09d8dc8-cd19-4c5b-9383-8d695de5a206.png)
+![Screenshot 2023-03-03 165756](https://user-images.githubusercontent.com/3124894/233972967-c64f65fb-e16f-4686-bb5b-105921dfcbff.png)
 
 We preload the avatars by calling Preload function of the Memory Cache class. The Memory Cache is shared and can be accessed through the ReadyPlayerMeSubsystem.
 When the avatars are successfully preloaded we hide the Loading Widget and spawn 500 avatars randomly using the URLs of the preloaded avatars.
 
-![Screenshot 2022-10-26 131037](https://user-images.githubusercontent.com/108666572/198011602-a09d8dc8-cd19-4c5b-9383-8d695de5a206.png)
+![Screenshot 2023-03-02 121909](https://user-images.githubusercontent.com/3124894/233973041-571a4226-80c2-4255-b19b-918900a31354.png)
+
+![Screenshot 2023-03-13 214725](https://user-images.githubusercontent.com/3124894/233973110-9432aef5-1a63-43a7-bc3f-2a3599b40829.png)
 
 Now that we don't need the preloaded avatars in the memory cache we clean the Memory Cache. It's always good to clean the unneeded avatars from the memory cache to clean up the memory and always have up-to-date avatars.
 
-![Screenshot 2022-10-26 131037](https://user-images.githubusercontent.com/108666572/198011602-a09d8dc8-cd19-4c5b-9383-8d695de5a206.png)
+![Screenshot 2023-03-13 214816](https://user-images.githubusercontent.com/3124894/233973161-350e6bb6-f50d-4e04-b201-100245cf528b.png)
 
 # Preloaded Actor
 
 Preloaded actor contains a simple logic of loading the avatar when it is spawned, using the provided avatar URL.
 
-![Screenshot 2022-10-26 131037](https://user-images.githubusercontent.com/108666572/198011602-a09d8dc8-cd19-4c5b-9383-8d695de5a206.png)
+![Screenshot 2023-03-02 121909](https://user-images.githubusercontent.com/3124894/233973310-a4f30e63-2bf4-4877-b631-f6e7d77c2acb.png)
