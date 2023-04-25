@@ -66,7 +66,7 @@ Example demonstrates how to render the ReadyPlayerMe avatars in the 2D space, to
 
 ## Avatar Preloading
 
-![Screenshot 2023-03-03 165756](https://user-images.githubusercontent.com/3124894/233971955-0f905deb-a3ec-4f73-8fe0-c2c5719bc716.png)
+![Screenshot 2023-03-02 121909](https://user-images.githubusercontent.com/3124894/234279340-ce5b8fce-70e9-47dd-a723-9db9989d83c8.png)
 
 [**Example**](https://github.com/readyplayerme/UnrealExamples/tree/main/Content/ReadyPlayerMe/Preloading#readme)
 
