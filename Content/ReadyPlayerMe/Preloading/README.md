@@ -16,7 +16,7 @@ While the widget is shown we iterate through all the avatar URLs that we want to
 ![Screenshot 2023-03-03 165756](https://user-images.githubusercontent.com/3124894/233972967-c64f65fb-e16f-4686-bb5b-105921dfcbff.png)
 
 We preload the avatars by calling Preload function of the Memory Cache class. The Memory Cache is shared and can be accessed through the ReadyPlayerMeSubsystem.
-When the avatars are successfully preloaded we hide the Loading Widget and spawn 500 avatars randomly using the URLs of the preloaded avatars.
+When the avatars are successfully preloaded we hide the Loading Widget and spawn 100 avatars randomly using the URLs of the preloaded avatars.
 
 ![Screenshot 2023-03-02 121909](https://user-images.githubusercontent.com/3124894/233973041-571a4226-80c2-4255-b19b-918900a31354.png)
 
