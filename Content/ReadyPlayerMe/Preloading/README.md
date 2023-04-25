@@ -1,6 +1,6 @@
 # Avatar Preloading Example
 
-![Screenshot 2023-03-03 165756](https://user-images.githubusercontent.com/3124894/233971955-0f905deb-a3ec-4f73-8fe0-c2c5719bc716.png)
+![Screenshot 2023-03-02 121909](https://user-images.githubusercontent.com/3124894/234279340-ce5b8fce-70e9-47dd-a723-9db9989d83c8.png)
 
 Example demonstrates how to preload Ready Player Me avatars while showing a loading screen, and spawn number of preloaded avatars instantly.
 
@@ -20,7 +20,7 @@ When the avatars are successfully preloaded we hide the Loading Widget and spawn
 
 ![Screenshot 2023-03-02 121909](https://user-images.githubusercontent.com/3124894/233973041-571a4226-80c2-4255-b19b-918900a31354.png)
 
-![Screenshot 2023-03-13 214725](https://user-images.githubusercontent.com/3124894/233973110-9432aef5-1a63-43a7-bc3f-2a3599b40829.png)
+![Screenshot 2023-03-03 165756](https://user-images.githubusercontent.com/3124894/234279510-5093de51-b954-45e5-ba12-170c6f76b7e6.png)
 
 Now that we don't need the preloaded avatars in the memory cache we clean the Memory Cache. It's always good to clean the unneeded avatars from the memory cache to clean up the memory and always have up-to-date avatars.
 
