@@ -64,17 +64,12 @@ This function will be called on every client when the value of the variable gets
 Inside of this function we check if the url of the avatar is set and it is not the same as the avatar url for the ReadyPlayerMeComponent.
 If the conditions are met, we load new avatar with the updated Url.
 
+![Screenshot_20230224_044917](https://github.com/readyplayerme/UnrealExamples/assets/3124894/546866ca-2101-4d03-9028-61880b86408f)
+
 If the avatar fails to load for a certen client the, the game can not contine for him, he needs to leave the session.
 For that we call `DestroySession` node and open the multiplayer level for him.
 
-
-It also has 2 extra events used to trigger avatar loading on the server and then on each avatar client using the following network of nodes.
-
-![Screenshot 2022-10-26 135136](https://user-images.githubusercontent.com/108666572/198021160-694231eb-448f-41e6-864d-68450ede99b6.png)
-
-To get that avatar loading correctly for each player (server and clients), the player that triggers the loading will always call the `LoadAvatarServer` function.
-So for example Player 2 opens the avatar Loader widget, enters a Url and clicks the "Load" button, this will then call the `LoadAvatarServer` function.
-Then the server will set the `AvatarUrl` and tell all the clients (everyone but the server) to run `LoadAvatarClient` function, before running the `LoadNewAvatar` function itself.
+![Screenshot_20230221_061652](https://github.com/readyplayerme/UnrealExamples/assets/3124894/a1d27ada-647b-47cf-99ce-b3eed7a4e270)
 
 ## Replication
 
@@ -84,13 +79,6 @@ To ensure the character updates are replicated to all clients (and server) selec
 - Replicates
 
 ![Screenshot 2022-10-26 135223](https://user-images.githubusercontent.com/108666572/198021230-a8ca4ea4-f5a7-4e41-8409-a044825e1688.png)
-
-## Late joining clients
-
-
-When the clients are joining the game after all the avatars are loaded, they will not be able to see the loaded avatars, because the LoadAvatarClient would not be called for them. We need to first make the Url variable replicated, so it would be updated when the player joins. In the begin play we need to load the avatar if the url is set.
-
-![Screenshot 2022-11-08 134253](https://user-images.githubusercontent.com/3124894/200618285-17e4f538-4a56-43b5-8f3f-fb72527de5a9.png)
 
 # Game Instance
 
@@ -128,7 +116,5 @@ Afterwards we will call `SetAvatarLocal` function from OnPossess node. Since OnP
 
 ![Screenshot_20230221_060838](https://github.com/readyplayerme/UnrealExamples/assets/3124894/055ede20-e3a9-4475-960a-6a970a590f13)
 
-## Bind events to Avatar Loader Widget
-We get a reference to the controlled pawn, cast it to an RPM_Character and bind an event to the widgets OnLoadUrl event so that it will run LoadAvatarServer each time the Load button is clicked.
-
-![Screenshot 2022-10-26 135716](https://user-images.githubusercontent.com/108666572/198021640-98c67102-2c85-4c62-849a-6e09aa01315e.png)
+# Online Services
+While this setup will work fine for testing in the local environment, To be able to use sessions properly in production, you would need to integrate [Epic Online Services](https://docs.unrealengine.com/5.2/en-US/online-subsystem-eos-plugin-in-unreal-engine/) or [Steam Online Services](https://docs.unrealengine.com/5.2/en-US/online-subsystem-steam-interface-in-unreal-engine/).
