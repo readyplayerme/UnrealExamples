@@ -116,5 +116,12 @@ Afterwards we will call `SetAvatarLocal` function from OnPossess node. Since OnP
 
 ![Screenshot_20230221_060838](https://github.com/readyplayerme/UnrealExamples/assets/3124894/055ede20-e3a9-4475-960a-6a970a590f13)
 
+# Testing
+For easily test the the multiplayer environment, you can run the packaged game on the single computer. You can also test it with a short command line script
+
+```
+powershell -Command "& '[Path To UE5]\Engine\Binaries\Win64\UnrealEditor.exe' '[Path To UnrealExamples project]\UnrealExamples.uproject' -Game -Windowed -ResX=800 -ResY=600 -WinX=0 -WinY=20 -Log -Nosteam"
+```
+
 # Online Services
 While this setup will work fine for testing in the local environment, To be able to use sessions properly in production, you would need to integrate [Epic Online Services](https://docs.unrealengine.com/5.2/en-US/online-subsystem-eos-plugin-in-unreal-engine/) or [Steam Online Services](https://docs.unrealengine.com/5.2/en-US/online-subsystem-steam-interface-in-unreal-engine/).
