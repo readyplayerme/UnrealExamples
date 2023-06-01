@@ -8,6 +8,17 @@ This repository contains examples of Ready Player Me integration into Unreal Eng
 
 The examples are located in `Content > ReadyPlayerMe` folder. Each example has dedicated Map and game mode for demonstration.
 
+## Note
+
+The dependency plugins are added as submodules to the project.
+They are not automatically clonned when clonning the repository. Use the following command to initialize or update the dependency submodules.
+```
+git submodule update --init
+```
+
+If you are downloading the archive zip file of the project, you need to manually download the dependency plugins(`ReadyPlayerMe, RpmAvatarCreator, glTFRuntime`) and add them to 
+the **Plugins** folder.
+
 ## Animation Retargeting
 
 ![Screenshot 2022-10-06 141418](https://user-images.githubusercontent.com/108666572/194309906-d7dc5108-2cb4-4005-baf7-b0d88af69c50.png)
@@ -72,12 +83,9 @@ Example demonstrates how to render the ReadyPlayerMe avatars in the 2D space, to
 
 Example demonstrates how to preload Ready Player Me avatars while showing a loading screen, and spawn number of preloaded avatars instantly.
 
-## Note
-
-Currently the runtime retargeting doesn't work with the loaded RPM avatars.
-
 ## Dependencies
-- Ready Player Me Unreal SDK 
+- Ready Player Me Unreal SDK
+- Ready Player Me Avatar Creator 
 - glTFRuntime (Third party plugin)
 
 ## Links
