@@ -8,7 +8,7 @@ Example demonstrates demonstrates how to add Ready Player Me avatars to a multip
 
 The map is located in `Content > ReadyPlayerMe > Multiplayer > Maps`. With the map open click on the three dots next to the Play button and set the `Number of Players`.
 
-![Screenshot_20230224_044917](https://github.com/readyplayerme/UnrealExamples/assets/3124894/493b3906-aede-43e4-ab90-9816d93d4761)
+![241892760-493b3906-aede-43e4-ab90-9816d93d4761](https://github.com/readyplayerme/UnrealExamples/assets/3124894/3d43aa99-9651-4baf-adb9-ece25bc356a4)
 
 Now when you hit play you should see 3 instances of that game running.
 
