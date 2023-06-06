@@ -4,7 +4,11 @@
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
 
+#include "Public/WebViewEvents.h"
+
 static const FString LinkObjectName = TEXT("rpmlinkobject");
+static const FString JavascriptPath = TEXT("Scripts/rpmFrameSetup.js");
+
 static const TCHAR* ClearCacheParam = TEXT("clearCache");
 static const TCHAR* QuickStartParam = TEXT("quickStart");
 static const TCHAR* FullBodyParam = TEXT("bodyType=fullbody");
@@ -30,37 +34,58 @@ static const TMap<ELanguage, FString> LANGUAGE_TO_STRING =
 	{ ELanguage::Ch, "ch" }
 };
 
-void UReadyPlayerMeWebBrowser::SetupBrowser(const FReadyPlayerWebBrowserResponse& Response)
+//void UReadyPlayerMeWebBrowser::SetupBrowser(const FReadyPlayerWebBrowserResponse& Response)
+void UReadyPlayerMeWebBrowser::SetupBrowser()
 {
 	BindBrowserToObject();
-	WebLinkObject->SetAvatarUrlCallback(Response);
+	//WebLinkObject->SetResponseCallback(Response);
 
 	// Define the path to the JS file.
-	const FString path = FPaths::ProjectContentDir() / TEXT("ReadyPlayerMe/WebBrowser/Scripts/rpmFrameSetup.js");
+	const FString Path = FPaths::ProjectContentDir() / JavascriptPath;
 
 	// Load the JS file into a string.
-	FString javascript;
-	if (FPaths::FileExists(path))
+	FString rpmSetupJavascript;
+	if (FPaths::FileExists(Path))
 	{
-		FFileHelper::LoadFileToString(javascript, *path);
+		FFileHelper::LoadFileToString(rpmSetupJavascript, *Path);
+		//UE_LOG(LogTemp, Warning, TEXT("JS = : %s"), *rpmSetupJavascript);
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Script file not found: %s"), *path);
+		UE_LOG(LogTemp, Warning, TEXT("Script file not found: %s"), *rpmSetupJavascript);
 		return;
 	}
 
 	// Execute the JS code.
-	ExecuteJavascript(javascript);
-	//ExecuteJavascript(JSAddAvatarGeneratedListener);
+	//ExecuteJavascript("window.ue.rpmlinkobject.eventReceived(\"TEST\");window.addEventListener('message',function(event){window.ue.rpmlinkobject.avatargenerated(event.data);window.ue.rpmlinkobject.eventReceived(\"TEST\");});");
+	ExecuteJavascript(rpmSetupJavascript);
 }
 
 void UReadyPlayerMeWebBrowser::BindBrowserToObject()
 {
 	if (!WebLinkObject) {
 		WebLinkObject = NewObject<UWebLink>(this, *LinkObjectName);
+		WebLinkObject->SetWebBrowser(*this);
+		UE_LOG(LogTemp, Warning, TEXT("CREATE AND SETUP WEBLINK OBJECT"));
 	}
 	WebBrowserWidget->BindUObject(LinkObjectName, WebLinkObject);
+}
+
+void UReadyPlayerMeWebBrowser::HandleEvents(const FWebMessage& JsonResponse)
+{		
+	if (JsonResponse.eventName == WebViewEvents::USER_SET)
+	{
+	}
+	else if (JsonResponse.eventName.Compare(WebViewEvents::USER_AUTHORIZED))
+	{
+	}
+	else if (JsonResponse.eventName == WebViewEvents::AVATAR_EXPORT)
+	{
+	}
+	else if (JsonResponse.eventName == WebViewEvents::ASSET_UNLOCK)
+	{
+	}
+	UE_LOG(LogTemp, Warning, TEXT("WebEvent: %s"), *JsonResponse.eventName);
 }
 
 void UReadyPlayerMeWebBrowser::AddBodyTypeParam(TArray<FString>& Params) const
@@ -121,7 +146,7 @@ TSharedRef<SWidget> UReadyPlayerMeWebBrowser::RebuildWidget()
 		LanguageStr = "/" + LANGUAGE_TO_STRING[Language];
 	}
 
-	InitialURL = FString::Printf(TEXT("https://%s.readyplayer.me%s/avatar%s"), *PartnerDomain, *LanguageStr, *UrlQueryStr);
+	InitialURL = FString::Printf(TEXT("https://%s.readyplayer.me%s/avatar%s&frameApi"), *PartnerDomain, *LanguageStr, *UrlQueryStr);
 
 	return Super::RebuildWidget();
 }

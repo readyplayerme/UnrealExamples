@@ -55,10 +55,12 @@ class UReadyPlayerMeWebBrowser : public UWebBrowser
 public:
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Setup Browser"), Category = "Ready Player Me|Web Browser")
-	void SetupBrowser(const FReadyPlayerWebBrowserResponse& Response);
+	void SetupBrowser();
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Bind Browser To Object"), Category = "Ready Player Me|Web Browser")
 	void BindBrowserToObject();
+	
+	void HandleEvents(const struct FWebMessage& JsonResponse);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me")
 	FString PartnerDomain = "demo";
