@@ -46,11 +46,11 @@ void UReadyPlayerMeWebBrowser::SetupBrowser()
 	if (FPaths::FileExists(Path))
 	{
 		FFileHelper::LoadFileToString(rpmSetupJavascript, *Path);
-		UE_LOG(LogTemp, Warning, TEXT("JS = : %s"), *rpmSetupJavascript);
+		//UE_LOG(LogTemp, Warning, TEXT("JS = : %s"), *rpmSetupJavascript);
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Script file not found: %s"), *Path);
+		UE_LOG(LogTemp, Warning, TEXT("Script file not found: %s"), *rpmSetupJavascript);
 		return;
 	}
 
@@ -144,7 +144,7 @@ TSharedRef<SWidget> UReadyPlayerMeWebBrowser::RebuildWidget()
 		LanguageStr = "/" + LANGUAGE_TO_STRING[Language];
 	}
 
-	InitialURL = FString::Printf(TEXT("https://%s.readyplayer.me%s/avatar%s"), *PartnerDomain, *LanguageStr, *UrlQueryStr);
+	InitialURL = FString::Printf(TEXT("https://%s.readyplayer.me%s/avatar%s&frameApi"), *PartnerDomain, *LanguageStr, *UrlQueryStr);
 
 	return Super::RebuildWidget();
 }

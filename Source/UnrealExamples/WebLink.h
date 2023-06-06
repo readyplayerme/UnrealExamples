@@ -15,14 +15,12 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "Ready Player Me")
 	void EventReceived(FString JsonResponse);
-
-	// Setter for UReadyPlayerMeWebBrowser reference
+	
 	void SetWebBrowser(class UReadyPlayerMeWebBrowser& InWebBrowser)
 	{
 		WebBrowser = &InWebBrowser;
 	}
 	
 private:
-	// Reference to UReadyPlayerMeWebBrowser
 	UReadyPlayerMeWebBrowser* WebBrowser;
 };
