@@ -6,6 +6,7 @@
 #include "WebBrowser.h"
 #include "WebLink.h"
 #include "SWebBrowser.h"
+#include "WebViewEvents.h"
 #include "ReadyPlayerMeWebBrowser.generated.h"
 
 UENUM(BlueprintType)
@@ -60,25 +61,34 @@ public:
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Bind Browser To Object"), Category = "Ready Player Me|Web Browser")
 	void BindBrowserToObject();
 	
-	void HandleEvents(const struct FWebMessage& JsonResponse);
+	void HandleEvents(const struct FWebMessage& WebMessage);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me|Web Browser")
 	FString PartnerDomain = "demo";
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me|Web Browser")
 	bool bClearCache = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me|Web Browser")
 	bool bQuickStart = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me|Web Browser")
 	ESelectBodyType SelectBodyType = ESelectBodyType::None;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me|Web Browser")
 	ESelectGender SelectGender = ESelectGender::None;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me|Web Browser")
 	ELanguage Language = ELanguage::Default;
+	
+	UPROPERTY(BlueprintAssignable)
+	FOnAvatarCreated OnAvatarExported;
+	UPROPERTY(BlueprintAssignable)
+	FOnUserSet OnUserSet;
+	UPROPERTY(BlueprintAssignable)
+	FOnAssetUnlock OnAssetUnlock;
+	UPROPERTY(BlueprintAssignable)
+	FOnUserAuthorized OnUserAuthorized;
 
 protected:
 	virtual TSharedRef<SWidget> RebuildWidget() override;

@@ -8,7 +8,6 @@
 
 void UWebLink::EventReceived(FString JsonResponse)
 {
-	UE_LOG(LogTemp, Warning, TEXT("EVENT RECEIVED!!! %p"), &JsonResponse);
 	const FWebMessage WebMessage = WebViewEvents::ConvertJsonStringToWebMessage(JsonResponse);
 	WebBrowser->HandleEvents(WebMessage);
 }

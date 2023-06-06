@@ -7,7 +7,7 @@
 #include "Public/WebViewEvents.h"
 
 static const FString LinkObjectName = TEXT("rpmlinkobject");
-static const FString JavascriptPath = TEXT("Scripts/rpmFrameSetup.js");
+static const FString JavascriptPath = TEXT("ReadyPlayerMe/WebBrowser/Scripts/rpmFrameSetup.js");
 
 static const TCHAR* ClearCacheParam = TEXT("clearCache");
 static const TCHAR* QuickStartParam = TEXT("quickStart");
@@ -34,30 +34,23 @@ static const TMap<ELanguage, FString> LANGUAGE_TO_STRING =
 	{ ELanguage::Ch, "ch" }
 };
 
-//void UReadyPlayerMeWebBrowser::SetupBrowser(const FReadyPlayerWebBrowserResponse& Response)
 void UReadyPlayerMeWebBrowser::SetupBrowser()
 {
-	BindBrowserToObject();
-	//WebLinkObject->SetResponseCallback(Response);
-
-	// Define the path to the JS file.
+	BindBrowserToObject();	
 	const FString Path = FPaths::ProjectContentDir() / JavascriptPath;
 
-	// Load the JS file into a string.
+
 	FString rpmSetupJavascript;
 	if (FPaths::FileExists(Path))
 	{
 		FFileHelper::LoadFileToString(rpmSetupJavascript, *Path);
-		//UE_LOG(LogTemp, Warning, TEXT("JS = : %s"), *rpmSetupJavascript);
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Script file not found: %s"), *rpmSetupJavascript);
+		UE_LOG(LogTemp, Warning, TEXT("Script file not found: %s"), *Path);
 		return;
 	}
-
-	// Execute the JS code.
-	//ExecuteJavascript("window.ue.rpmlinkobject.eventReceived(\"TEST\");window.addEventListener('message',function(event){window.ue.rpmlinkobject.avatargenerated(event.data);window.ue.rpmlinkobject.eventReceived(\"TEST\");});");
+	
 	ExecuteJavascript(rpmSetupJavascript);
 }
 
@@ -65,27 +58,43 @@ void UReadyPlayerMeWebBrowser::BindBrowserToObject()
 {
 	if (!WebLinkObject) {
 		WebLinkObject = NewObject<UWebLink>(this, *LinkObjectName);
-		WebLinkObject->SetWebBrowser(*this);
-		UE_LOG(LogTemp, Warning, TEXT("CREATE AND SETUP WEBLINK OBJECT"));
 	}
+	WebLinkObject->SetWebBrowser(*this);
 	WebBrowserWidget->BindUObject(LinkObjectName, WebLinkObject);
 }
 
-void UReadyPlayerMeWebBrowser::HandleEvents(const FWebMessage& JsonResponse)
+void UReadyPlayerMeWebBrowser::HandleEvents(const FWebMessage& WebMessage)
 {		
-	if (JsonResponse.eventName == WebViewEvents::USER_SET)
+	if (WebMessage.EventName == WebViewEvents::USER_SET)
 	{
+		if (OnUserSet.IsBound())
+		{
+			OnUserSet.Broadcast(WebMessage.GetId());
+		}
 	}
-	else if (JsonResponse.eventName.Compare(WebViewEvents::USER_AUTHORIZED))
+	else if (WebMessage.EventName == WebViewEvents::USER_AUTHORIZED)
 	{
+		if (OnUserAuthorized.IsBound())
+		{
+			OnUserAuthorized.Broadcast(WebMessage.GetUserId());
+		}
+		
 	}
-	else if (JsonResponse.eventName == WebViewEvents::AVATAR_EXPORT)
+	else if (WebMessage.EventName == WebViewEvents::AVATAR_EXPORT)
 	{
+		if (OnAvatarExported.IsBound())
+		{
+			OnAvatarExported.Broadcast(WebMessage.GetUrl());
+		}
 	}
-	else if (JsonResponse.eventName == WebViewEvents::ASSET_UNLOCK)
+	else if (WebMessage.EventName == WebViewEvents::ASSET_UNLOCK)
 	{
+		if (OnAssetUnlock.IsBound())
+		{
+			OnAssetUnlock.Broadcast(WebMessage.GetAssetRecord());
+		}
 	}
-	UE_LOG(LogTemp, Warning, TEXT("WebEvent: %s"), *JsonResponse.eventName);
+	UE_LOG(LogTemp, Warning, TEXT("WebEvent: %s"), *WebMessage.EventName);
 }
 
 void UReadyPlayerMeWebBrowser::AddBodyTypeParam(TArray<FString>& Params) const

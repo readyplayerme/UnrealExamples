@@ -13,7 +13,7 @@ class UWebLink : public UObject
 	
 public:
 	
-	UFUNCTION(BlueprintCallable, Category = "Ready Player Me")
+	UFUNCTION(BlueprintCallable, Category = "Ready Player Me|Web Browser")
 	void EventReceived(FString JsonResponse);
 	
 	void SetWebBrowser(class UReadyPlayerMeWebBrowser& InWebBrowser)
