@@ -1,10 +1,10 @@
 // Copyright © 2021++ Ready Player Me
 
 #include "ReadyPlayerMeWebBrowser.h"
+#include "Misc/FileHelper.h"
+#include "Misc/Paths.h"
 
 static const FString LinkObjectName = TEXT("rpmlinkobject");
-static const FString JSAddAvatarGeneratedListener = TEXT("window.addEventListener('message', function(event){ window.ue.rpmlinkobject.avatargenerated(event.data);});");
-
 static const TCHAR* ClearCacheParam = TEXT("clearCache");
 static const TCHAR* QuickStartParam = TEXT("quickStart");
 static const TCHAR* FullBodyParam = TEXT("bodyType=fullbody");
@@ -34,7 +34,25 @@ void UReadyPlayerMeWebBrowser::SetupBrowser(const FReadyPlayerWebBrowserResponse
 {
 	BindBrowserToObject();
 	WebLinkObject->SetAvatarUrlCallback(Response);
-	ExecuteJavascript(JSAddAvatarGeneratedListener);
+
+	// Define the path to the JS file.
+	const FString path = FPaths::ProjectContentDir() / TEXT("ReadyPlayerMe/WebBrowser/Scripts/rpmFrameSetup.js");
+
+	// Load the JS file into a string.
+	FString javascript;
+	if (FPaths::FileExists(path))
+	{
+		FFileHelper::LoadFileToString(javascript, *path);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Script file not found: %s"), *path);
+		return;
+	}
+
+	// Execute the JS code.
+	ExecuteJavascript(javascript);
+	//ExecuteJavascript(JSAddAvatarGeneratedListener);
 }
 
 void UReadyPlayerMeWebBrowser::BindBrowserToObject()
