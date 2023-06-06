@@ -3,30 +3,12 @@
 
 #include "WebLink.h"
 
-void UWebLink::AvatarGenerated(FString JsonResponse)
+#include "ReadyPlayerMeWebBrowser.h"
+#include "Public/WebViewEvents.h"
+
+void UWebLink::EventReceived(FString JsonResponse)
 {
-	FString Url = "";
-	if (JsonResponse.Contains(TEXT(".glb")))
-	{
-		UE_LOG(LogTemp, Warning, TEXT(".glb found "));
-		Url = JsonResponse;
-	}
-	if (Url.IsEmpty())
-	{
-		return;
-	}
-
-	WebBrowserResponse.Execute(Url);
-	LastAvatarUrl = Url;
+	UE_LOG(LogTemp, Warning, TEXT("EVENT RECEIVED!!! %p"), &JsonResponse);
+	const FWebMessage WebMessage = WebViewEvents::ConvertJsonStringToWebMessage(JsonResponse);
+	WebBrowser->HandleEvents(WebMessage);
 }
-
-void UWebLink::SetAvatarUrlCallback(const FReadyPlayerWebBrowserResponse& WebBrowserCallback)
-{
-	WebBrowserResponse = WebBrowserCallback;
-}
-
-FString UWebLink::GetLastAvatarUrl()
-{
-	return LastAvatarUrl;
-}
-
