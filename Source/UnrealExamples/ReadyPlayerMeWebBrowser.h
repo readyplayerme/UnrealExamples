@@ -60,7 +60,7 @@ public:
 		Category = "Ready Player Me|Web Browser")
 	void BindBrowserToObject();
 
-	void HandleEvents(class WebMessage WebMessage);
+	void HandleEvents(WebMessage WebMessage);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me|Web Browser")
 	FString PartnerDomain = "demo";
@@ -98,4 +98,5 @@ protected:
 private:
 	void AddBodyTypeParam(TArray<FString>& Params) const;
 	void AddGenderParam(TArray<FString>& Params) const;
+	FString BuildUrl(const FString& LoginToken = FString()) const;
 };

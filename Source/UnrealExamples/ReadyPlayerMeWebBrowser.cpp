@@ -17,6 +17,8 @@ static const TCHAR* HalfBodyParam = TEXT("bodyType=halfbody");
 static const TCHAR* SelectBodyTypeParam = TEXT("selectBodyType");
 static const TCHAR* GenderMaleParam = TEXT("gender=male");
 static const TCHAR* GenderFemaleParam = TEXT("gender=female");
+static const TCHAR* LoginTokenParam = TEXT("token");
+static const TCHAR* FrameApiParam = TEXT("frameApi");
 
 static const TMap<ELanguage, FString> LANGUAGE_TO_STRING =
 {
@@ -131,9 +133,15 @@ void UReadyPlayerMeWebBrowser::AddGenderParam(TArray<FString>& Params) const
 	}
 }
 
-TSharedRef<SWidget> UReadyPlayerMeWebBrowser::RebuildWidget()
+FString UReadyPlayerMeWebBrowser::BuildUrl(const FString& LoginToken) const
 {
 	TArray<FString> Params;
+	if(!LoginToken.IsEmpty())
+	{
+		Params.Add(LoginTokenParam + '=' + LoginToken);
+	}
+	
+	Params.Add(FrameApiParam);
 	if (bClearCache)
 	{
 		Params.Add(ClearCacheParam);
@@ -156,8 +164,13 @@ TSharedRef<SWidget> UReadyPlayerMeWebBrowser::RebuildWidget()
 		LanguageStr = "/" + LANGUAGE_TO_STRING[Language];
 	}
 
-	InitialURL = FString::Printf(
-		TEXT("https://%s.readyplayer.me%s/avatar%s&frameApi"), *PartnerDomain, *LanguageStr, *UrlQueryStr);
+	return FString::Printf(
+		TEXT("https://%s.readyplayer.me%s/avatar%s"), *PartnerDomain, *LanguageStr, *UrlQueryStr);
+}
+
+TSharedRef<SWidget> UReadyPlayerMeWebBrowser::RebuildWidget()
+{
+	InitialURL = BuildUrl();
 
 	return Super::RebuildWidget();
 }
