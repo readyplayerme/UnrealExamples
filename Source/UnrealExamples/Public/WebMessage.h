@@ -8,7 +8,6 @@ class UNREALEXAMPLES_API WebMessage
 {
 public:
 	FString Type;
-	FString Source;
 	FString EventName;
 	TMap<FString, FString> Data;
 

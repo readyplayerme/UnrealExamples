@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "WebBrowser.h"
-#include "WebLink.h"
 #include "WebViewEvents.h"
 #include "ReadyPlayerMeWebBrowser.generated.h"
 
@@ -53,6 +52,7 @@ class UReadyPlayerMeWebBrowser : public UWebBrowser
 	GENERATED_BODY()
 
 public:
+	
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Setup Browser"), Category = "Ready Player Me|Web Browser")
 	void SetupBrowser();
 
@@ -60,7 +60,7 @@ public:
 		Category = "Ready Player Me|Web Browser")
 	void BindBrowserToObject();
 
-	void HandleEvents(WebMessage WebMessage);
+	void HandleEvents(WebMessage WebMessage) const;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me|Web Browser")
 	FString PartnerDomain = "demo";
@@ -79,6 +79,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me|Web Browser")
 	ELanguage Language = ELanguage::Default;
+	
+	UFUNCTION(BlueprintCallable, Category = "Ready Player Me|Web Browser")
+	void EventReceived(const FString JsonResponse);
 
 	UPROPERTY(BlueprintAssignable)
 	FOnAvatarCreated OnAvatarExported;
@@ -91,9 +94,6 @@ public:
 
 protected:
 	virtual TSharedRef<SWidget> RebuildWidget() override;
-
-	UPROPERTY()
-	UWebLink* WebLinkObject;
 
 private:
 	void AddBodyTypeParam(TArray<FString>& Params) const;

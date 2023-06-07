@@ -21,8 +21,6 @@ WebMessage WebViewEvents::ConvertJsonStringToWebMessage(const FString& JsonStrin
 	if (FJsonSerializer::Deserialize(JsonReader, JsonObject) && JsonObject.IsValid())
 	{
 		WebMessage WebMessage;
-
-		WebMessage.Source = JsonObject->GetStringField(SOURCE_FIELD);
 		WebMessage.EventName = JsonObject->GetStringField(EVENT_NAME_FIELD);
 
 		if (JsonObject->HasField(TYPE_FIELD))

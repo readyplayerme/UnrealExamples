@@ -8,7 +8,7 @@
 #include "WebViewEvents.h"
 
 static const FString LinkObjectName = TEXT("rpmlinkobject");
-static const FString JavascriptPath = TEXT("ReadyPlayerMe/WebBrowser/Scripts/rpmFrameSetup.js");
+static const FString JavascriptPath = TEXT("ReadyPlayerMe/WebBrowser/Scripts/RpmFrameSetup.js");
 
 static const TCHAR* ClearCacheParam = TEXT("clearCache");
 static const TCHAR* QuickStartParam = TEXT("quickStart");
@@ -59,15 +59,11 @@ void UReadyPlayerMeWebBrowser::SetupBrowser()
 
 void UReadyPlayerMeWebBrowser::BindBrowserToObject()
 {
-	if (!WebLinkObject)
-	{
-		WebLinkObject = NewObject<UWebLink>(this, *LinkObjectName);
-	}
-	WebLinkObject->SetWebBrowser(this);
-	WebBrowserWidget->BindUObject(LinkObjectName, WebLinkObject);
+	this->Rename(*LinkObjectName);
+	WebBrowserWidget->BindUObject(LinkObjectName, this);
 }
 
-void UReadyPlayerMeWebBrowser::HandleEvents(WebMessage WebMessage)
+void UReadyPlayerMeWebBrowser::HandleEvents(WebMessage WebMessage) const
 {
 	if (WebMessage.EventName == WebViewEvents::USER_SET)
 	{
@@ -166,6 +162,12 @@ FString UReadyPlayerMeWebBrowser::BuildUrl(const FString& LoginToken) const
 
 	return FString::Printf(
 		TEXT("https://%s.readyplayer.me%s/avatar%s"), *PartnerDomain, *LanguageStr, *UrlQueryStr);
+}
+
+void UReadyPlayerMeWebBrowser::EventReceived(const FString JsonResponse)
+{
+	const WebMessage WebMessage = WebViewEvents::ConvertJsonStringToWebMessage(JsonResponse);
+	HandleEvents(WebMessage);
 }
 
 TSharedRef<SWidget> UReadyPlayerMeWebBrowser::RebuildWidget()

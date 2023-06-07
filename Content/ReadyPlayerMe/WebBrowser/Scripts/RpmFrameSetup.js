@@ -1,14 +1,14 @@
-function setupEventSubscription() {
+function SetupEventSubscription() {
     const rpmFilter = "readyplayerme";
     const frameReadyEvent = "v1.frame.ready";
     const message = "message";
-    window.removeEventListener(message, subscribe);
-    document.removeEventListener(message, subscribe);
-    window.addEventListener(message, subscribe);
-    document.addEventListener(message, subscribe);
+    window.removeEventListener(message, Subscribe);
+    document.removeEventListener(message, Subscribe);
+    window.addEventListener(message, Subscribe);
+    document.addEventListener(message, Subscribe);
 
-    function subscribe(event) {
-        const json = parse(event);
+    function Subscribe(event) {
+        const json = Parse(event);
         if (json?.source !== rpmFilter || json?.eventName == null) {
             return;
         }
@@ -30,7 +30,7 @@ function setupEventSubscription() {
         }
     }
 
-    function parse(event) {
+    function Parse(event) {
         try {
             return JSON.parse(event.data);
         } catch (error) {
@@ -39,4 +39,4 @@ function setupEventSubscription() {
     }
 }
 
-setupEventSubscription();
+SetupEventSubscription();
