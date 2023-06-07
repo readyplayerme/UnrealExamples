@@ -1,10 +1,11 @@
 // Copyright © 2021++ Ready Player Me
 
 #include "ReadyPlayerMeWebBrowser.h"
+#include "SWebBrowser.h"
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
-
-#include "Public/WebViewEvents.h"
+#include "WebMessage.h"
+#include "WebViewEvents.h"
 
 static const FString LinkObjectName = TEXT("rpmlinkobject");
 static const FString JavascriptPath = TEXT("ReadyPlayerMe/WebBrowser/Scripts/rpmFrameSetup.js");
@@ -19,24 +20,24 @@ static const TCHAR* GenderFemaleParam = TEXT("gender=female");
 
 static const TMap<ELanguage, FString> LANGUAGE_TO_STRING =
 {
-	{ ELanguage::En, "en" },
-	{ ELanguage::EnIe, "en-IE" },
-	{ ELanguage::De, "de" },
-	{ ELanguage::Fr, "fr" },
-	{ ELanguage::Es, "es" },
-	{ ELanguage::EsMx, "es-MX" },
-	{ ELanguage::Pt, "pt" },
-	{ ELanguage::PtBr, "pt-BR" },
-	{ ELanguage::It, "it" },
-	{ ELanguage::Tr, "tr" },
-	{ ELanguage::Jp, "jp" },
-	{ ELanguage::Kr, "kr" },
-	{ ELanguage::Ch, "ch" }
+	{ELanguage::En, "en"},
+	{ELanguage::EnIe, "en-IE"},
+	{ELanguage::De, "de"},
+	{ELanguage::Fr, "fr"},
+	{ELanguage::Es, "es"},
+	{ELanguage::EsMx, "es-MX"},
+	{ELanguage::Pt, "pt"},
+	{ELanguage::PtBr, "pt-BR"},
+	{ELanguage::It, "it"},
+	{ELanguage::Tr, "tr"},
+	{ELanguage::Jp, "jp"},
+	{ELanguage::Kr, "kr"},
+	{ELanguage::Ch, "ch"}
 };
 
 void UReadyPlayerMeWebBrowser::SetupBrowser()
 {
-	BindBrowserToObject();	
+	BindBrowserToObject();
 	const FString Path = FPaths::ProjectContentDir() / JavascriptPath;
 
 
@@ -50,21 +51,22 @@ void UReadyPlayerMeWebBrowser::SetupBrowser()
 		UE_LOG(LogTemp, Warning, TEXT("Script file not found: %s"), *Path);
 		return;
 	}
-	
+
 	ExecuteJavascript(rpmSetupJavascript);
 }
 
 void UReadyPlayerMeWebBrowser::BindBrowserToObject()
 {
-	if (!WebLinkObject) {
+	if (!WebLinkObject)
+	{
 		WebLinkObject = NewObject<UWebLink>(this, *LinkObjectName);
 	}
 	WebLinkObject->SetWebBrowser(*this);
 	WebBrowserWidget->BindUObject(LinkObjectName, WebLinkObject);
 }
 
-void UReadyPlayerMeWebBrowser::HandleEvents(const FWebMessage& WebMessage)
-{		
+void UReadyPlayerMeWebBrowser::HandleEvents(WebMessage WebMessage)
+{
 	if (WebMessage.EventName == WebViewEvents::USER_SET)
 	{
 		if (OnUserSet.IsBound())
@@ -78,7 +80,6 @@ void UReadyPlayerMeWebBrowser::HandleEvents(const FWebMessage& WebMessage)
 		{
 			OnUserAuthorized.Broadcast(WebMessage.GetUserId());
 		}
-		
 	}
 	else if (WebMessage.EventName == WebViewEvents::AVATAR_EXPORT)
 	{
@@ -155,7 +156,8 @@ TSharedRef<SWidget> UReadyPlayerMeWebBrowser::RebuildWidget()
 		LanguageStr = "/" + LANGUAGE_TO_STRING[Language];
 	}
 
-	InitialURL = FString::Printf(TEXT("https://%s.readyplayer.me%s/avatar%s&frameApi"), *PartnerDomain, *LanguageStr, *UrlQueryStr);
+	InitialURL = FString::Printf(
+		TEXT("https://%s.readyplayer.me%s/avatar%s&frameApi"), *PartnerDomain, *LanguageStr, *UrlQueryStr);
 
 	return Super::RebuildWidget();
 }

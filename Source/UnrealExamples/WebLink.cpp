@@ -2,12 +2,12 @@
 
 
 #include "WebLink.h"
-
 #include "ReadyPlayerMeWebBrowser.h"
-#include "Public/WebViewEvents.h"
+#include "WebMessage.h"
+#include "WebViewEvents.h"
 
-void UWebLink::EventReceived(FString JsonResponse)
+void UWebLink::EventReceived(const FString JsonResponse)
 {
-	const FWebMessage WebMessage = WebViewEvents::ConvertJsonStringToWebMessage(JsonResponse);
+	const WebMessage WebMessage = WebViewEvents::ConvertJsonStringToWebMessage(JsonResponse);
 	WebBrowser->HandleEvents(WebMessage);
 }

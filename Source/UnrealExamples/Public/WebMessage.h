@@ -4,12 +4,18 @@
 
 #include "CoreMinimal.h"
 
-/**
- * 
- */
 class UNREALEXAMPLES_API WebMessage
 {
 public:
-	WebMessage();
-	~WebMessage();
+	FString Type;
+	FString Source;
+	FString EventName;
+	TMap<FString, FString> Data;
+
+
+	FString GetDataValue(const FString& Key);
+	FString GetId();
+	FString GetUserId();
+	FString GetUrl();
+	struct FAssetRecord GetAssetRecord();
 };
