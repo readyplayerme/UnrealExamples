@@ -14,11 +14,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Ready Player Me|Web Browser")
 	void EventReceived(const FString JsonResponse);
 
-	void SetWebBrowser(class UReadyPlayerMeWebBrowser& InWebBrowser)
+	void SetWebBrowser(class UReadyPlayerMeWebBrowser* InWebBrowser)
 	{
-		WebBrowser = &InWebBrowser;
+		WebBrowser = InWebBrowser;
 	}
 
 private:
+	UPROPERTY()
 	UReadyPlayerMeWebBrowser* WebBrowser;
 };

@@ -3,10 +3,10 @@
 #include "WebMessage.h"
 #include "WebViewEvents.h"
 
-const char* KeyId = "id";
-const char* KeyUserId = "userId";
-const char* KeyUrl = "url";
-const char* KeyAssetId = "assetId";
+const char* WebMessage::KeyId = "id";
+const char* WebMessage::KeyUserId = "userId";
+const char* WebMessage::KeyUrl = "url";
+const char* WebMessage::KeyAssetId = "assetId";
 
 FString WebMessage::GetDataValue(const FString& Key)
 {

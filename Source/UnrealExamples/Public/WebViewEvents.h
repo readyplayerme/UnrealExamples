@@ -19,11 +19,11 @@ struct FAssetRecord
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAvatarCreated, const FString&, AvatarUrl);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnUserSet, const FString&, userId);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnUserSet, const FString&, UserId);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAssetUnlock, const FAssetRecord&, assetId);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAssetUnlock, const FAssetRecord&, AssetId);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnUserAuthorized, const FString&, userId);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnUserAuthorized, const FString&, UserId);
 
 class UNREALEXAMPLES_API WebViewEvents
 {
@@ -34,5 +34,10 @@ public:
 	static const FString USER_SET;
 	static const FString USER_AUTHORIZED;
 	static const FString ASSET_UNLOCK;
-	static const FString ID;
+	
+private:
+	static const FString DATA_FIELD;
+	static const FString TYPE_FIELD;
+	static const FString SOURCE_FIELD;
+	static const FString EVENT_NAME_FIELD;
 };

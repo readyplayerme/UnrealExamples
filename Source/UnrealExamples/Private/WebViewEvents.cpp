@@ -8,11 +8,10 @@ const FString WebViewEvents::AVATAR_EXPORT = TEXT("v1.avatar.exported");
 const FString WebViewEvents::USER_SET = TEXT("v1.user.set");
 const FString WebViewEvents::USER_AUTHORIZED = TEXT("v1.user.authorized");
 const FString WebViewEvents::ASSET_UNLOCK = TEXT("v1.asset.unlock");
-
-const FString DataField = "data";
-const FString TypeField = "type";
-const FString SourceField = "source";
-const FString EventNameField = "eventName";
+const FString WebViewEvents::DATA_FIELD = "data";
+const FString WebViewEvents::TYPE_FIELD = "type";
+const FString WebViewEvents::SOURCE_FIELD = "source";
+const FString WebViewEvents::EVENT_NAME_FIELD = "eventName";
 
 WebMessage WebViewEvents::ConvertJsonStringToWebMessage(const FString& JsonString)
 {
@@ -23,17 +22,17 @@ WebMessage WebViewEvents::ConvertJsonStringToWebMessage(const FString& JsonStrin
 	{
 		WebMessage WebMessage;
 
-		WebMessage.Source = JsonObject->GetStringField(SourceField);
-		WebMessage.EventName = JsonObject->GetStringField(EventNameField);
+		WebMessage.Source = JsonObject->GetStringField(SOURCE_FIELD);
+		WebMessage.EventName = JsonObject->GetStringField(EVENT_NAME_FIELD);
 
-		if (JsonObject->HasField(TypeField))
+		if (JsonObject->HasField(TYPE_FIELD))
 		{
-			WebMessage.Type = JsonObject->GetStringField(TypeField);
+			WebMessage.Type = JsonObject->GetStringField(TYPE_FIELD);
 		}
 
-		if (JsonObject->HasField(DataField))
+		if (JsonObject->HasField(DATA_FIELD))
 		{
-			const TSharedPtr<FJsonObject> DataObject = JsonObject->GetObjectField(DataField);
+			const TSharedPtr<FJsonObject> DataObject = JsonObject->GetObjectField(DATA_FIELD);
 
 			for (const auto& Pair : DataObject->Values)
 			{

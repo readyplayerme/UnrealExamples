@@ -18,4 +18,10 @@ public:
 	FString GetUserId();
 	FString GetUrl();
 	struct FAssetRecord GetAssetRecord();
+
+private:
+	static const char* KeyId;
+	static const char* KeyUserId;
+	static const char* KeyUrl;
+	static const char* KeyAssetId;
 };

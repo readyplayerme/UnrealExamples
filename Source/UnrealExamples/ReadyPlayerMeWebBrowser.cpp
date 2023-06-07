@@ -43,10 +43,10 @@ void UReadyPlayerMeWebBrowser::SetupBrowser()
 	const FString Path = FPaths::ProjectContentDir() / JavascriptPath;
 
 
-	FString rpmSetupJavascript;
+	FString RpmSetupJavascript;
 	if (FPaths::FileExists(Path))
 	{
-		FFileHelper::LoadFileToString(rpmSetupJavascript, *Path);
+		FFileHelper::LoadFileToString(RpmSetupJavascript, *Path);
 	}
 	else
 	{
@@ -54,7 +54,7 @@ void UReadyPlayerMeWebBrowser::SetupBrowser()
 		return;
 	}
 
-	ExecuteJavascript(rpmSetupJavascript);
+	ExecuteJavascript(RpmSetupJavascript);
 }
 
 void UReadyPlayerMeWebBrowser::BindBrowserToObject()
@@ -63,7 +63,7 @@ void UReadyPlayerMeWebBrowser::BindBrowserToObject()
 	{
 		WebLinkObject = NewObject<UWebLink>(this, *LinkObjectName);
 	}
-	WebLinkObject->SetWebBrowser(*this);
+	WebLinkObject->SetWebBrowser(this);
 	WebBrowserWidget->BindUObject(LinkObjectName, WebLinkObject);
 }
 
