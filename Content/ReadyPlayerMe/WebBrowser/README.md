@@ -47,16 +47,16 @@ Select the RPM_Browser object in the hierarchy, in the ReadyPlayerMe category th
 
 Further down in the Details panel you will also see a number of events that can be bound to. These events are called from the **WebBrowser Widget** when certain events occur. For example when the avatar creation process has been completed the `OnAvatarExported` event will be called. This event will return the URL to the GLB file of the avatar. This can then be used to load the avatar into the scene.
 
+![Screenshot 2023-06-08 110535](https://github.com/readyplayerme/UnrealExamples/assets/7085672/1716ab37-a550-44af-966d-e31d12a46d32)
+
 Next open up the Graph for the **Ready Player Me Browser Widget** and you will see this network of nodes.
 
-![img-browser-widget-bp](https://user-images.githubusercontent.com/7085672/163359928-7e915cc0-6076-4195-91f8-cda06d7120bb.png)
+![Screenshot 2023-06-08 110605](https://github.com/readyplayerme/UnrealExamples/assets/7085672/094e98ca-733c-44cc-b582-32ab00e84e51)
 
 Lets take at the first group of nodes connected to the widget's construct event. Here bind a custom event to the WebBrowser Widgets `OnUrlChanged` event that runs the `BrowserSetup` function. This is done on `OnUrlChanged` to ensure the the browser has actually started loading the website before starting to load the initial Url. Without this there is issues when it comes to injecting custom javascript. Additionally you can also call `ClearAvatarData` to clear previously created avatar data, to be able to create a new avatar next time the browser is loaded. Lastly we also unbind the event so it doesn't run the setup again.
 
-![img-setup-and-bind](https://user-images.githubusercontent.com/7085672/163365180-1a498452-8f3c-4ec3-b735-d62199ac6817.png)
-
 In the bottom half of the photo you can see the **Avatar Exported** callback section which shows the `OnAvatarExported` event we mentioned previous. Use this callback anbd the AvatarUrl property to retrieve the avatar url.
-![img-callback-and-hide](https://user-images.githubusercontent.com/7085672/163376787-073c89ad-bea5-4f6f-9855-62472f9e600b.png)
+![Screenshot 2023-06-08 123434](https://github.com/readyplayerme/UnrealExamples/assets/7085672/44043a1e-7a2d-4974-a4d8-fffea13a5c4b)
 
 In the last section of the graph labeled **Auto Hide (Optional)** we simply hide the browser widget by setting the visibility, this can be toggled with the `HideAfterAvatarGeneration` property.
 
