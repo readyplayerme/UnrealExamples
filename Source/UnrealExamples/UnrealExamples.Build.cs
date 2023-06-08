@@ -13,6 +13,6 @@ public class UnrealExamples : ModuleRules
 		PrivateDependencyModuleNames.AddRange(new string[] { "ReadyPlayerMe" });
 
 		// Dependencies Web Browser
-		PrivateDependencyModuleNames.AddRange(new string[] { "WebBrowserWidget", "WebBrowser", "UMG" });
+		PrivateDependencyModuleNames.AddRange(new string[] { "WebBrowserWidget", "WebBrowser", "UMG", "Json", "JsonUtilities" });
 	}
 }

@@ -11,7 +11,7 @@ Example uses the Unreal Engine Web Browser module (and Web Browser Widget) to em
 # Dependencies
 
 To enable the WebBrowser support for our project, WebBrowserWidget plugins need to be enabled in the uproject file.
-Additionally to ba able to access it through the C++ code we need to add the followwing modules to our `UnrealExamplesBuild.cs`file `WebBrowserWidget`, `WebBrowser`, `UMG`.
+Additionally to ba able to access it through the C++ code we need to add the following modules to our `UnrealExamplesBuild.cs`file `WebBrowserWidget`, `WebBrowser`, `UMG`.
 
 # Web Browser Demo Map
 
@@ -35,81 +35,131 @@ To display and interact with the a web browser inside unreal you need to use a U
 
 It is set up this way so that the RPM Browser Widgets position, padding and anchor settings can be easily adjusted relative to the Canvas Panel. If you select the `RPM_Browser` object in the hierachy you will most likely need to update the `InitialUrl` setting. This is the Url that will be loaded when this Widget is created/added to the scene.
 
-Select the RPM_Browser object in the hierachy, in the ReadyPlayerMe category there are several parameters that can be used to generate the initial url of the WebBrowser.
+Select the RPM_Browser object in the hierarchy, in the ReadyPlayerMe category there are several parameters that can be used to generate the initial url of the WebBrowser.
 - **Partner Domain**: By default it's set to demo, however as the name suggests this is only recommended for demo's. We highly recommend you become a Ready Player Me partner and get your own partner space. Once you have your own partner space setup you update this parameter accordingly.
 - **Clean Cache**: Provides a Kiosk experience
-- **Quick Start**: Enters the Quicks Start view.
+- **Quick Start**: Enters the Quick Start view.
 - **Body Type**: Skip the body type selection step when opening the avatar view.
 - **Gender**: Skip the gender selection step when opening the avatar view.
 - **Language**: By default the system language will be used for opening the browser, However the language can be customized.
 
 ![Screenshot 2022-12-02 173148](https://user-images.githubusercontent.com/3124894/205340278-cc75a168-7813-4e32-bfdb-e44e41f00555.png)
 
-Next open up the Graph for the Ready Player Me Browser Widget and you will see this network of nodes.
+Further down in the Details panel you will also see a number of events that can be bound to. These events are called from the **WebBrowser Widget** when certain events occur. For example when the avatar creation process has been completed the `OnAvatarExported` event will be called. This event will return the URL to the GLB file of the avatar. This can then be used to load the avatar into the scene.
 
-![img-browser-widget-bp](https://user-images.githubusercontent.com/7085672/163359928-7e915cc0-6076-4195-91f8-cda06d7120bb.png)
+![Screenshot 2023-06-08 110535](https://github.com/readyplayerme/UnrealExamples/assets/7085672/1716ab37-a550-44af-966d-e31d12a46d32)
 
-Lets take at the first group of nodes connected to the widget's construct event. Here bind a custom event to the WebBrowserWidgets `OnUrlChanged` event that runs the `RunBrowserSetup` function. This is done on `OnUrlChanged` to ensure the the browser has actually started loading the website before starting to load the initial Url. Without this there is issues when it comes to injecting custom javascript. Additionaly you can also call `ClearAvatarData` to clear previously created avatar data, to be able to create a new avatar. Lastly we also unbind the event so it doesn't run the setup again.
+Next open up the Graph for the **Ready Player Me Browser Widget** and you will see this network of nodes.
 
-![img-setup-and-bind](https://user-images.githubusercontent.com/7085672/163365180-1a498452-8f3c-4ec3-b735-d62199ac6817.png)
+![Screenshot 2023-06-08 110605](https://github.com/readyplayerme/UnrealExamples/assets/7085672/094e98ca-733c-44cc-b582-32ab00e84e51)
 
-As you may have noticed the Setup Browser function above has a callback function called Response. To make use of this there is the `AvatarGeneratedCallback` event which will call the `AvatarGeneratedEvent`. The `AvatarGenerated` event it a an Event Dispatcher that can be subscribed to. This was added to make it easy to connect callback functions whenever an avatar has been created. Next we also have a groud of nodes to handle an optional AutoHide feature. If the `HideAfterAvatarGeneration` property is set to true it will automatically hide the widget after character creation is complete.
+Lets take at the first group of nodes connected to the widget's construct event. Here bind a custom event to the WebBrowser Widgets `OnUrlChanged` event that runs the `BrowserSetup` function. This is done on `OnUrlChanged` to ensure the the browser has actually started loading the website before starting to load the initial Url. Without this there is issues when it comes to injecting custom javascript. Additionally you can also call `ClearAvatarData` to clear previously created avatar data, to be able to create a new avatar next time the browser is loaded. Lastly we also unbind the event so it doesn't run the setup again.
 
-![img-callback-and-hide](https://user-images.githubusercontent.com/7085672/163376787-073c89ad-bea5-4f6f-9855-62472f9e600b.png)
+In the bottom half of the photo you can see the **Avatar Exported** callback section which shows the `OnAvatarExported` event we mentioned previous. Use this callback anbd the AvatarUrl property to retrieve the avatar url.
+![Screenshot 2023-06-08 123434](https://github.com/readyplayerme/UnrealExamples/assets/7085672/44043a1e-7a2d-4974-a4d8-fffea13a5c4b)
 
-# Web Link Class
-
-The Web Link class is a simple UObject with the sole purpose of linking Web Browser javascript events back to Unreal engine via a dynamic delegate. By doing this we can listen to specific javascript events inside the Web Browser Widget to trigger functions and receive data from the browser.
-
-The `SetAvatarUrlCallback` function is what we use to assign the callback (delegate) function to be run once the avatar creation process is complete.
-```cpp
-void UWebLink::SetAvatarUrlCallback(FReadyPlayerWebBrowserResponse WebBrowserCallback)
-{
-	UWebLink::WebBrowserResponse = WebBrowserCallback;
-}
-```
-The `AvatarGenerated` function is run when the browser event is triggered upon completion of avatar creation. In here we simply check the response is a Ready Player Me avatar url by searching for ".glb", otherwise it exits the function.
-```cpp
-FString Url = "";
-if (JsonResponse.Contains(TEXT(".glb"))) {
-  UE_LOG(LogTemp, Warning, TEXT(".glb found "));
-  Url = JsonResponse;
-}
-if (Url.IsEmpty()) {
-  return;
-}
-```
-If a Ready Player Me avatar url is found then we run the callback function, passing the `Url` as a parameter. We also store the url in in a `LastAvatarUrl` property in case we need to check it later.
-```cpp
-UWebLink::WebBrowserResponse.Execute(Url);
-LastAvatarUrl = Url;
-```
+In the last section of the graph labeled **Auto Hide (Optional)** we simply hide the browser widget by setting the visibility, this can be toggled with the `HideAfterAvatarGeneration` property.
 
 # Ready Player Me Browser Class
 
-This is another rather simple class, based on the` UWebBrowser` class it adds a few extra functions for setting up the connection between the Web Browser and Unreal engine using the Web Link object we covered previously.
+Now let's tale a look at the `ReadyPlayerMeWebBrowser` class, based on the Unreal` UWebBrowser` class and it adds a few extra functions for setting up the connection between the Web Browser and Unreal engine using the Web Link object we covered previously.
 
-To understand how this works we will first look at the ``BindBrowserToObject()`` function.
-Initially it creates a UWebLink object, if it doesn't already exist.
-Set the name of the link object, this part is important as the **name is used as an ID** when linking back the javascript event.
+To understand how this works lets take a look at the `SetupBrowser()` function. 
 ```cpp
-UReadyPlayerMeWebBrowser::WebLinkObject = NewObject<UWebLink>(this, LinkObjectName);
+void UReadyPlayerMeWebBrowser::SetupBrowser()
+{
+	BindBrowserToObject();
+	const FString Path = FPaths::ProjectContentDir() / JavascriptPath;
+
+
+	FString RpmSetupJavascript;
+	if (FPaths::FileExists(Path))
+	{
+		FFileHelper::LoadFileToString(RpmSetupJavascript, *Path);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Script file not found: %s"), *Path);
+		return;
+	}
+
+	ExecuteJavascript(RpmSetupJavascript);
+}
+
 ```
 
-Lastly we bind the WebLink object to the browser widget to ensure it's permanantly connected.
+This function is responsible for binding the Web Browser Widget to the Web Link object and setting up the javascript that listens to the website events that fire from the Ready Player Me website. These events include: 
+- Avatar Exported
+- User Set 
+- Asset Unlock 
+- User Authorized
+
+More information about these events can be found in the [Web Browser Integration](https://docs.readyplayer.me/web-browser-integration) documentation.
+
+The Javascript we run can be found in here `Content/ReadyPlayerMe/WebBrowser/Scripts/RpmFrameSetup.js`.
+
+You will also notice that this function calls the `BindBrowserToObject()` function which we will cover next. 
+
 ```cpp
-WebBrowserWidget->BindUObject(LinkObjectName, WebLinkObject, true);
+void UReadyPlayerMeWebBrowser::BindBrowserToObject()
+{
+	this->Rename(*LinkObjectName);
+	WebBrowserWidget->BindUObject(LinkObjectName, this);
+}
 ```
-Now lets take a look at the ```SetupBrowser(FReadyPlayerWebBrowserResponse WebBrowserCallback)``` function.
-To begin it runs the ```BindBrowserToObject``` function mentioned previously.
+The `BindBrowserToObject()` function simply renames the Web Browser Widget and binds the web browser functionality to the widget using the [BindUObject](https://docs.unrealengine.com/4.27/en-US/API/Runtime/WebBrowser/SWebBrowser/BindUObject/) function. This is important as it enables communication between the web browser and Unreal engine API.
+
+Next we can look at the `HandleEvent`s function which is responsible for handling the events that are fired from the Ready Player Me website and subsequently calling the appropriate delegate, passing the required data.
+
 ```cpp
-UReadyPlayerMeWebBrowser::BindBrowserToObject();
+void UReadyPlayerMeWebBrowser::HandleEvents(WebMessage WebMessage) const
+{
+	if (WebMessage.EventName == WebViewEvents::USER_SET)
+	{
+		if (OnUserSet.IsBound())
+		{
+			OnUserSet.Broadcast(WebMessage.GetId());
+		}
+	}
+	else if (WebMessage.EventName == WebViewEvents::USER_AUTHORIZED)
+	{
+		if (OnUserAuthorized.IsBound())
+		{
+			OnUserAuthorized.Broadcast(WebMessage.GetUserId());
+		}
+	}
+	else if (WebMessage.EventName == WebViewEvents::AVATAR_EXPORT)
+	{
+		if (OnAvatarExported.IsBound())
+		{
+			OnAvatarExported.Broadcast(WebMessage.GetUrl());
+		}
+	}
+	else if (WebMessage.EventName == WebViewEvents::ASSET_UNLOCK)
+	{
+		if (OnAssetUnlock.IsBound())
+		{
+			OnAssetUnlock.Broadcast(WebMessage.GetAssetRecord());
+		}
+	}
+	UE_LOG(LogTemp, Warning, TEXT("WebEvent: %s"), *WebMessage.EventName);
+}
 ```
-Next we set the callback function (delegate) to be run once creation is complete.
+
+The code itself should be quite self explanatory, it checks for the event name, and broadcasts the delegate with the required data. 
+
+If you switch back to the `ReadyPlayerMeWebBrowser.h` file you will see the following delegates defined.
+
 ```cpp
-WebLinkObject->SetAvatarUrlCallback(WebBrowserCallback);
+	UPROPERTY(BlueprintAssignable)
+	FOnAvatarCreated OnAvatarExported;
+	UPROPERTY(BlueprintAssignable)
+	FOnUserSet OnUserSet;
+	UPROPERTY(BlueprintAssignable)
+	FOnAssetUnlock OnAssetUnlock;
+	UPROPERTY(BlueprintAssignable)
+	FOnUserAuthorized OnUserAuthorized;
 ```
-Finally we execute the custom javascript that we use to listen to the website event that fires when the avatar creation process is complete.
-```cpp
-this->ExecuteJavascript(JavascriptSnippet);
-```
+
+Notice that all of these have the macro `UPROPERTY(BlueprintAssignable)` which is required for the delegates to be accessible from the Widget Blueprint. By doing this we can easily bind the delegates to custom events from in the Widget Blueprint.
+
