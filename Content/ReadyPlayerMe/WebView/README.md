@@ -49,7 +49,7 @@ This event will return the URL to the GLB file of the avatar. This can then be u
 
 ![Screenshot 2023-03-13 214725](https://github.com/readyplayerme/rpm-unreal-webview/assets/3124894/ecbf65cc-9231-4816-96c4-8ce1420077e4)
 
-![Screenshot 2023-03-03 165756](https://github.com/readyplayerme/rpm-unreal-webview/assets/3124894/cb3d86e8-2ce1-4381-b93f-45b8dd9da788)
+![Screenshot 2023-06-20 141228](https://github.com/readyplayerme/rpm-unreal-webview/assets/3124894/a21d733e-28f0-4f3f-b413-02ac3fb67c5c)
 
 # Ready Player Me WebView Widget Class
 
