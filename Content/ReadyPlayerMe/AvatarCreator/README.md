@@ -36,7 +36,6 @@ We need to set the customization options for the avatar creator in the propertie
 - **Select Gender** Allows skipping the gender selection screen
 - **Allow Close Button** Hides the close button
 - **Allow Webcam** Enables the selfie selection screen if the webcam is available
-- **Default Avatar Ids** Specify the avatar ids that will be shown on the **Pick An Avatar** page. **Important** this field needs to be filled with the avatar ids from the demo map.
 
 In order to be notified when the avatar is saved or selected in the avatar creator, we need to subscribe to the **Avatar Saved** and **Avatar Selected** events. Both of these events will have the avatar URL that we can use afterwards.
 When the avatar is saved or selected we can close widgets and spawn a new avatar with the avatar URL that was passed through the events.

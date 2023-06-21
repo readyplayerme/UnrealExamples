@@ -32,7 +32,7 @@
 			"Enabled": true
 		},
 		{
-			"Name": "WebBrowserWidget",
+			"Name": "RpmWebView",
 			"Enabled": true
 		},
 		{

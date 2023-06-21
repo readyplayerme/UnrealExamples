@@ -43,11 +43,11 @@ Example demonstrates how to use the runtime retargeting to retarget the animatio
 
 Example demonstrates the use of the Ready Player Me Custom Avatar Creator open-source plugin. The plugin is an in-engine implementation of the web avatar creator.
 
-## Web Browser
+## Web View
 
 ![Screenshot 2022-10-26 121009](https://user-images.githubusercontent.com/108666572/198000086-7771d6a5-70cc-4b39-b087-b0533257d9be.png)
 
-[**Example**](https://github.com/readyplayerme/UnrealExamples/tree/main/Content/ReadyPlayerMe/WebBrowser#readme)
+[**Example**](https://github.com/readyplayerme/UnrealExamples/tree/main/Content/ReadyPlayerMe/WebView#readme)
 
 Example demonstrates the use of the Unreal Engine Web Browser module (and Web Browser Widget) to embed the ReadyPlayerMe Web Avatar Creator inside an application to create a seamless integration.
 
