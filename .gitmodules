@@ -7,6 +7,6 @@
 [submodule "Plugins/RpmAvatarCreator"]
 	path = Plugins/RpmAvatarCreator
 	url = https://github.com/readyplayerme/rpm-unreal-avatar-creator.git
-[submodule "Plugins/RpmWebBrowser"]
-	path = Plugins/RpmWebBrowser
-	url = https://github.com/readyplayerme/rpm-unreal-web-browser.git
+[submodule "Plugins/RpmWebView"]
+	path = Plugins/RpmWebView
+	url = https://github.com/readyplayerme/rpm-unreal-webview.git
