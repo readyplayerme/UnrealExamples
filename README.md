@@ -83,6 +83,14 @@ Example demonstrates how to render the ReadyPlayerMe avatars in the 2D space, to
 
 Example demonstrates how to preload Ready Player Me avatars while showing a loading screen, and spawn number of preloaded avatars instantly.
 
+## Avatar Config
+
+![Screenshot 2023-03-02 121909](https://user-images.githubusercontent.com/3124894/234279340-ce5b8fce-70e9-47dd-a723-9db9989d83c8.png)
+
+[**Example**](https://github.com/readyplayerme/UnrealExamples/tree/main/Content/ReadyPlayerMe/AvatarConfig#readme)
+
+Example demonstrates the avatar config usage. By tweaking the config parameters you can achieve the desired avatar configuration.
+
 ## Dependencies
 - Ready Player Me Unreal SDK
 - Ready Player Me Avatar Creator 
