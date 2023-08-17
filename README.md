@@ -85,7 +85,7 @@ Example demonstrates how to preload Ready Player Me avatars while showing a load
 
 ## Avatar Config
 
-![Screenshot 2023-03-02 121909](https://user-images.githubusercontent.com/3124894/234279340-ce5b8fce-70e9-47dd-a723-9db9989d83c8.png)
+![Screenshot 2023-08-17 222648](https://github.com/readyplayerme/UnrealExamples/assets/3124894/845adc82-ae72-40b3-b4d0-b75b70e53189)
 
 [**Example**](https://github.com/readyplayerme/UnrealExamples/tree/main/Content/ReadyPlayerMe/AvatarConfig#readme)
 
