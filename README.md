@@ -2,7 +2,7 @@
 
 ![Screenshot 2022-10-06 141418](https://user-images.githubusercontent.com/108666572/194309906-d7dc5108-2cb4-4005-baf7-b0d88af69c50.png)
 
-This repository contains examples of Ready Player Me integration into Unreal Engine 5 project. This is to serve as a reference for anybody that wants to integrate our 3D avatars into their Unreal Engine project.
+This repository contains examples of Ready Player Me integration into an Unreal Engine 5 project. This is to serve as a reference for anybody that wants to integrate our 3D avatars into their Unreal Engine project.
 
 # Examples
 
@@ -11,7 +11,7 @@ The examples are located in `Content > ReadyPlayerMe` folder. Each example has d
 ## Note
 
 The dependency plugins are added as submodules to the project.
-They are not automatically clonned when clonning the repository. Use the following command to initialize or update the dependency submodules.
+They are not automatically cloned when cloning the repository. Use the following command to initialize or update the dependency submodules.
 ```
 git submodule update --init
 ```
@@ -81,7 +81,7 @@ Example demonstrates how to render the ReadyPlayerMe avatars in the 2D space, to
 
 [**Example**](https://github.com/readyplayerme/UnrealExamples/tree/main/Content/ReadyPlayerMe/Preloading#readme)
 
-Example demonstrates how to preload Ready Player Me avatars while showing a loading screen, and spawn number of preloaded avatars instantly.
+Example demonstrates how to preload Ready Player Me avatars while showing a loading screen, and spawn a number of preloaded avatars instantly.
 
 ## Avatar Config
 
