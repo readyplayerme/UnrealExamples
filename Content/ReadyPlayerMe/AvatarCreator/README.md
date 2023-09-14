@@ -31,7 +31,6 @@ We need to set the customization options for the avatar creator in the propertie
 ![Screenshot 2023-03-13 214816](https://user-images.githubusercontent.com/3124894/233412512-138d218d-53f0-488b-aa44-236c0cf04d44.png)
 
 ### Customization options
-- **Partner Domain** Specify your partner domain
 - **Select Body Type** Allows skipping the body type selection screen
 - **Select Gender** Allows skipping the gender selection screen
 - **Allow Close Button** Hides the close button
