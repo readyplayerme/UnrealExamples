@@ -10,7 +10,7 @@ To enable the LiveLink support for our project, `LiveLink` and `AppleARKitFaceSu
 # Quick Start
 By default the `LiveLinkExample` map is loaded on startup and it can be found in the `Content > Maps` folder as below.
 
-The map itself has no custom code or logic in the Level Blueprint. If you already have a compatible Apple device setup correctly with the Live Link plugin then you should be able to just click play, wait for an avatar to load and then you should see the avatar's face animating.
+The map itself has no custom code or logic in the Level Blueprint. If you already have a compatible Apple device set up correctly with the Live Link plugin then you should be able to just click play, wait for an avatar to load, and then you should see the avatar's face animating.
 
 To load a different avatar you can do the following:
 - select the actor in the scene named `BP_RPM_LiveLinkActor`
@@ -40,3 +40,7 @@ Now lets open the Event Graph, here you can see how we get the head rotation dat
 ## Livelink Actor
 
 In the LiveLink Actor we load the avatar and when it's completed, we set the subject name of the Livelink animation using `Get Live Link Enabled Subject Names` function.
+
+## Built Application
+
+For the LiveLink to work on the built application, make sure you run the application with the **-messaging** command line argument.
