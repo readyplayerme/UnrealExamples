@@ -28,10 +28,6 @@
 			"Enabled": true
 		},
 		{
-			"Name": "RpmAvatarCreator",
-			"Enabled": true
-		},
-		{
 			"Name": "RpmWebView",
 			"Enabled": true
 		},
