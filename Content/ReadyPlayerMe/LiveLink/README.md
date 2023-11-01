@@ -39,7 +39,9 @@ Now lets open the Event Graph, here you can see how we get the head rotation dat
 
 ## Livelink Actor
 
-In the LiveLink Actor we load the avatar and when it's completed, we set the subject name of the Livelink animation using `Get Live Link Enabled Subject Names` function.
+In the LiveLink Actor we add a ReadyPlayerMe Component. For the AvatarConfig property of the component we set a custom avatar config that contains ARKit MorphTargetGroup.
+This way the loaded avatar will have the ARKit MorphTargets that we can use for the facial animations.
+We load an avatar using the ReadyPlayerMe component, and when it's completed, we set the subject name of the Livelink animation using `Get Live Link Enabled Subject Names` function.
 
 ## Built Application
 
