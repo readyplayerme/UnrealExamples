@@ -75,6 +75,14 @@ Example demonstrates how to use the Live Link plugin to apply facial tracking an
 
 Example demonstrates how to render the ReadyPlayerMe avatars in the 2D space, to create images or 2D Animations.
 
+## Render API
+
+![Screenshot 2023-11-07 141826](https://github.com/readyplayerme/UnrealExamples/assets/3124894/0db4ae2e-1536-4d76-a1c0-f99b8735a216)
+
+[**Example**](https://github.com/readyplayerme/UnrealExamples/tree/main/Content/ReadyPlayerMe/RenderApi#readme)
+
+The example demonstrates how to use the render API to load the ReadyPlayerMe 2D avatar images.
+
 ## Avatar Preloading
 
 ![Screenshot 2023-03-02 121909](https://user-images.githubusercontent.com/3124894/234279340-ce5b8fce-70e9-47dd-a723-9db9989d83c8.png)
