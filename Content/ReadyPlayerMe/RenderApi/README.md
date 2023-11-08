@@ -9,10 +9,10 @@ The `RenderApiMap` map can be found in the `Content > ReadyPlayerMe > RenderApi 
 
 ## Render Api Image Widget
 
-When the widget is constructed, we create a **Load Avatar Render Async** blueprint node and provide the model URL and RenderProperties inputs.
+When the widget is constructed, we create a **LoadAvatarRenderAsync** blueprint node and provide the model URL and RenderProperties inputs.
 When the **OnComplete** callback is called, we set the texture to the already existing image.
 
-![Screenshot 2023-11-07 142149](https://github.com/readyplayerme/UnrealExamples/assets/3124894/6a989765-ad90-4594-b94d-84444eaa6fa8)
+![Screenshot 2023-11-08 164907](https://github.com/readyplayerme/UnrealExamples/assets/3124894/72f4d7d0-67b2-4bc0-a19f-5d19d241f6b7)
 
 # Render Api Overlay
 
