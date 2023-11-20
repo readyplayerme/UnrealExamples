@@ -20,7 +20,8 @@ When the avatars are successfully preloaded we hide the Loading Widget and spawn
 
 ![Screenshot 2023-03-03 165756](https://user-images.githubusercontent.com/3124894/234279510-5093de51-b954-45e5-ba12-170c6f76b7e6.png)
 
-Now that we don't need the preloaded avatars in the runtime memory cache we remove all avatars from the runtime memory cache by calling `RemoveAvatarsFromRuntimeMemoryCache` node. It's always good to clean the unneeded avatars from the memory cache to clean up the the memory and always have up-to-date avatars.
+Now that we don't need the preloaded avatars in the memory we remove all avatars from the memory by calling `RemoveAvatarsFromMemory` node.
+It's always good to clean the unneeded avatars from the memory to clean up the the memory and always have up-to-date avatars.
 
 ![Screenshot 2023-03-13 214816](https://user-images.githubusercontent.com/3124894/233973161-350e6bb6-f50d-4e04-b201-100245cf528b.png)
 
@@ -30,12 +31,9 @@ Preloaded actor contains a simple logic of loading the avatar when it is spawned
 
 ![Screenshot 2023-03-02 121909](https://user-images.githubusercontent.com/3124894/233973310-a4f30e63-2bf4-4877-b631-f6e7d77c2acb.png)
 
-For the actor to be able to use the memory cache we need to enable **Use Memory Cache** checkbox in the **ReadyPlayeMeComponent**.
-
-![Screenshot 2023-03-02 121909](https://user-images.githubusercontent.com/3124894/233977455-57a9323b-917c-4173-99cc-4024078d7fa1.png)
-
 **Note:** Avatar Config and Target Skeleton need to be the same, as in the **AvatarPreloadedData** that is used to preload avatars.
 
-## Add Loaded Avatars To Runtime Memory Cache (Optional)
+## Keep Loaded Avatars In Memory (Optional)
 
-There is also a posibility to add the loaded avatars 
+Besides preloading, there is also an option to keep the loaded avatars in memory when loading the avatars from the ReadyPlayerMeComponent component.
+To enable this functionality, go to the `project settings > Ready Player Me` and enable the **Keep Loaded Avatars In Memory** checkbox.
