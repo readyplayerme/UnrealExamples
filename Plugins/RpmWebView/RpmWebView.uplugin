@@ -1,0 +1,33 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "0.1.1",
+	"FriendlyName": "Ready Player Me WebView",
+	"Description": "Ready Player Me WebView",
+	"Category": "Runtime",
+	"CreatedBy": "Ready Player Me",
+	"CreatedByURL": "https://readyplayer.me/",
+	"DocsURL": "https://docs.readyplayer.me/integration-guides/unreal-engine",
+	"MarketplaceURL": "",
+	"SupportURL": "https://docs.readyplayer.me/integration-guides/unreal-engine",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": true,
+	"Modules": [
+		{
+			"Name": "RpmWebView",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"WhitelistPlatforms": [
+				"Win64"
+			]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "WebBrowserWidget",
+			"Enabled": true
+		}
+	]
+}

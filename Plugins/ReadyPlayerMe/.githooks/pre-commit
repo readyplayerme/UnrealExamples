@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# Gitflow branching and naming strategy enforcement for Windows and Mac
+
+protected_branches="^(master|develop|hotfix/|release/|feature/)"
+current_branch=$(git symbolic-ref HEAD | sed 's!refs/heads/!!')
+
+# Ensure the branch name adheres to the Gitflow naming strategy
+if ! [[ ${current_branch} =~ ${protected_branches} ]]; then
+    echo "Error: The current branch '${current_branch}' does not adhere to the Gitflow naming strategy."
+    echo "Branch names must match the following patterns: master, develop, hotfix/*, release/*, feature/*."
+    exit 1
+fi
+
+# Check if pushing to the correct remote branch
+remote_branch=$(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD))
+if [[ -z "${remote_branch}" ]]; then
+    echo "Error: The current branch '${current_branch}' has no tracking remote branch."
+    exit 1
+fi
+
+remote_name=$(echo ${remote_branch} | cut -d/ -f1)
+remote_branch_name=$(echo ${remote_branch} | cut -d/ -f2-)
+
+if [[ "${current_branch}" != "${remote_branch_name}" ]]; then
+    echo "Error: The current branch '${current_branch}' must be pushed to a remote branch with the same name: '${remote_name}/${current_branch}'."
+    exit 1
+fi
+
+exit 0
