@@ -1,0 +1,23 @@
+#!/bin/sh
+
+COMMIT_MESSAGE="$(head -n1 "$1")"
+COMMIT_MESSAGE_REGEX="^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-z ]+\))?: .+$"
+AUTO_COMMIT_MESSAGE_REGEX="^Merge (pull request|branch) [a-zA-Z0-9#'_/-]+ (of [a-zA-Z0-9#':_. /-]+ )?(from|into) [a-zA-Z0-9#':_. /-]+$"
+
+
+if [[ $COMMIT_MESSAGE =~ $COMMIT_MESSAGE_REGEX || $COMMIT_MESSAGE =~ $AUTO_COMMIT_MESSAGE_REGEX ]]; then
+	exit 0
+else
+    echo "Invalid commit message format:"
+    echo "Your message: '${COMMIT_MESSAGE}'"
+    echo ""
+    echo "Please use the following format:"
+    echo "<type>(<scope>): <subject>"
+    echo ""
+    echo " the (<scope>) part is optional"
+    echo ""
+    echo "Examples:"
+    echo "feat(login): add support for email login"
+    echo "fix: fix issue with user profile image upload"
+	exit 1
+fi
