@@ -15,6 +15,7 @@ static const TCHAR* HalfBodyParam = TEXT("bodyType=halfbody");
 static const TCHAR* SelectBodyTypeParam = TEXT("selectBodyType");
 static const TCHAR* GenderMaleParam = TEXT("gender=male");
 static const TCHAR* GenderFemaleParam = TEXT("gender=female");
+static const TCHAR* SourceParam = TEXT("source=unreal-webview");
 static const TCHAR* LoginTokenParam = TEXT("token");
 static const TCHAR* FrameApiParam = TEXT("frameApi");
 
@@ -112,19 +113,17 @@ void URpmWebViewWidget::AddGenderParam(TArray<FString>& Params) const
 FString URpmWebViewWidget::BuildUrl(const FString& LoginToken) const
 {
 	TArray<FString> Params;
-	if(!LoginToken.IsEmpty())
+	if (!LoginToken.IsEmpty())
 	{
 		Params.Add(LoginTokenParam + '=' + LoginToken);
 	}
-	
+
 	Params.Add(FrameApiParam);
+	Params.Add(SourceParam);
+
 	if (bClearCache)
 	{
 		Params.Add(ClearCacheParam);
-	}
-	if (bQuickStart)
-	{
-		Params.Add(QuickStartParam);
 	}
 	AddBodyTypeParam(Params);
 	AddGenderParam(Params);

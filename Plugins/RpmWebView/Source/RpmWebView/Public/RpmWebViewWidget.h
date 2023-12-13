@@ -16,9 +16,6 @@ public:
 	bool bClearCache = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me|Web Browser")
-	bool bQuickStart = false;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me|Web Browser")
 	ESelectBodyType SelectBodyType = ESelectBodyType::None;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me|Web Browser")
