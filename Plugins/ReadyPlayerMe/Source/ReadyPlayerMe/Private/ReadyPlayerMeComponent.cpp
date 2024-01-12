@@ -14,6 +14,7 @@
 UReadyPlayerMeComponent::UReadyPlayerMeComponent()
 	: TargetSkeleton(nullptr)
 	, AvatarConfig(nullptr)
+	, AutoLodConfig(nullptr)
 	, SkeletalMeshComponent(nullptr)
 {
 	PrimaryComponentTick.bCanEverTick = false;
@@ -47,6 +48,7 @@ void UReadyPlayerMeComponent::LoadAvatar(const FAvatarLoadCompleted& OnLoadCompl
 	}
 
 	AvatarLoader = NewObject<UReadyPlayerMeAvatarLoader>(this,TEXT("AvatarLoader"));
+	AvatarLoader->AutoLodConfig = AutoLodConfig;
 	AvatarLoader->LoadAvatar(UrlShortcode, AvatarConfig, TargetSkeleton, SkeletalMeshConfig, OnAvatarDownloadCompleted, OnLoadFailed);
 }
 

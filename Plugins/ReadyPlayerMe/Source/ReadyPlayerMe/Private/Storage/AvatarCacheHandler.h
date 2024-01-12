@@ -13,7 +13,7 @@ public:
 	~FAvatarCacheHandler();
 
 	void SetUpdatedMetadataStr(const FString& MetadataJson, const FString& UpdatedDate);
-	void SetModelData(const TArray<uint8>* Data);
+	void SetModelData(int LodIndex, const TArray<uint8>* Data);
 
 	void SaveAvatarInCache() const;
 
@@ -31,7 +31,7 @@ private:
 	const FAvatarUri AvatarUri;
 
 	FString UpdatedMetadataStr;
-	const TArray<uint8>* ModelData;
+	TMap<FString, const TArray<uint8>*> ModelDataMap;
 	bool bMetadataNeedsUpdate;
 
 	TSharedPtr<class FAvatarManifest> AvatarManifest;

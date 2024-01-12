@@ -41,7 +41,7 @@ void FRpmAvatarTemplateDownloader::OnTemplatesDownloadCompleted(bool bSuccess)
 	}
 	AvatarTemplates = FAvatarTemplateExtractor::ExtractAvatarTemplates(AvatarTemplatesRequest->GetContentAsString());
 	AvatarTemplatesRequest.Reset();
-	(void)OnDownloadCompleted.ExecuteIfBound(GetAvatarTemplates());
+	(void)OnDownloadCompleted.ExecuteIfBound(AvatarTemplates);
 	OnFailed.Unbind();
 	OnDownloadCompleted.Unbind();
 }

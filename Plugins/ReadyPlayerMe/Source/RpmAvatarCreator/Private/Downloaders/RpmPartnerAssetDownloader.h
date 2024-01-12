@@ -8,13 +8,13 @@
 class FRpmPartnerAssetDownloader : public TSharedFromThis<FRpmPartnerAssetDownloader>
 {
 public:
-	FRpmPartnerAssetDownloader(TSharedPtr<class FRequestFactory> RequestFactory);
+	FRpmPartnerAssetDownloader(TSharedPtr<class FRequestFactory> RequestFactory, EAvatarBodyType BodyType);
 
 	void DownloadAssets();
 
 	void ClearAssets();
 
-	TArray<FRpmPartnerAsset> GetFilteredAssets(EAvatarBodyType BodyType, EAvatarGender Gender) const;
+	TArray<FRpmPartnerAsset> GetFilteredAssets(EAvatarGender Gender) const;
 
 	FBaseRequestCompleted& GetPartnerAssetsDownloadCallback();
 
@@ -29,4 +29,5 @@ private:
 
 	TSharedPtr<class FRequestFactory> RequestFactory;
 	TMap<ERpmPartnerAssetType, TSharedPtr<class IBaseRequest>> AssetRequests;
+	EAvatarBodyType BodyType;
 };

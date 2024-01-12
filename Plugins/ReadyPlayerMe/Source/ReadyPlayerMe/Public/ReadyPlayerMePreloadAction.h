@@ -24,6 +24,9 @@ struct FAvatarPreloadData
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ReadyPlayerMe")
 	FglTFRuntimeSkeletalMeshConfig SkeletalMeshConfig;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me")
+	class UReadyPlayerMeAutoLodConfig* AutoLodConfig = nullptr;
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FAvatarPreloadCompleted);

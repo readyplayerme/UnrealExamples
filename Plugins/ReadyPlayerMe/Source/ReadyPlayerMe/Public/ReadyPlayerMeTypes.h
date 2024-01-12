@@ -205,7 +205,9 @@ struct FAvatarUri
 {
 	FString Guid;
 	FString ModelUrl;
+	TArray<FString> ModelLodUrls;
 	FString LocalModelPath;
+	TArray<FString> LocalModelLodPaths;
 	FString MetadataUrl;
 	FString LocalMetadataPath;
 	FString LocalAvatarDirectory;

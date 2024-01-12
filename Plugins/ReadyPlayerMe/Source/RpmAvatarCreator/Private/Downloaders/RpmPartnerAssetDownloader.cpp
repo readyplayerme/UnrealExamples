@@ -8,18 +8,23 @@
 
 namespace
 {
-	bool IsAssetFiltered(const FRpmPartnerAsset& Asset, EAvatarBodyType BodyType, EAvatarGender Gender)
+	bool IsAssetFiltered(const FRpmPartnerAsset& Asset, EAvatarGender Gender)
 	{
-		const bool BodyTypeFiltered = !((Asset.AssetType == ERpmPartnerAssetType::Outfit && BodyType == EAvatarBodyType::HalfBody) ||
-			(Asset.AssetType == ERpmPartnerAssetType::Shirt && BodyType == EAvatarBodyType::FullBody));
-		const bool GenderFiltered = Asset.Gender == Gender || Asset.Gender == EAvatarGender::Undefined;
-		return BodyTypeFiltered && GenderFiltered;
+		return Asset.Gender == Gender || Asset.Gender == EAvatarGender::Undefined;
+	}
+	bool ShouldDownloadAssets(ERpmPartnerAssetType AssetType, EAvatarBodyType BodyType)
+	{
+		const bool ShouldDownload = (BodyType == EAvatarBodyType::FullBody && AssetType != ERpmPartnerAssetType::Shirt) ||
+			(BodyType == EAvatarBodyType::HalfBody && AssetType != ERpmPartnerAssetType::Outfit && AssetType != ERpmPartnerAssetType::Top &&
+				AssetType != ERpmPartnerAssetType::Bottom && AssetType != ERpmPartnerAssetType::Footwear);
+		return ShouldDownload;
 	}
 	constexpr int ASSET_REQUEST_LIMIT = 100;
 }
 
-FRpmPartnerAssetDownloader::FRpmPartnerAssetDownloader(TSharedPtr<FRequestFactory> RequestFactory)
-	: RequestFactory(RequestFactory)
+FRpmPartnerAssetDownloader::FRpmPartnerAssetDownloader(TSharedPtr<FRequestFactory> RequestFactory, EAvatarBodyType BodyType)
+	: RequestFactory(MoveTemp(RequestFactory))
+	, BodyType(BodyType)
 {
 }
 
@@ -34,10 +39,13 @@ void FRpmPartnerAssetDownloader::DownloadAssets()
 	for (uint8 AssetTypeInt = 0; AssetTypeInt <= static_cast<uint8>(ERpmPartnerAssetType::Shirt); AssetTypeInt++)
 	{
 		ERpmPartnerAssetType AssetType = static_cast<ERpmPartnerAssetType>(AssetTypeInt);
-		auto AssetRequest = RequestFactory->CreateAssetRequest(FPartnerAssetExtractor::GetStringFromAssetType(AssetType), ASSET_REQUEST_LIMIT, 1);
-		AssetRequest->GetCompleteCallback().BindSP(AsShared(), &FRpmPartnerAssetDownloader::OnAssetsDownloadCompleted, AssetType);
-		AssetRequests.Add(AssetType, AssetRequest);
-		AssetRequest->Download();
+		if (ShouldDownloadAssets(AssetType, BodyType))
+		{
+			auto AssetRequest = RequestFactory->CreateAssetRequest(FPartnerAssetExtractor::GetStringFromAssetType(AssetType), ASSET_REQUEST_LIMIT, 1);
+			AssetRequest->GetCompleteCallback().BindSP(AsShared(), &FRpmPartnerAssetDownloader::OnAssetsDownloadCompleted, AssetType);
+			AssetRequests.Add(AssetType, AssetRequest);
+			AssetRequest->Download();
+		}
 	}
 }
 
@@ -46,9 +54,9 @@ void FRpmPartnerAssetDownloader::ClearAssets()
 	Assets.Empty();
 }
 
-TArray<FRpmPartnerAsset> FRpmPartnerAssetDownloader::GetFilteredAssets(EAvatarBodyType BodyType, EAvatarGender Gender) const
+TArray<FRpmPartnerAsset> FRpmPartnerAssetDownloader::GetFilteredAssets(EAvatarGender Gender) const
 {
-	return Assets.FilterByPredicate([BodyType, Gender](const auto& Asset){ return IsAssetFiltered(Asset, BodyType, Gender); });
+	return Assets.FilterByPredicate([this, Gender](const auto& Asset){ return IsAssetFiltered(Asset, Gender); });
 }
 
 bool FRpmPartnerAssetDownloader::AreAssetsReady() const

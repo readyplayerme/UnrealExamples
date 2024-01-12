@@ -21,7 +21,6 @@ namespace
 
 FAvatarCacheHandler::FAvatarCacheHandler(const FAvatarUri& AvatarUri, TSharedPtr<class FAvatarManifest> Manifest)
 	: AvatarUri(AvatarUri)
-	, ModelData(nullptr)
 	, bMetadataNeedsUpdate(false)
 	, AvatarManifest(MoveTemp(Manifest))
 	, AvatarCacheSettings(GetAvatarCacheSettings())
@@ -85,25 +84,35 @@ void FAvatarCacheHandler::SetUpdatedMetadataStr(const FString& MetadataJson, con
 	}
 }
 
-void FAvatarCacheHandler::SetModelData(const TArray<uint8>* Data)
+void FAvatarCacheHandler::SetModelData(int LodIndex, const TArray<uint8>* Data)
 {
 	if (!AvatarCacheSettings.bEnableAvatarCaching)
 	{
 		return;
 	}
 	// We store the pointer because we don't want to copy the avatar data.
-	ModelData = Data;
+	if (LodIndex == 0)
+	{
+		ModelDataMap.Add(AvatarUri.LocalModelPath, Data);
+	}
+	else
+	{
+		ModelDataMap.Add(AvatarUri.LocalModelLodPaths[LodIndex - 1], Data);
+	}
 }
 
 void FAvatarCacheHandler::SaveAvatarInCache() const
 {
-	if (AvatarCacheSettings.bEnableAvatarCaching && ModelData != nullptr)
+	if (AvatarCacheSettings.bEnableAvatarCaching && ModelDataMap.Num() != 0)
 	{
 		if (bMetadataNeedsUpdate)
 		{
 			FAvatarStorage::SaveJson(AvatarUri.LocalMetadataPath, UpdatedMetadataStr);
 		}
-		FAvatarStorage::SaveAvatar(AvatarUri.LocalModelPath, *ModelData);
+		for (const auto& Pair : ModelDataMap)
+		{
+			FAvatarStorage::SaveAvatar(Pair.Key, *Pair.Value);
+		}
 		if (AvatarCacheSettings.bEnableAutomaticCacheCleaning && AvatarManifest.IsValid())
 		{
 			AvatarManifest->AddAvatarAndEnforceLimit(AvatarUri.Guid);
@@ -114,6 +123,6 @@ void FAvatarCacheHandler::SaveAvatarInCache() const
 void FAvatarCacheHandler::ResetState()
 {
 	UpdatedMetadataStr = "";
-	ModelData = nullptr;
+	ModelDataMap.Empty();
 	bMetadataNeedsUpdate = false;
 };

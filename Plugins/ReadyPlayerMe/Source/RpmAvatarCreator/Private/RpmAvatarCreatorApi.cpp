@@ -15,8 +15,7 @@
 #include "Engine/SkeletalMesh.h"
 
 URpmAvatarCreatorApi::URpmAvatarCreatorApi()
-	: FullBodySkeleton(nullptr)
-	, HalfBodySkeleton(nullptr)
+	: TargetSkeleton(nullptr)
 	, BodyType(EAvatarBodyType::FullBody)
 	, ImageDownloader(nullptr)
 	, AvatarRequestHandler(nullptr)
@@ -29,7 +28,7 @@ void URpmAvatarCreatorApi::Initialize()
 	AuthManager = MakeShared<FRpmAuthManager>(RequestFactory);
 	AuthManager->BindTokenRefreshDelegate();
 	ColorDownloader = MakeShared<FRpmColorDownloader>(RequestFactory);
-	AssetDownloader = MakeShared<FRpmPartnerAssetDownloader>(RequestFactory);
+	AssetDownloader = MakeShared<FRpmPartnerAssetDownloader>(RequestFactory, BodyType);
 	AvatarTemplateDownloader = MakeShared<FRpmAvatarTemplateDownloader>(RequestFactory);
 	UserAvatarDownloader = MakeShared<FRpmUserAvatarDownloader>(RequestFactory);
 	ImageDownloader = NewObject<URpmImageDownloader>();
@@ -115,7 +114,6 @@ void URpmAvatarCreatorApi::PropertiesDownloaded(bool bSuccess, ERpmAvatarCreator
 	ColorDownloader->GetCompleteCallback().BindUObject(this, &URpmAvatarCreatorApi::ExecuteEditorReadyCallback, ERpmAvatarCreatorError::ColorDownloadFailure);
 	ColorDownloader->DownloadColors(AvatarProperties.Id);
 	AvatarRequestHandler->GetAvatarPreviewDownloadedCallback().BindUObject(this, &URpmAvatarCreatorApi::ExecuteEditorReadyCallback, ERpmAvatarCreatorError::AvatarPreviewFailure);
-	USkeleton* TargetSkeleton = BodyType == EAvatarBodyType::HalfBody ? HalfBodySkeleton : FullBodySkeleton;
 	AvatarRequestHandler->DownloadModel(TargetSkeleton);
 }
 
@@ -183,7 +181,7 @@ void URpmAvatarCreatorApi::UpdateAvatarColor(ERpmPartnerAssetColor AssetColor, i
 
 void URpmAvatarCreatorApi::PrecompileAvatar(ERpmPartnerAssetType AssetType)
 {
-	AvatarRequestHandler->Precompile(AssetType, AssetDownloader->GetFilteredAssets(BodyType, AvatarProperties.Gender));
+	AvatarRequestHandler->Precompile(AssetType, AssetDownloader->GetFilteredAssets(AvatarProperties.Gender));
 }
 
 void URpmAvatarCreatorApi::SaveAvatar(const FAvatarSaveCompleted& AvatarSaveCompleted, const FAvatarCreatorFailed& Failed)
@@ -208,12 +206,17 @@ void URpmAvatarCreatorApi::DownloadImage(const FString& Url, int32 Size, const F
 
 TArray<FRpmPartnerAsset> URpmAvatarCreatorApi::GetFilteredPartnerAssets() const
 {
-	return AssetDownloader->GetFilteredAssets(BodyType, AvatarProperties.Gender);
+	return AssetDownloader->GetFilteredAssets(AvatarProperties.Gender);
 }
 
 TArray<FRpmColorPalette> URpmAvatarCreatorApi::GetColorPalettes() const
 {
 	return ColorDownloader->GetColors();
+}
+
+TArray<FRpmAvatarTemplate> URpmAvatarCreatorApi::GetAvatarTemplates() const
+{
+	return AvatarTemplateDownloader->GetAvatarTemplates();
 }
 
 void URpmAvatarCreatorApi::BeginDestroy()

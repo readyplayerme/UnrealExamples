@@ -3,6 +3,8 @@
 
 #include "ReadyPlayerMeAvatarLoader.h"
 
+#include "ReadyPlayerMeAutoLodConfig.h"
+#include "ReadyPlayerMeAvatarConfig.h"
 #include "ReadyPlayerMeGameSubsystem.h"
 #include "Utils/AvatarUrlConvertor.h"
 #include "Storage/AvatarCacheHandler.h"
@@ -18,7 +20,9 @@ constexpr float METADATA_REQUEST_TIMEOUT = 20.f;
 
 UReadyPlayerMeAvatarLoader::UReadyPlayerMeAvatarLoader()
 	: SkeletalMesh(nullptr)
+	, AutoLodConfig(nullptr)
 	, GlbLoader(nullptr)
+	, DownloadedModelCount(0)
 	, bIsTryingToUpdate(false)
 {
 }
@@ -36,7 +40,7 @@ void UReadyPlayerMeAvatarLoader::LoadAvatar(const FString& UrlShortcode, UReadyP
 	Reset();
 	OnAvatarDownloadCompleted = OnDownloadCompleted;
 	OnAvatarLoadFailed = OnLoadFailed;
-	AvatarUri = FAvatarUrlConvertor::CreateAvatarUri(Url, AvatarConfig);
+	AvatarUri = FAvatarUrlConvertor::CreateAvatarUri(Url, AvatarConfig, AutoLodConfig);
 	const UReadyPlayerMeGameSubsystem* GameSubsystem = UGameInstance::GetSubsystem<UReadyPlayerMeGameSubsystem>(GetWorld()->GetGameInstance());
 	auto AvatarManifest = GameSubsystem ? GameSubsystem->AvatarManifest : nullptr;
 	CacheHandler = MakeShared<FAvatarCacheHandler>(*AvatarUri, AvatarManifest);
@@ -64,9 +68,9 @@ void UReadyPlayerMeAvatarLoader::CancelAvatarLoad()
 	{
 		MetadataRequest->CancelRequest();
 	}
-	if (ModelRequest.IsValid())
+	for (const auto& Request : ModelRequests)
 	{
-		ModelRequest->CancelRequest();
+		Request->CancelRequest();
 	}
 	Reset();
 }
@@ -88,8 +92,7 @@ void UReadyPlayerMeAvatarLoader::ProcessReceivedMetadata()
 		return;
 	}
 	// If we are trying to update the avatar, but the metadata is not changed, we loaded the cached avatar.
-	OnGlbLoadCompleted.BindDynamic(this, &UReadyPlayerMeAvatarLoader::OnGlbLoaded);
-	GlbLoader->LoadFromFile(AvatarUri->LocalModelPath, AvatarMetadata->BodyType, OnGlbLoadCompleted);
+	LoadGlb(true, AvatarMetadata->BodyType);
 }
 
 void UReadyPlayerMeAvatarLoader::ExecuteSuccessCallback()
@@ -105,17 +108,16 @@ void UReadyPlayerMeAvatarLoader::ExecuteSuccessCallback()
 void UReadyPlayerMeAvatarLoader::TryLoadFromCache()
 {
 	MetadataRequest->GetCompleteCallback().Unbind();
-	if (ModelRequest)
+	for (const auto& Request : ModelRequests)
 	{
-		ModelRequest->GetCompleteCallback().Unbind();
+		Request->GetCompleteCallback().Unbind();
 	}
 	// We reset the cache handler state to prevent saving of incomplete data
 	CacheHandler->ResetState();
 	AvatarMetadata = CacheHandler->GetLocalMetadata();
 	if (AvatarMetadata.IsSet())
 	{
-		OnGlbLoadCompleted.BindDynamic(this, &UReadyPlayerMeAvatarLoader::OnGlbLoaded);
-		GlbLoader->LoadFromFile(AvatarUri->LocalModelPath, AvatarMetadata->BodyType, OnGlbLoadCompleted);
+		LoadGlb(true, AvatarMetadata->BodyType);
 	}
 	else
 	{
@@ -167,7 +169,7 @@ void UReadyPlayerMeAvatarLoader::OnGlbLoaded(USkeletalMesh* Mesh)
 	OnGlbLoadCompleted.Unbind();
 }
 
-void UReadyPlayerMeAvatarLoader::OnModelDownloaded(bool bSuccess)
+void UReadyPlayerMeAvatarLoader::OnModelDownloaded(bool bSuccess, int LodIndex)
 {
 	if (!OnAvatarDownloadCompleted.IsBound())
 	{
@@ -175,10 +177,13 @@ void UReadyPlayerMeAvatarLoader::OnModelDownloaded(bool bSuccess)
 	}
 	if (bSuccess)
 	{
-		CacheHandler->SetModelData(&ModelRequest->GetContent());
-		const EAvatarBodyType BodyType = AvatarMetadata ? AvatarMetadata->BodyType : EAvatarBodyType::Undefined;
-		OnGlbLoadCompleted.BindDynamic(this, &UReadyPlayerMeAvatarLoader::OnGlbLoaded);
-		GlbLoader->LoadFromData(ModelRequest->GetContent(), BodyType, OnGlbLoadCompleted);
+		CacheHandler->SetModelData(LodIndex, &ModelRequests[LodIndex]->GetContent());
+		DownloadedModelCount++;
+		if (DownloadedModelCount == AvatarUri->ModelLodUrls.Num() + 1)
+		{
+			const EAvatarBodyType BodyType = AvatarMetadata ? AvatarMetadata->BodyType : EAvatarBodyType::Undefined;
+			LoadGlb(false, BodyType);
+		}
 	}
 	else if (bIsTryingToUpdate)
 	{
@@ -192,9 +197,49 @@ void UReadyPlayerMeAvatarLoader::OnModelDownloaded(bool bSuccess)
 
 void UReadyPlayerMeAvatarLoader::DownloadAvatarModel()
 {
-	ModelRequest = MakeShared<FAvatarRequest>();
-	ModelRequest->GetCompleteCallback().BindUObject(this, &UReadyPlayerMeAvatarLoader::OnModelDownloaded);
-	ModelRequest->Download(AvatarUri->ModelUrl, AVATAR_REQUEST_TIMEOUT);
+	TArray<FString> ModelUrls = {AvatarUri->ModelUrl};
+	ModelUrls.Append(AvatarUri->ModelLodUrls);
+	for (int i = 0; i < ModelUrls.Num(); ++i)
+	{
+		ModelRequests.Add(MakeShared<FAvatarRequest>());
+		ModelRequests[i]->GetCompleteCallback().BindUObject(this, &UReadyPlayerMeAvatarLoader::OnModelDownloaded, i);
+		ModelRequests[i]->Download(ModelUrls[i], AVATAR_REQUEST_TIMEOUT);
+	}
+}
+
+void UReadyPlayerMeAvatarLoader::LoadGlb(bool bFromFile, const EAvatarBodyType BodyType)
+{
+	OnGlbLoadCompleted.BindDynamic(this, &UReadyPlayerMeAvatarLoader::OnGlbLoaded);
+	if (bFromFile)
+	{
+		if (AvatarUri->ModelLodUrls.Num() == 0)
+		{
+			GlbLoader->LoadFromFile(AvatarUri->LocalModelPath, BodyType, OnGlbLoadCompleted);
+		}
+		else
+		{
+			TArray<FString> ModelLodPaths = {AvatarUri->LocalModelPath};
+			ModelLodPaths.Append(AvatarUri->LocalModelLodPaths);
+			GlbLoader->LoadFromLodFiles(ModelLodPaths, AutoLodConfig->LODScreenSizes, BodyType, OnGlbLoadCompleted);
+		}
+	}
+	else
+	{
+		OnGlbLoadCompleted.BindDynamic(this, &UReadyPlayerMeAvatarLoader::OnGlbLoaded);
+		if (AvatarUri->ModelLodUrls.Num() == 0)
+		{
+			GlbLoader->LoadFromData(ModelRequests[0]->GetContent(), BodyType, OnGlbLoadCompleted);
+		}
+		else
+		{
+			TArray<const TArray<uint8>*> LodData;
+			for (const auto& Request : ModelRequests)
+			{
+				LodData.Add(&Request->GetContent());
+			}
+			GlbLoader->LoadFromLodData(LodData, AutoLodConfig->LODScreenSizes, BodyType, OnGlbLoadCompleted);
+		}
+	}
 }
 
 void UReadyPlayerMeAvatarLoader::Reset()
@@ -202,12 +247,13 @@ void UReadyPlayerMeAvatarLoader::Reset()
 	bIsTryingToUpdate = false;
 	SkeletalMesh = nullptr;
 	GlbLoader = nullptr;
+	DownloadedModelCount = 0;
 	OnGlbLoadCompleted.Unbind();
 	CacheHandler.Reset();
 	AvatarMetadata.Reset();
 	AvatarUri.Reset();
 	MetadataRequest.Reset();
-	ModelRequest.Reset();
+	ModelRequests.Empty();
 }
 
 void UReadyPlayerMeAvatarLoader::BeginDestroy()

@@ -4,6 +4,7 @@
 #include "RpmAvatarCreatorApi.h"
 #include "Blueprint/WidgetTree.h"
 #include "Components/WrapBox.h"
+#include "UI/RpmBadgeIconUI.h"
 
 static const TSet<ERpmPartnerAssetType> EXCLUDE_CLEAR_SELECTION_ASSETS =
 {
@@ -21,6 +22,9 @@ void URpmAvatarEditorUI::Init(class URpmAvatarCreatorApi* Api)
 	FPreviewDownloadCompleted PreviewDownloadedDelegate;
 	PreviewDownloadedDelegate.BindDynamic(this, &URpmAvatarEditorUI::PreviewDownloaded);
 	AvatarCreatorApi->SetPreviewDownloadedDelegate(PreviewDownloadedDelegate);
+	AssetIconDownloadCompleted.BindDynamic(this, &URpmAvatarEditorUI::OnAssetIconDownloaded);
+	TemplateIconDownloadCompleted.BindDynamic(this, &URpmAvatarEditorUI::OnTemplateIconDownloaded);
+	BadgeIconDownloadCompleted.BindDynamic(this, &URpmAvatarEditorUI::OnBadgeIconDownloaded);
 }
 
 void URpmAvatarEditorUI::SetupAssets()
@@ -32,6 +36,43 @@ void URpmAvatarEditorUI::SetupAssets()
 	bAreModularOutfitsDisabled = AssetContainerMap[ERpmPartnerAssetType::Top]->GetChildrenCount() == 0 ||
 		AssetContainerMap[ERpmPartnerAssetType::Bottom]->GetChildrenCount() == 0 ||
 		AssetContainerMap[ERpmPartnerAssetType::Footwear]->GetChildrenCount() == 0;
+}
+
+void URpmAvatarEditorUI::DiscardAvatarDraft()
+{
+	auto& AvatarProperties = AvatarCreatorApi->AvatarProperties;
+	if (!AvatarProperties.Id.IsEmpty())
+	{
+		AvatarCreatorApi->DeleteAvatar(AvatarProperties.Id, true, {}, {});
+	}
+	AvatarCreatorApi->SelectedAvatarTemplateId.Empty();
+	AvatarProperties.Assets.Empty();
+	AvatarProperties.Colors.Empty();
+	AvatarProperties.Id.Empty();
+	AvatarProperties.Base64Image.Empty();
+}
+
+void URpmAvatarEditorUI::UpdateLockedAssets()
+{
+	AvatarCreatorApi->UpdateLockedAssets(UpdateLockedAssetsCompleted, {});
+}
+
+void URpmAvatarEditorUI::OnUpdateLockedAssetsCompleted()
+{
+	bool ContainsLockedAsset = false;
+	const auto& SelectedAssets = AvatarCreatorApi->AvatarProperties.Assets;
+	for (const auto& Asset : AvatarCreatorApi->GetFilteredPartnerAssets())
+	{
+		if (SelectedAssets.Contains(Asset.AssetType) && SelectedAssets[Asset.AssetType] == Asset.Id && Asset.bIsLocked)
+		{
+			ContainsLockedAsset = true;
+			break;
+		}
+	}
+	if (!ContainsLockedAsset)
+	{
+		AssetUnlocked();
+	}
 }
 
 bool URpmAvatarEditorUI::IsCustomizableAssetSelected() const
@@ -103,9 +144,9 @@ void URpmAvatarEditorUI::AddAssetButton(const FRpmPartnerAsset& Asset, UWrapBox*
 {
 	const auto& ButtonClass = Asset.AssetType == ERpmPartnerAssetType::EyeColor ? EyeColorButtonClass : AssetButtonClass;
 	URpmAssetButtonUI* AssetButton = WidgetTree->ConstructWidget<URpmAssetButtonUI>(ButtonClass);
-	AssetButton->SetSelected(IsAssetSelected(Asset));
+	AssetButton->bIsSelected = IsAssetSelected(Asset);
+	AssetButton->SetSelected(AssetButton->bIsSelected);
 	AssetButton->Asset = Asset;
-	AssetButton->AvatarCreatorApi = AvatarCreatorApi;
 	AssetButton->UpdateUI();
 	WrapBox->AddChildToWrapBox(AssetButton);
 	AssetButton->AssetButtonSelected.AddDynamic(this, &URpmAvatarEditorUI::OnAssetButtonClicked);
@@ -113,6 +154,10 @@ void URpmAvatarEditorUI::AddAssetButton(const FRpmPartnerAsset& Asset, UWrapBox*
 
 void URpmAvatarEditorUI::OnAssetButtonClicked(const FRpmPartnerAsset& Asset)
 {
+	if (AvatarCreatorApi->AvatarProperties.Assets.Contains(Asset.AssetType) && AvatarCreatorApi->AvatarProperties.Assets[Asset.AssetType] == Asset.Id)
+	{
+		return;
+	}
 	AssetSelected(Asset);
 	AvatarCreatorApi->UpdateAvatarAsset(Asset.AssetType, Asset.Id);
 	SetAssetSelectedPin(Asset);
@@ -127,6 +172,17 @@ void URpmAvatarEditorUI::OnAssetButtonClicked(const FRpmPartnerAsset& Asset)
 		else if (Asset.AssetType == ERpmPartnerAssetType::Top || Asset.AssetType == ERpmPartnerAssetType::Bottom || Asset.AssetType == ERpmPartnerAssetType::Footwear)
 		{
 			RemoveAssetSelectedPin(ERpmPartnerAssetType::Outfit);
+		}
+	}
+	if (BadgeIcon)
+	{
+		if (Asset.BadgeUrl.IsEmpty())
+		{
+			BadgeIcon->SetIconTexture(nullptr);
+		}
+		else
+		{
+			AvatarCreatorApi->DownloadImage(Asset.BadgeUrl, BadgeIcon->IconSize, BadgeIconDownloadCompleted);
 		}
 	}
 }
@@ -146,8 +202,8 @@ void URpmAvatarEditorUI::SetAssetSelectedPin(const FRpmPartnerAsset& Asset)
 	for (UWidget* Widget : AssetContainer->GetAllChildren())
 	{
 		URpmAssetButtonUI* AssetButton = Cast<URpmAssetButtonUI>(Widget);
-		const bool IsSelected = AssetButton->Asset.Id == Asset.Id && AssetButton->Asset.AssetType == Asset.AssetType;
-		AssetButton->SetSelected(IsSelected);
+		AssetButton->bIsSelected = AssetButton->Asset.Id == Asset.Id && AssetButton->Asset.AssetType == Asset.AssetType;
+		AssetButton->SetSelected(AssetButton->bIsSelected);
 	}
 }
 
@@ -157,6 +213,7 @@ void URpmAvatarEditorUI::RemoveAssetSelectedPin(ERpmPartnerAssetType AssetType)
 	for (UWidget* Widget : AssetContainer->GetAllChildren())
 	{
 		URpmAssetButtonUI* AssetButton = Cast<URpmAssetButtonUI>(Widget);
+		AssetButton->bIsSelected = false;
 		AssetButton->SetSelected(false);
 	}
 }
@@ -199,4 +256,73 @@ void URpmAvatarEditorUI::SetColorSelectedPin(ERpmPartnerAssetColor AssetColor, i
 		const bool IsSelected = ColorButton->AssetColor == AssetColor && ColorButton->ColorIndex == ColorIndex;
 		ColorButton->SetSelected(IsSelected);
 	}
+}
+
+void URpmAvatarEditorUI::DownloadAssetIcons(const UWrapBox* AssetContainer)
+{
+	for (UWidget* Widget : AssetContainer->GetAllChildren())
+	{
+		URpmAssetButtonUI* AssetButton = Cast<URpmAssetButtonUI>(Widget);
+		const FString& IconUrl = AssetButton->Asset.IconUrl;
+		if (!IconUrl.IsEmpty())
+		{
+			AssetImageMap.Add(IconUrl, AssetButton);
+			AvatarCreatorApi->DownloadImage(IconUrl, AssetButton->IconSize, AssetIconDownloadCompleted);
+		}
+	}
+}
+
+void URpmAvatarEditorUI::OnAssetIconDownloaded(UTexture2D* Image, const FString& Url)
+{
+	if (AssetImageMap.Contains(Url))
+	{
+		AssetImageMap[Url]->SetIconTexture(Image);
+		AssetImageMap.Remove(Url);
+	}
+}
+
+void URpmAvatarEditorUI::SetupTemplates()
+{
+	TemplateContainer->ClearChildren();
+	for (const FRpmAvatarTemplate& Template : AvatarCreatorApi->GetAvatarTemplates())
+	{
+		if (Template.Gender != AvatarCreatorApi->AvatarProperties.Gender)
+		{
+			continue;
+		}
+		URpmTemplateButtonUI* TemplateButton = WidgetTree->ConstructWidget<URpmTemplateButtonUI>(TemplateButtonClass);
+		TemplateButton->Template = Template;
+		TemplateButton->UpdateUI();
+		TemplateContainer->AddChildToWrapBox(TemplateButton);
+		TemplateButton->TemplateButtonSelected.AddDynamic(this, &URpmAvatarEditorUI::OnTemplateButtonClicked);
+
+		TemplateImageMap.Add(Template.ImageUrl, TemplateButton);
+		AvatarCreatorApi->DownloadImage(Template.ImageUrl, TemplateButton->IconSize, TemplateIconDownloadCompleted);
+	}
+}
+
+void URpmAvatarEditorUI::OnTemplateButtonClicked(const FRpmAvatarTemplate& Template)
+{
+	AvatarCreatorApi->SelectedAvatarTemplateId = Template.Id;
+	TemplateSelected(Template);
+	for (UWidget* Widget : TemplateContainer->GetAllChildren())
+	{
+		URpmTemplateButtonUI* TemplateButton = Cast<URpmTemplateButtonUI>(Widget);
+		const bool IsSelected = TemplateButton->Template.Id == Template.Id;
+		TemplateButton->SetSelected(IsSelected);
+	}
+}
+
+void URpmAvatarEditorUI::OnTemplateIconDownloaded(UTexture2D* Image, const FString& Url)
+{
+	if (TemplateImageMap.Contains(Url))
+	{
+		TemplateImageMap[Url]->SetIconTexture(Image);
+		TemplateImageMap.Remove(Url);
+	}
+}
+
+void URpmAvatarEditorUI::OnBadgeIconDownloaded(UTexture2D* Image, const FString& Url)
+{
+	BadgeIcon->SetIconTexture(Image);
 }

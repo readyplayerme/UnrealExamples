@@ -16,5 +16,5 @@ public:
 	
 	static FString GetAvatarId(const FString& IdUrl);
 
-	static FAvatarUri CreateAvatarUri(const FString& Url, class UReadyPlayerMeAvatarConfig* AvatarConfig);
+	static FAvatarUri CreateAvatarUri(const FString& Url, class UReadyPlayerMeAvatarConfig* AvatarConfig = nullptr, class UReadyPlayerMeAutoLodConfig* AutoLodConfig = nullptr);
 };

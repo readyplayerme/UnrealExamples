@@ -44,7 +44,14 @@ FString FAvatarStorage::LoadJson(const FString& Path)
 
 bool FAvatarStorage::AvatarExists(const FAvatarUri& AvatarUri)
 {
-	return FileExists(AvatarUri.LocalMetadataPath) && FileExists(AvatarUri.LocalModelPath);
+	TArray<FString> Paths = {AvatarUri.LocalMetadataPath, AvatarUri.LocalModelPath};
+	Paths.Append(AvatarUri.LocalModelLodPaths);
+	bool AvatarExists = true;
+	for (auto& Path : Paths)
+	{
+		AvatarExists = AvatarExists && FileExists(Path);
+	}
+	return AvatarExists;
 }
 
 bool FAvatarStorage::FileExists(const FString& Path)

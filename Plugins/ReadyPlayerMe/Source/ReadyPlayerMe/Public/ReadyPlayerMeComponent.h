@@ -63,6 +63,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me")
 	class UReadyPlayerMeAvatarConfig* AvatarConfig;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ready Player Me")
+	class UReadyPlayerMeAutoLodConfig* AutoLodConfig;
+
 	/**
 	 * Skeletal mesh component used for setting the skeletal mesh of the loaded avatar.
 	 * If not set, It will be initialised with the skeletal mesh component of the parent actor.

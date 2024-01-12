@@ -32,7 +32,7 @@ void URpmImageDownloader::DownloadImage(const FString& ImageUrl, int32 Size, con
 	}
 	if (ImageMap.Contains(ImageUrl))
 	{
-		(void)ImageDownloaded.ExecuteIfBound(ImageMap[ImageUrl]);
+		(void)ImageDownloaded.ExecuteIfBound(ImageMap[ImageUrl], ImageUrl);
 		return;
 	}
 	if (RequestCallbacks.Contains(ImageUrl))
@@ -62,7 +62,7 @@ void URpmImageDownloader::OnImageDownloadCompleted(bool bSuccess, FString ImageU
 	}
 	for (auto& Callback : RequestCallbacks[ImageUrl])
 	{
-		(void)Callback.ExecuteIfBound(Texture);
+		(void)Callback.ExecuteIfBound(Texture, ImageUrl);
 	}
 	ImageRequests.Remove(ImageUrl);
 	RequestCallbacks.Remove(ImageUrl);

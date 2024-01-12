@@ -3,7 +3,9 @@
 
 #include "AvatarUrlConvertor.h"
 
+#include "ReadyPlayerMeAvatarConfig.h"
 #include "AvatarConfigProcessor.h"
+#include "ReadyPlayerMeAutoLodConfig.h"
 #include "Internationalization/Regex.h"
 #include "Misc/Paths.h"
 
@@ -52,11 +54,11 @@ FString FAvatarUrlConvertor::GetAvatarId(const FString& IdUrl)
 	{
 		return IdUrl;
 	}
-	const FAvatarUri Uri = CreateAvatarUri(IdUrl, nullptr);
+	const FAvatarUri Uri = CreateAvatarUri(IdUrl);
 	return Uri.Guid;
 }
 
-FAvatarUri FAvatarUrlConvertor::CreateAvatarUri(const FString& Url, UReadyPlayerMeAvatarConfig* AvatarConfig)
+FAvatarUri FAvatarUrlConvertor::CreateAvatarUri(const FString& Url, UReadyPlayerMeAvatarConfig* AvatarConfig, UReadyPlayerMeAutoLodConfig* AutoLodConfig)
 {
 	FString UrlLink, UrlQueryString;
 	if (!Url.Split(TEXT("?"), &UrlLink, &UrlQueryString))
@@ -78,6 +80,14 @@ FAvatarUri FAvatarUrlConvertor::CreateAvatarUri(const FString& Url, UReadyPlayer
 	AvatarUri.LocalAvatarDirectory = AvatarsFolder;
 	AvatarUri.LocalModelPath = AvatarsFolder + "/" + ModelFolderName + "/" + Guid + SUFFIX_GLB;
 	AvatarUri.LocalMetadataPath = AvatarsFolder + "/" + Guid + SUFFIX_JSON;
-
+	if (AutoLodConfig)
+	{
+		for (auto* Config : AutoLodConfig->AutoLodConfigs)
+		{
+			const FString LodUrlQueryString = FAvatarConfigProcessor::Process(Config);
+			AvatarUri.ModelLodUrls.Add(UrlPath + SUFFIX_GLB + LodUrlQueryString);
+			AvatarUri.LocalModelLodPaths.Add(AvatarsFolder + "/" + FMD5::HashAnsiString(*LodUrlQueryString).Left(8) + "/" + Guid + SUFFIX_GLB);
+		}
+	}
 	return AvatarUri;
 }

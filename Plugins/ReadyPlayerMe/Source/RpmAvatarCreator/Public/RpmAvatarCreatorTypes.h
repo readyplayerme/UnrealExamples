@@ -235,7 +235,7 @@ DECLARE_DYNAMIC_DELEGATE(FUpdateLockedAssetsCompleted);
 
 DECLARE_DYNAMIC_DELEGATE_OneParam(FUserAvatarsDownloadCompleted, const TArray<FRpmUserAvatar>&, UserAvatars);
 
-DECLARE_DYNAMIC_DELEGATE_OneParam(FImageDownloadCompleted, UTexture2D*, Image);
+DECLARE_DYNAMIC_DELEGATE_TwoParams(FImageDownloadCompleted, UTexture2D*, Image, const FString&, Url);
 
 DECLARE_DYNAMIC_DELEGATE_OneParam(FAvatarTemplatesDownloadCompleted, const TArray<FRpmAvatarTemplate>&, AvatarTemplates);
 

@@ -48,12 +48,15 @@ public:
 	UPROPERTY()
 	USkeletalMesh* SkeletalMesh;
 
+	UPROPERTY()
+	class UReadyPlayerMeAutoLodConfig* AutoLodConfig;
+
 private:
 	UFUNCTION()
 	void OnMetadataDownloaded(bool bSuccess);
 
 	UFUNCTION()
-	void OnModelDownloaded(bool bSuccess);
+	void OnModelDownloaded(bool bSuccess, int LodIndex);
 
 	UFUNCTION()
 	void OnGlbLoaded(USkeletalMesh* Mesh);
@@ -68,6 +71,8 @@ private:
 
 	void TryLoadFromCache();
 
+	void LoadGlb(bool bFromFile, const EAvatarBodyType BodyType);
+
 	void Reset();
 
 	virtual void BeginDestroy() override;
@@ -80,11 +85,12 @@ private:
 
 	TSharedPtr<class FAvatarCacheHandler> CacheHandler;
 	TSharedPtr<class FAvatarRequest> MetadataRequest;
-	TSharedPtr<class FAvatarRequest> ModelRequest;
+	TArray<TSharedPtr<class FAvatarRequest>> ModelRequests;
 
 	FAvatarDownloadCompleted OnAvatarDownloadCompleted;
 	FAvatarLoadFailed OnAvatarLoadFailed;
 	FGlbLoadCompleted OnGlbLoadCompleted;
 
+	int DownloadedModelCount;
 	bool bIsTryingToUpdate;
 };

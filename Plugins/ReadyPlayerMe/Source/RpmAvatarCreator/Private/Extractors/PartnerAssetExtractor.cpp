@@ -58,7 +58,6 @@ namespace
 	const FString JSON_FIELD_NAME = "name";
 	const FString JSON_FIELD_GENDER = "gender";
 	const FString JSON_FIELD_ICON_URL = "iconUrl";
-	const FString JSON_FIELD_MASK_URL = "maskUrl";
 	const FString JSON_FIELD_BADGE_LOGO_URL = "badgeLogoUrl";
 	const FString JSON_FIELD_IS_LOCKED = "locked";
 	const FString JSON_FIELD_IS_LOCKED_CATEGORIES = "lockedCategories";
@@ -68,8 +67,6 @@ namespace
 	const FString JSON_TOTAL_PAGES = "totalPages";
 	const FString JSON_PAGE = "page";
 	const FString JSON_HAS_NEXT_PAGE = "hasNextPage";
-
-	const FString EYE_MASK_CROP_PARAM = "?rect=155,152,204,204";
 }
 
 FString FPartnerAssetExtractor::GetStringFromAssetType(ERpmPartnerAssetType AssetType)
@@ -139,10 +136,6 @@ FAssetPaginationData FPartnerAssetExtractor::ExtractAssets(const FString& JsonSt
 		if (JsonObject->HasTypedField<EJson::String>(JSON_FIELD_ICON_URL))
 		{
 			Asset.IconUrl = JsonObject->GetStringField(JSON_FIELD_ICON_URL);
-		}
-		if (Asset.AssetType == ERpmPartnerAssetType::EyeColor && JsonObject->HasTypedField<EJson::String>(JSON_FIELD_MASK_URL))
-		{
-			Asset.IconUrl = JsonObject->GetStringField(JSON_FIELD_MASK_URL) + EYE_MASK_CROP_PARAM;
 		}
 		if (JsonObject->HasTypedField<EJson::String>(JSON_FIELD_BADGE_LOGO_URL))
 		{

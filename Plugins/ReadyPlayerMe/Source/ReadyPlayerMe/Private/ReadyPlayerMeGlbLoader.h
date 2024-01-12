@@ -15,16 +15,18 @@ class UReadyPlayerMeGlbLoader : public UObject
 public:
 	UReadyPlayerMeGlbLoader();
 
-	UFUNCTION(BlueprintCallable, Category = "Ready Player Me", meta = (DisplayName = "Load Glb From File"))
 	void LoadFromFile(const FString& LocalModelPath, EAvatarBodyType BodyType, const FGlbLoadCompleted& LoadCompleted);
 
-	UFUNCTION(BlueprintCallable, Category = "Ready Player Me", meta = (DisplayName = "Load Glb From Data"))
 	void LoadFromData(const TArray<uint8>& Data, EAvatarBodyType BodyType, const FGlbLoadCompleted& LoadCompleted);
 
-	UPROPERTY(BlueprintReadWrite, Category="Ready Player Me")
+	void LoadFromLodData(const TArray<const TArray<uint8>*>& LodData, const TArray<float>& LODScreenSizes, EAvatarBodyType BodyType, const FGlbLoadCompleted& LoadCompleted);
+
+	void LoadFromLodFiles(const TArray<FString>& LocalModelLodPaths, const TArray<float>& LODScreenSizes, EAvatarBodyType BodyType, const FGlbLoadCompleted& LoadCompleted);
+
+	UPROPERTY()
 	USkeleton* TargetSkeleton;
 
-	UPROPERTY(BlueprintReadWrite, Category="Ready Player Me")
+	UPROPERTY()
 	FglTFRuntimeSkeletalMeshConfig SkeletalMeshConfig;
 
 private:
@@ -32,6 +34,8 @@ private:
 	void OnSkeletalMeshLoaded(USkeletalMesh* SkeletalMesh);
 
 	void LoadSkeletalMesh(class UglTFRuntimeAsset* Asset, EAvatarBodyType BodyType);
+
+	void LoadFromLodData(UglTFRuntimeAsset* Asset, const TArray<FglTFRuntimeMeshLOD>& RuntimeLODs, const TArray<float>& LODScreenSizes, EAvatarBodyType BodyType, const FGlbLoadCompleted& LoadCompleted);
 
 	FglTFRuntimeSkeletalMeshAsync OnSkeletalMeshCallback;
 	FGlbLoadCompleted OnLoadCompleted;

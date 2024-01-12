@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "RpmIconUI.h"
 #include "RpmAvatarCreatorTypes.h"
-#include "Blueprint/UserWidget.h"
 #include "RpmAssetButtonUI.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAssetButtonSelected, const FRpmPartnerAsset&, Asset);
 
 UCLASS(Abstract)
-class RPMAVATARCREATOR_API URpmAssetButtonUI : public UUserWidget
+class RPMAVATARCREATOR_API URpmAssetButtonUI : public URpmIconUI
 {
 	GENERATED_BODY()
 
@@ -28,5 +28,5 @@ public:
 	FRpmPartnerAsset Asset;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Ready Player Me")
-	class URpmAvatarCreatorApi* AvatarCreatorApi = nullptr;
+	bool bIsSelected;
 };
