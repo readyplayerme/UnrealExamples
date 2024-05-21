@@ -84,7 +84,7 @@ void URpmAvatarRequestHandler::OnPrecompileCompleted(bool bSuccess)
 	PrecompileRequest.Reset();
 }
 
-void URpmAvatarRequestHandler::UpdateAvatar(ERpmPartnerAssetType AssetType, int64 AssetId)
+void URpmAvatarRequestHandler::UpdateAvatar(ERpmPartnerAssetType AssetType, const FString& AssetId)
 {
 	AvatarProperties.Assets.FindOrAdd(AssetType) = AssetId;
 	UpdateAvatar(FPayloadExtractor::MakeUpdatePayload(AssetType, AssetId));

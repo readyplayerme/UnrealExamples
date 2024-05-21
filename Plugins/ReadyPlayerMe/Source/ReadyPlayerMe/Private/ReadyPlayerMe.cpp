@@ -1,4 +1,4 @@
-// Copyright © 2021++ Ready Player Me
+// Copyright © 2024 Ready Player Me
 
 #include "ReadyPlayerMe.h"
 #include "ReadyPlayerMeTypes.h"

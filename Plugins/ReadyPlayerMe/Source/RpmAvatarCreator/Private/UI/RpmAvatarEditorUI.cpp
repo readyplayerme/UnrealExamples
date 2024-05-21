@@ -63,7 +63,7 @@ void URpmAvatarEditorUI::OnUpdateLockedAssetsCompleted()
 	const auto& SelectedAssets = AvatarCreatorApi->AvatarProperties.Assets;
 	for (const auto& Asset : AvatarCreatorApi->GetFilteredPartnerAssets())
 	{
-		if (SelectedAssets.Contains(Asset.AssetType) && SelectedAssets[Asset.AssetType] == Asset.Id && Asset.bIsLocked)
+		if (SelectedAssets.Contains(Asset.AssetType) && SelectedAssets[Asset.AssetType].Equals(Asset.Id) && Asset.bIsLocked)
 		{
 			ContainsLockedAsset = true;
 			break;
@@ -193,7 +193,7 @@ bool URpmAvatarEditorUI::IsAssetSelected(const FRpmPartnerAsset& Asset) const
 	{
 		return AvatarCreatorApi->AvatarProperties.Assets[Asset.AssetType] == Asset.Id;
 	}
-	return Asset.Id == 0;
+	return Asset.Id == "0";
 }
 
 void URpmAvatarEditorUI::SetAssetSelectedPin(const FRpmPartnerAsset& Asset)

@@ -1,14 +1,14 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "2.2.0",
+	"VersionName": "3.2.0",
 	"FriendlyName": "Ready Player Me",
 	"Description": "Ready Player Me SDK",
 	"Category": "Runtime",
 	"CreatedBy": "Ready Player Me",
 	"CreatedByURL": "https://readyplayer.me/",
 	"DocsURL": "https://docs.readyplayer.me/integration-guides/unreal-engine",
-	"MarketplaceURL": "",
+	"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/57665e6da03749ceb765905d87f716bd",
 	"SupportURL": "https://docs.readyplayer.me/integration-guides/unreal-engine",
 	"CanContainContent": true,
 	"IsBetaVersion": false,
@@ -48,11 +48,33 @@
 				"Android",
 				"IOS"
 			]
+		},
+		{
+			"Name": "glTFRuntime",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"WhitelistPlatforms": [
+				"Win64",
+				"Mac",
+				"Linux",
+				"Android",
+				"IOS"
+			]
+		},
+		{
+			"Name": "glTFRuntimeEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default",
+			"WhitelistPlatforms": [
+				"Win64",
+				"Mac",
+				"Linux"
+			]
 		}
 	],
 	"Plugins": [
 		{
-			"Name": "glTFRuntime",
+			"Name": "ProceduralMeshComponent",
 			"Enabled": true
 		}
 	]

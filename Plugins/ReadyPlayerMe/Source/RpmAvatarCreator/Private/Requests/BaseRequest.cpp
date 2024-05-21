@@ -21,6 +21,7 @@ namespace
 	const FString HEADER_AUTHORIZATION = "Authorization";
 	const FString HEADER_APP_ID = "X-APP-ID";
 	const FString HEADER_CONTENT_TYPE = "Content-Type";
+	const FString HEADER_RPM_SOURCE = "rpm-source";
 }
 
 FBaseRequest::FBaseRequest(const TSharedRef<FCancellationDelegate>& CancellationDelegate, const FString& Url, const FString& AuthToken, ERequestVerb RequestVerb, const FString& Payload, float Timeout)
@@ -41,6 +42,7 @@ void FBaseRequest::Download()
 	{
 		DownloadRequest->SetTimeout(Timeout);
 	}
+	DownloadRequest->SetHeader(HEADER_RPM_SOURCE, "unreal");
 	DownloadRequest->SetURL(Url);
 	if (!AuthToken.IsEmpty())
 	{

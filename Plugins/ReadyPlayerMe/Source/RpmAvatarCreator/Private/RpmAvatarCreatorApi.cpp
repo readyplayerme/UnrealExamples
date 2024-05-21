@@ -169,7 +169,7 @@ void URpmAvatarCreatorApi::DownloadUserAvatars(const FUserAvatarsDownloadComplet
 	UserAvatarDownloader->DownloadUserAvatars(DownloadCompleted, Failed);
 }
 
-void URpmAvatarCreatorApi::UpdateAvatarAsset(ERpmPartnerAssetType AssetType, int64 AssetId)
+void URpmAvatarCreatorApi::UpdateAvatarAsset(ERpmPartnerAssetType AssetType, const FString& AssetId)
 {
 	AvatarRequestHandler->UpdateAvatar(AssetType, AssetId);
 }

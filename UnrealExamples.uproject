@@ -19,13 +19,9 @@
 			]
 		},
 		{
-			"Name": "glTFRuntime",
-			"Enabled": true,
-			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/d2ed3709933d4608a3a8dd746cbc045d"
-		},
-		{
 			"Name": "ReadyPlayerMe",
-			"Enabled": true
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/57665e6da03749ceb765905d87f716bd"
 		},
 		{
 			"Name": "RpmWebView",
