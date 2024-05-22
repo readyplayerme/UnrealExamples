@@ -92,6 +92,8 @@ public:
 
 	virtual void BeginDestroy() override;
 
+	void Reset();
+
 private:
 	UFUNCTION()
 	void PropertiesDownloaded(bool bSuccess, ERpmAvatarCreatorError Error);

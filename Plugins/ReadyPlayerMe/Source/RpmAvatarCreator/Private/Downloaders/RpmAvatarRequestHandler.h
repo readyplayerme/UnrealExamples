@@ -50,6 +50,8 @@ public:
 
 	FBaseRequestCompleted& GetAvatarPreviewDownloadedCallback();
 
+	void Reset() const;
+
 private:
 	UFUNCTION()
 	void OnUpdateAvatarCompleted(bool bSuccess);

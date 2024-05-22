@@ -37,7 +37,6 @@ void URpmAvatarCreatorApi::Initialize()
 	AvatarRequestHandler->SetRequestFactory(RequestFactory);
 	AvatarRequestHandler->SetUserAvatarDownloader(UserAvatarDownloader);
 	AvatarRequestHandler->ImageDownloader = ImageDownloader;
-
 	const UReadyPlayerMeSettings* Settings = GetDefault<UReadyPlayerMeSettings>();
 	if (!IsValid(Settings) || Settings->Subdomain.IsEmpty())
 	{
@@ -226,4 +225,12 @@ void URpmAvatarCreatorApi::BeginDestroy()
 		RequestFactory->CancelRequests();
 	}
 	Super::BeginDestroy();
+}
+
+void URpmAvatarCreatorApi::Reset()
+{
+	if(AvatarRequestHandler)
+	{
+		AvatarRequestHandler->Reset();
+	}
 }

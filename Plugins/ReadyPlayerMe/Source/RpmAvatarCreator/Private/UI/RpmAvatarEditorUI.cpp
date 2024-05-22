@@ -50,6 +50,7 @@ void URpmAvatarEditorUI::DiscardAvatarDraft()
 	AvatarProperties.Colors.Empty();
 	AvatarProperties.Id.Empty();
 	AvatarProperties.Base64Image.Empty();
+	AvatarCreatorApi->Reset();
 }
 
 void URpmAvatarEditorUI::UpdateLockedAssets()
