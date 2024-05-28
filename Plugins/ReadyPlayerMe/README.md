@@ -8,12 +8,6 @@ Please visit the online documentation and join our public `discord` community.
 
 ![](https://i.imgur.com/FgbNsPN.png) **[Discord Channel]( https://discord.gg/9veRUu2 )**
 
-
-### Dependencies
-
-**glTFRuntime** An open source third party plugin with functionality for downloading and importing assets from GLTF and GLB files.
-The plugin can be found on GitHub [here](https://github.com/rdeioris/glTFRuntime), but can also be purchased from the Unreal Marketplace.
-
 [Discord channel](https://discord.gg/DzS7MHy)
 
 ### Requirements

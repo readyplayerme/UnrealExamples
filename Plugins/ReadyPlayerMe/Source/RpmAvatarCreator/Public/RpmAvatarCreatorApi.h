@@ -43,7 +43,7 @@ public:
 	void PrepareEditor(const FAvatarEditorReady& EditorReady, const FAvatarCreatorFailed& Failed);
 
 	UFUNCTION(BlueprintCallable, Category = "Ready Player Me", meta = (DisplayName = "Update Avatar Asset"))
-	void UpdateAvatarAsset(ERpmPartnerAssetType AssetType, int64 AssetId);
+	void UpdateAvatarAsset(ERpmPartnerAssetType AssetType, const FString& AssetId);
 
 	UFUNCTION(BlueprintCallable, Category = "Ready Player Me", meta = (DisplayName = "Update Avatar Color"))
 	void UpdateAvatarColor(ERpmPartnerAssetColor AssetColor, int32 ColorIndex);
@@ -91,6 +91,8 @@ public:
 	TArray<FRpmAvatarTemplate> GetAvatarTemplates() const;
 
 	virtual void BeginDestroy() override;
+
+	void Reset();
 
 private:
 	UFUNCTION()

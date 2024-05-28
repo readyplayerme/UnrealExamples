@@ -23,7 +23,7 @@ public:
 
 	void Precompile(ERpmPartnerAssetType AssetType, const TArray<FRpmPartnerAsset>& FilteredAssets);
 
-	void UpdateAvatar(ERpmPartnerAssetType AssetType, int64 AssetId);
+	void UpdateAvatar(ERpmPartnerAssetType AssetType, const FString& AssetId);
 
 	void UpdateAvatar(ERpmPartnerAssetColor AssetColor, int32 ColorIndex);
 
@@ -49,6 +49,8 @@ public:
 	FBaseRequestCompleted& GetAvatarPropertiesDownloadedCallback();
 
 	FBaseRequestCompleted& GetAvatarPreviewDownloadedCallback();
+
+	void Reset() const;
 
 private:
 	UFUNCTION()

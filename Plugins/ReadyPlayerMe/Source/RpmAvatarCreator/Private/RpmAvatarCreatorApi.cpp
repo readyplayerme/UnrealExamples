@@ -37,7 +37,6 @@ void URpmAvatarCreatorApi::Initialize()
 	AvatarRequestHandler->SetRequestFactory(RequestFactory);
 	AvatarRequestHandler->SetUserAvatarDownloader(UserAvatarDownloader);
 	AvatarRequestHandler->ImageDownloader = ImageDownloader;
-
 	const UReadyPlayerMeSettings* Settings = GetDefault<UReadyPlayerMeSettings>();
 	if (!IsValid(Settings) || Settings->Subdomain.IsEmpty())
 	{
@@ -169,7 +168,7 @@ void URpmAvatarCreatorApi::DownloadUserAvatars(const FUserAvatarsDownloadComplet
 	UserAvatarDownloader->DownloadUserAvatars(DownloadCompleted, Failed);
 }
 
-void URpmAvatarCreatorApi::UpdateAvatarAsset(ERpmPartnerAssetType AssetType, int64 AssetId)
+void URpmAvatarCreatorApi::UpdateAvatarAsset(ERpmPartnerAssetType AssetType, const FString& AssetId)
 {
 	AvatarRequestHandler->UpdateAvatar(AssetType, AssetId);
 }
@@ -226,4 +225,12 @@ void URpmAvatarCreatorApi::BeginDestroy()
 		RequestFactory->CancelRequests();
 	}
 	Super::BeginDestroy();
+}
+
+void URpmAvatarCreatorApi::Reset()
+{
+	if(AvatarRequestHandler)
+	{
+		AvatarRequestHandler->Reset();
+	}
 }

@@ -84,7 +84,7 @@ void URpmAvatarRequestHandler::OnPrecompileCompleted(bool bSuccess)
 	PrecompileRequest.Reset();
 }
 
-void URpmAvatarRequestHandler::UpdateAvatar(ERpmPartnerAssetType AssetType, int64 AssetId)
+void URpmAvatarRequestHandler::UpdateAvatar(ERpmPartnerAssetType AssetType, const FString& AssetId)
 {
 	AvatarProperties.Assets.FindOrAdd(AssetType) = AssetId;
 	UpdateAvatar(FPayloadExtractor::MakeUpdatePayload(AssetType, AssetId));
@@ -218,4 +218,20 @@ void URpmAvatarRequestHandler::LoadGlb(const TArray<uint8>& Data)
 	}
 	const FString RootBoneName = AvatarProperties.BodyType == EAvatarBodyType::FullBody ? FULLBODY_BONE_NODE : HALFBODY_BONE_NODE;
 	Mesh = Asset->LoadSkeletalMeshRecursive(RootBoneName, {}, FGlTFConfigCreator::GetSkeletalMeshConfig(RootBoneName, TargetSkeleton));
+}
+
+void URpmAvatarRequestHandler::Reset() const
+{
+	if(AvatarModelRequest.IsValid())
+	{
+		if(AvatarModelRequest->GetCompleteCallback().IsBound())
+			AvatarModelRequest->GetCompleteCallback().Unbind();
+		AvatarModelRequest->CancelRequest();
+	}
+	if(UpdateAvatarRequest.IsValid())
+	{
+		if(UpdateAvatarRequest->GetCompleteCallback().IsBound())
+			UpdateAvatarRequest->GetCompleteCallback().Unbind();
+		UpdateAvatarRequest->CancelRequest();
+	}
 }

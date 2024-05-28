@@ -12,6 +12,7 @@ static const FString JSON_FIELD_EMAIL = "email";
 static const FString JSON_FIELD_CODE = "code";
 static const FString JSON_FIELD_NAME = "name";
 static const FString JSON_FIELD_ID = "id";
+static const FString JSON_FIELD__ID = "_id";
 static const FString JSON_FIELD_AUTH_TYPE = "authType";
 
 FRpmUserData FUserDataExtractor::ExtractAnonymousUserData(const FString& JsonString)
@@ -48,7 +49,7 @@ FRpmUserData FUserDataExtractor::ExtractRefreshedUserSession(const FString& Json
 FRpmUserData FUserDataExtractor::ExtractUserData(const FString& JsonString)
 {
 	const TSharedPtr<FJsonObject> DataObject = FDataJsonUtils::ExtractDataObject(JsonString);
-	if (!DataObject || !DataObject->HasField("_id") || !DataObject->HasField(JSON_FIELD_TOKEN))
+	if (!DataObject || !DataObject->HasField(JSON_FIELD__ID) || !DataObject->HasField(JSON_FIELD_TOKEN))
 	{
 		return {};
 	}
@@ -56,7 +57,7 @@ FRpmUserData FUserDataExtractor::ExtractUserData(const FString& JsonString)
 	FRpmUserData UserData;
 	UserData.bIsAuthenticated = true;
 	UserData.bIsExistingUser = true;
-	UserData.Id = DataObject->GetStringField("_id");
+	UserData.Id = DataObject->GetStringField(JSON_FIELD__ID);
 	UserData.Name = DataObject->GetStringField(JSON_FIELD_NAME);
 	UserData.Email = DataObject->GetStringField(JSON_FIELD_EMAIL);
 	UserData.Token = DataObject->GetStringField(JSON_FIELD_TOKEN);
