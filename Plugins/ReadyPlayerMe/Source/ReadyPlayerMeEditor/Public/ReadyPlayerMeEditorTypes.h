@@ -1,4 +1,4 @@
-// Copyright © 2021++ Ready Player Me
+// Copyright © 2024 Ready Player Me
 #pragma once
 
 #include "ReadyPlayerMeEditorTypes.generated.h"

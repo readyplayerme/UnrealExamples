@@ -1,4 +1,4 @@
-// Copyright © 2021++ Ready Player Me
+// Copyright © 2024 Ready Player Me
 
 #include "ReadyPlayerMeEditor.h"
 
@@ -14,9 +14,9 @@ namespace
 	void AddGLTFRuntimeToCookingDirectories()
 	{
 		UProjectPackagingSettings* PackagingSetting = GetMutableDefault<UProjectPackagingSettings>();
-		if (!PackagingSetting->DirectoriesToAlwaysCook.ContainsByPredicate([](const auto& Item){ return Item.Path == "/glTFRuntime";} ))
+		if (!PackagingSetting->DirectoriesToAlwaysCook.ContainsByPredicate([](const auto& Item){ return Item.Path == "/ReadyPlayerMe/glTFRuntime";} ))
 		{
-			PackagingSetting->DirectoriesToAlwaysCook.Add(FDirectoryPath{"/glTFRuntime"});
+			PackagingSetting->DirectoriesToAlwaysCook.Add(FDirectoryPath{"/ReadyPlayerMe/glTFRuntime"});
 #if ENGINE_MAJOR_VERSION > 4
 			PackagingSetting->TryUpdateDefaultConfigFile();
 #else

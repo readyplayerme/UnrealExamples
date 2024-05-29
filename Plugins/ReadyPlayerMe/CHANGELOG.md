@@ -3,11 +3,50 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.2.0] 2024-05-23
+
+## Updated
+
+- updated to latest version of glTFRuntime [#65](https://github.com/readyplayerme/rpm-unreal-sdk/pull/65)
+
+## Fixed
+
+- removed UE5.4 warnings [#66](https://github.com/readyplayerme/rpm-unreal-sdk/pull/66)
+- fixed a crash caused by unmanaged avatar request callbacks in Avatar Creator [#67](https://github.com/readyplayerme/rpm-unreal-sdk/pull/67)
+
+## [3.1.0] 2024-05-08
+
+## Added
+
+- gltfRuntime is merged now to the Ready Player Me Plugin and it is no longer needed to download it manually [#55](https://github.com/readyplayerme/rpm-unreal-sdk/pull/55)
+
+## Fixed
+- resize image based on camera resolution [#61](https://github.com/readyplayerme/rpm-unreal-sdk/pull/61)
+- Fix setup guide path [#60](https://github.com/readyplayerme/rpm-unreal-sdk/pull/60)
+- Fix typos in quickstart [#62](https://github.com/readyplayerme/rpm-unreal-sdk/pull/62)
+- Dont show halfbody/fullbody-xr animations in quickstart [#63](https://github.com/readyplayerme/rpm-unreal-sdk/pull/63)
+
+## Breaking
+
+- gltfRuntime is now part of the SDK, so the separate version of gltfRuntime from the plugins folder needs to be removed [#55](https://github.com/readyplayerme/rpm-unreal-sdk/pull/55)
+
+## [2.4.0] 2024-02-19
+
+## Added
+
+- Add rpm source header to requests by @rk132 in [#56](https://github.com/readyplayerme/rpm-unreal-sdk/pull/56)
+
+## [2.3.0] 2024-01-24
+
+## Fixed
+
+- Fixed assetID type issue in the AvatarCreator by @harrisonhough in [#54](https://github.com/readyplayerme/rpm-unreal-sdk/pull/54)
+
 ## [2.2.0] 2024-01-12
 
 ## Added
 
-- Added support for auto LODs for the avatars
+- Added support for auto LODs for the avatars in [#52](https://github.com/readyplayerme/rpm-unreal-sdk/pull/52)
 
 ## Fixed
 

@@ -16,7 +16,7 @@ public:
 	
 	static FString MakeCreatePayload(const FRpmAvatarProperties& AvatarProperties);
 
-	static FString MakeUpdatePayload(ERpmPartnerAssetType AssetType, int64 AssetId);
+	static FString MakeUpdatePayload(ERpmPartnerAssetType AssetType, const FString& AssetId);
 	
 	static FString MakeUpdatePayload(ERpmPartnerAssetColor AssetColor, int32 ColorId);
 
